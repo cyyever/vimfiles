@@ -3,14 +3,15 @@ let some_space='[\t \n\r]\+'
 
 let func_header_maps=[  
 			\ ['malloc', 'calloc', 'free', 'stdlib.h'], 
-			\ ['read', 'write', 'close', 'chdir', 'setsid', 'exit', 'unlink', 'unistd.h'],
+			\ ['read', 'write', 'close', 'chdir', 'setsid', 'exit', 'unlink', 'getpid', 'unistd.h'],
 			\ ['open', 'fcntl.h'],
 			\ ['printf', 'sprintf', 'puts', 'stdio.h'],
 			\ ['strerror', 'strlen', 'strcpy', 'strcat', 'strncpy' , 'string.h'],
 			\ ['strerror', 'errno.h'],
 			\ ['gettimeofday', 'sys/time.h'],
+			\ ['wait', 'getpid', 'sys/types.h'],
+			\ ['wait', 'sys/wait.h'],
 			\]
-
 let macro_header_maps=[  
 			\ ['UINT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
