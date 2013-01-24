@@ -16,6 +16,6 @@ function Switch_case()
 		let cword=tolower(cword)
 	endif
 
-	exec "normal caw".cword
+	exec "normal ciw".cword
 	call setpos('.', save_cursor)
 endfunction

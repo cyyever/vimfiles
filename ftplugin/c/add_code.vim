@@ -6,7 +6,7 @@ let func_header_maps=[
 			\ ['read', 'write', 'close', 'chdir', 'setsid', 'exit', 'unlink', 'getpid', 'unistd.h'],
 			\ ['open', 'fcntl.h'],
 			\ ['printf', 'sprintf', 'puts', 'stdio.h'],
-			\ ['strerror', 'strlen', 'strcpy', 'strcat', 'strncpy' , 'string.h'],
+			\ ['strerror', 'strlen', 'strcpy', 'strcat', 'strncpy' , 'memset' , 'string.h'],
 			\ ['strerror', 'errno.h'],
 			\ ['gettimeofday', 'sys/time.h'],
 			\ ['wait', 'getpid', 'sys/types.h'],
@@ -15,9 +15,10 @@ let func_header_maps=[
 let macro_header_maps=[  
 			\ ['UINT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
-			\ ['SIGCHLD',  'signal.h'], 
+			\ ['SIGCHLD', 'SIGPIPE' , 'SIG_IGN', 'signal.h'], 
 			\ ['PRIu64', 'uint64_t', 'inttypes.h'], 
 			\ ['size_t', 'NULL',  'stdlib.h'], 
+			\ ['va_list',  'stdarg.h'], 
 			\]
 
 let struct_type_header_maps=[  
