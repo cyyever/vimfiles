@@ -1,3 +1,4 @@
+scripte utf-8
 function Show_options(waring,options)
 	"显示提示信息
 	let l:index=0

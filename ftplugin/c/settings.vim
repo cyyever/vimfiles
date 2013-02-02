@@ -1,3 +1,4 @@
+scripte utf-8
 function! Change_Setting()
 	let s:suffix=expand("%:p:e") "获取文件后缀
 	if (s:suffix=="c")

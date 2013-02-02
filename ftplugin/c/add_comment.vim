@@ -1,3 +1,4 @@
+scripte utf-8
 function! Add_Comment()
 	let file_name=expand("%:t")
 	let date=strftime("%Y-%m-%d")

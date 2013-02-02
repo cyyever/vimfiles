@@ -4,14 +4,20 @@ set nocompatible
 set backup
 "使用文件类型插件
 filetype plugin on
-"设置写入文件编码
-set fencs=utf-8,chinese
+
+if has("multi_byte")
+	"设置写入文件编码
+	set fencs=utf-8,chinese
+	set enc=chinese
+else
+	echo "no multi_byte support"
+endif
 
 if has("gui_win32")
 	"去除gvim菜单乱码
 	source $VIMRUNTIME/delmenu.vim
 	source $VIMRUNTIME/menu.vim
-	"去除gvim消息乱码
+	"去除消息乱码
 	language messages zh_CN.utf-8
 endif
 

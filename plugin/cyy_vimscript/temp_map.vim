@@ -1,3 +1,4 @@
+scripte utf-8
 "常用的键映射
 let s:subentrys=[ '执行下面全部键映射', {'替换行': 'map b pkddyy=='}]
 function Temp_map()

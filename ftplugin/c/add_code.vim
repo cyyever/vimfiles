@@ -1,3 +1,4 @@
+scripte utf-8
 let space='[\t \n\r]*'
 let some_space='[\t \n\r]\+'
 
