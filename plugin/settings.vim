@@ -13,14 +13,6 @@ else
 	echo "no multi_byte support"
 endif
 
-if has("gui_win32")
-	"去除gvim菜单乱码
-	source $VIMRUNTIME/delmenu.vim
-	source $VIMRUNTIME/menu.vim
-	"去除消息乱码
-	language messages zh_CN.utf-8
-endif
-
 "语法高亮
 syntax on
 "递增查询
