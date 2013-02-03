@@ -10,6 +10,7 @@ let func_header_maps=[
 			\ ['strerror', 'strlen', 'strcpy', 'strcat', 'strncpy' , 'memset' , 'string.h'],
 			\ ['strerror', 'errno.h'],
 			\ ['gettimeofday', 'sys/time.h'],
+			\ ['time', 'time.h'],
 			\ ['wait', 'getpid', 'sys/types.h'],
 			\ ['wait', 'sys/wait.h'],
 			\]
