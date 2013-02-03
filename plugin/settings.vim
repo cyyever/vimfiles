@@ -8,7 +8,6 @@ filetype plugin on
 if has("multi_byte")
 	"设置写入文件编码
 	set fencs=utf-8,chinese
-	set enc=chinese
 else
 	echo "no multi_byte support"
 endif
