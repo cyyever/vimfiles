@@ -4,7 +4,9 @@ set nocompatible
 set backup
 "使用文件类型插件
 filetype plugin on
-
+"使用文件类型缩进
+filetype indent on
+"设置编码
 if has("multi_byte")
 	"设置写入文件编码
 	set fencs=utf-8,chinese
@@ -33,3 +35,6 @@ set statusline=%F%50l:%c/%L
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
+
+"设置h文件类型
+au BufRead,BufNewFile *.h set filetype=h

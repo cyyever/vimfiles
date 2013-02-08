@@ -1,6 +1,5 @@
-
-function! Add_Include()
-	let file_content=["#ifndef ".toupper(expand("%:r"))."_H","#define ".toupper(expand("%:r"))."_H"]
+function! H_add_include_macro()
+	let file_content=["#ifndef ".toupper(expand("%:t:r"))."_H","#define ".toupper(expand("%:t:r"))."_H"]
 	let file_content+=getline(1,line('$'))
 	let file_content+=["#endif"]
 	let i=1
@@ -9,4 +8,3 @@ function! Add_Include()
 		let i=i+1
 	endfor
 endfunction
-
