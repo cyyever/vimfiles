@@ -5,4 +5,3 @@ map <F2> :call H_add_include_macro()<cr>
 map <F3> :call Comment_header()<cr>
 map <F4> :call H_open_relate_c_source()<cr>
 map <F12> :echo g:Fkeys_msg<CR>
-setlocal cindent
