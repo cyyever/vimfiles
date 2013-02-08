@@ -10,14 +10,14 @@ let s:file_name=expand("%:t")
 let s:date=strftime("%Y-%m-%d")
 
 function! Comment_begin_block()
-	if &filetype=="c" || &filetype=="h"
+	if &filetype=="c" || &filetype=="cpp"
 		return '/*'
 	else
 		return Comment_in_block()
 endfunction
 
 function! Comment_in_block()
-	if &filetype=="c" || &filetype=="h"
+	if &filetype=="c" || &filetype=="cpp"
 		return ' *'
 	elseif &filetype=="vim"
 		return '"'
@@ -29,7 +29,7 @@ function! Comment_in_block()
 endfunction
 
 function! Comment_end_block()
-	if &filetype=="c" || &filetype=="h"
+	if &filetype=="c" || &filetype=="cpp"
 		return ' */'
 	else
 		return Comment_in_block()

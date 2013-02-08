@@ -35,6 +35,3 @@ set statusline=%F%50l:%c/%L
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
-
-"设置h文件类型
-au BufRead,BufNewFile *.h set filetype=h
