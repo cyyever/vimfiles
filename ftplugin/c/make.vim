@@ -12,10 +12,10 @@ function! C_make()
 	exe 'w'
 	let compiler_output=system(make_cmd)
 	echo compiler_output
-
+	
 	"补全没有声明的函数
 	for line in split(compiler_output,'[\r\n]\+')
-		if stridx(line,expand('%:p')) ==0
+		if stridx(line,expand('%:p:t')) != -1
 			if stridx(line,"implicit declaration of function") !=-1
 				let func_name=substitute(line,".*implicit declaration of function", "", "")
 				let func_name=substitute(func_name,'[^a-zA-Z0-9_]\+', "", "g")
