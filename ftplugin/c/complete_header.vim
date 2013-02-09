@@ -41,14 +41,17 @@ function! C_complete_header(...)
 					echo man_cmd." 出错"
 					return
 				endif
-				let include_idx=match(man_output,'#include\s*<[^>]\+>') 
 				let func_idx=match(man_output,' '.a:000[i].'(')
-				for j in range(len(include_idx))
-					if include_idx[j] < func_idx[0] && (j==len(include_idx)-1 || ( j< len(include_idx)-1 && include_idx[j+1] > func_idx[0] ))
-						call C_insert_header(matchstr(man_output[include_idx[j]],'[a-zA-Z_0-9]\+\.h'))
-						return
-					endif
-				endfor
+				if func_idx != -1
+					call remove(man_output,func_idx,-1)
+					for j in range(len(man_output)-1,0,-1)
+						let include_idx=match(man_output,'#include\s*<[^>]\+>',j) 
+						if include_idx !=-1
+							call C_insert_header(matchstr(man_output[include_idx],'[a-zA-Z_0-9]\+\.h'))
+							return
+						endif
+					endfor
+				endif
 				echo "解析 ".man_cmd." 出错"
 				return
 			endfor	
@@ -104,19 +107,17 @@ function! C_insert_header(include)
 	let file_content=[]
 
 	let insert_pos=search('^\s*#'.g:space.'include\>',"wn") " 找出第一个include
-
-	if insert_pos ==0
+	if insert_pos !=0
+		let insert_pos-=1
+	else
 		let insert_pos=search('^#define '.toupper(expand("%:t:r"))."_H","wn") " 头文件头部
 		if insert_pos !=0
 			let insert_pos+=1
-		endif
-	endif
-
-	if insert_pos ==0
-		let insert_pos=search(' \*\t功能.*\n \*\/',"wn") " 文件注释尾部分
-		if insert_pos !=0
-			let insert_pos+=1
-			let file_content+=[""]
+		else
+			let insert_pos=search(' \*\t功能.*\n \*\/',"wn") " 文件注释尾部分
+			if insert_pos !=0
+				let insert_pos+=1
+			endif
 		endif
 	endif
 
