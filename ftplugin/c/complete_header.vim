@@ -18,7 +18,7 @@ let macro_header_maps=[
 			\ ['UINT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
 			\ ['SIGCHLD', 'SIGPIPE' , 'SIG_IGN', 'signal.h'], 
-			\ ['PRIu64', 'uint64_t', 'inttypes.h'], 
+			\ ['PRIu64', 'uint64_t', 'PRIi64', 'inttypes.h'], 
 			\ ['size_t', 'NULL',  'stdlib.h'], 
 			\ ['va_list',  'stdarg.h'], 
 			\]
