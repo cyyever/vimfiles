@@ -3,19 +3,10 @@ let space='[\t \n\r]*'
 let some_space='[\t \n\r]\+'
 
 let func_header_maps=[  
-			\ ['malloc', 'calloc', 'free', 'stdlib.h'], 
-			\ ['read', 'write', 'close', 'chdir', 'setsid', 'exit', 'unlink', 'getpid', 'unistd.h'],
-			\ ['open', 'fcntl.h'],
-			\ ['printf', 'sprintf', 'puts', 'stdio.h'],
-			\ ['strerror', 'strlen', 'strcpy', 'strcat', 'strncpy' , 'memset' , 'string.h'],
-			\ ['strerror', 'errno.h'],
-			\ ['gettimeofday', 'sys/time.h'],
-			\ ['time', 'time.h'],
-			\ ['wait', 'getpid', 'sys/types.h'],
 			\ ['wait', 'sys/wait.h'],
 			\]
 let macro_header_maps=[  
-			\ ['UINT_MAX',  'limits.h'], 
+			\ ['UINT_MAX', 'INT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
 			\ ['SIGCHLD', 'SIGPIPE' , 'SIG_IGN', 'signal.h'], 
 			\ ['PRIu64', 'uint64_t', 'PRIi64', 'inttypes.h'], 
