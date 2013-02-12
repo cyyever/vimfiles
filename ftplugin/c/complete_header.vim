@@ -9,7 +9,7 @@ let macro_header_maps=[
 			\ ['UINT_MAX', 'INT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
 			\ ['SIGCHLD', 'SIGPIPE' , 'SIG_IGN', 'signal.h'], 
-			\ ['PRIu64', 'uint64_t', 'PRIi64', 'inttypes.h'], 
+			\ ['PRIu64', 'uint64_t', 'PRIi64', 'INT64_MIN', 'INT64_MAX', 'inttypes.h'], 
 			\ ['size_t', 'NULL',  'stdlib.h'], 
 			\ ['va_list',  'stdarg.h'], 
 			\]
@@ -25,25 +25,28 @@ function! C_complete_header(...)
 		" 补足函数头文件
 		if a:1=="f"
 			for i in range(1,a:0-1)
-				" 通过man得知头文件名
-				let man_cmd="man 3 ".a:000[i]
-				let man_output=split(system(man_cmd),'[\r\n]\+')
-				if v:shell_error
-					echo man_cmd." 出错"
+				for page_num in [2,3]
+					" 通过man得知头文件名
+					let man_cmd="man ".page_num." ".a:000[i]
+					let man_output=split(system(man_cmd),'[\r\n]\+')
+					if v:shell_error
+						continue
+					endif
+					let func_idx=match(man_output,' '.a:000[i].'(')
+					if func_idx != -1
+						call remove(man_output,func_idx,-1)
+						for j in range(len(man_output)-1,0,-1)
+							let include_idx=match(man_output,'#include\s*<[^>]\+>',j) 
+							if include_idx !=-1
+								call C_insert_header(matchstr(man_output[include_idx],'[a-zA-Z_0-9]\+\.h'))
+								return
+							endif
+						endfor
+					endif
+					echo "解析 ".man_cmd." 出错"
 					return
-				endif
-				let func_idx=match(man_output,' '.a:000[i].'(')
-				if func_idx != -1
-					call remove(man_output,func_idx,-1)
-					for j in range(len(man_output)-1,0,-1)
-						let include_idx=match(man_output,'#include\s*<[^>]\+>',j) 
-						if include_idx !=-1
-							call C_insert_header(matchstr(man_output[include_idx],'[a-zA-Z_0-9]\+\.h'))
-							return
-						endif
-					endfor
-				endif
-				echo "解析 ".man_cmd." 出错"
+				endfor
+				echo "man ".a:000[i]." 出错"
 				return
 			endfor	
 		endif
