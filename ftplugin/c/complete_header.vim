@@ -27,7 +27,7 @@ function! C_complete_header(...)
 			for i in range(1,a:0-1)
 				for page_num in [2,3]
 					" 通过man得知头文件名
-					let man_cmd="man ".page_num." ".a:000[i]
+					let man_cmd="man ".page_num." ".a:000[i]." | col -b"
 					let man_output=split(system(man_cmd),'[\r\n]\+')
 					if v:shell_error
 						continue
