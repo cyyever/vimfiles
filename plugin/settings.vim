@@ -25,7 +25,7 @@ autocmd BufReadPost * call cursor(line("'\""),1)
 "检索高亮
 set hlsearch
 "映射到切换大小写
-nmap . :call Switch_case()<cr>
+nmap <Space> :call Switch_case()<cr>
 
 "关键字搜索当前目录
 set cpt+=k*
