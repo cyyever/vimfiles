@@ -3,4 +3,6 @@ tarball:
 	tar -cf vim_scripts-${date}.tar `find  -name *.vim`
 gitpush:
 	git push git@gitcafe.com:198767/vim_scripts.git
+clean:
+	rm -f `find  -name '*~'` vim_scripts*.tar
 		
