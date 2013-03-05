@@ -27,7 +27,7 @@ function! C_complete_header(...)
 			for i in range(1,a:0-1)
 				for page_num in [2,3]
 					" 通过man得知头文件名
-					let man_cmd="man ".page_num." ".a:000[i]." | col -b"
+					let man_cmd="set -o pipefail && ". "man ".page_num." ".a:000[i]." | col -b"
 					let man_output=split(system(man_cmd),'[\r\n]\+')
 					if v:shell_error
 						continue
@@ -99,12 +99,17 @@ function! C_insert_header(include)
 	let save_cursor = getpos(".")
 	call setpos('.',[0,1,1,0])
 	let file_content=[]
+	
+	let include_begin='^\s*#\s*include\s\+<'
+	let include_end='>\s*$'
 
-	let insert_pos=search('^\s*#'.g:space.'include\>',"wn") " 找出第一个include
-	if insert_pos !=0
-		let insert_pos-=1
-	else
-		let insert_pos=search('^#define '.toupper(expand("%:t:r"))."_H","wn") " 头文件头部
+	if(search(include_begin.a:include.include_end,"wn") !=0) " 是否已经包含？
+		return
+	endif
+
+	let insert_pos=search(include_begin,"wn") " 找出第一个include
+	if insert_pos ==0
+		let insert_pos=search('^#\s*define\s\+'.toupper(expand("%:t:r"))."_H","wn") " 头文件头部
 		if insert_pos !=0
 			let insert_pos+=1
 		else
