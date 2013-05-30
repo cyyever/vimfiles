@@ -13,9 +13,10 @@ if has("multi_byte")
 else
 	echo "no multi_byte support"
 endif
-
 "语法高亮
 syntax on
+"设置注释为绿色，否则伤眼
+highlight Comment ctermfg=green
 "递增查询
 set incsearch
 "设置页号
