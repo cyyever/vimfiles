@@ -6,9 +6,6 @@
 "
 scripte utf-8
 
-let s:file_name=expand("%:t")
-let s:date=strftime("%Y-%m-%d")
-
 function! Comment_begin_block()
 	if &filetype=="c" || &filetype=="cpp"
 		return '/*'
@@ -37,7 +34,7 @@ function! Comment_end_block()
 endfunction
 
 function! Comment_header()
-	let file_content=[Comment_begin_block(),Comment_in_block()."\t程序名：".s:file_name,Comment_in_block()."\t作者：陈源源",Comment_in_block()."\t日期：".s:date,Comment_in_block()."\t功能：",Comment_end_block()]
+	let file_content=[Comment_begin_block(),Comment_in_block()."\t程序名：".expand("%:t"),Comment_in_block()."\t作者：陈源源",Comment_in_block()."\t日期：".strftime("%Y-%m-%d"),Comment_in_block()."\t功能：",Comment_end_block()]
 	call append(0,file_content)
 endfunction
 
