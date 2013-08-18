@@ -12,6 +12,7 @@ let macro_header_maps=[
 			\ ['PRIu64', 'uint64_t', 'PRIi64', 'INT64_MIN', 'INT64_MAX', 'inttypes.h'], 
 			\ ['size_t', 'NULL',  'stdlib.h'], 
 			\ ['va_list',  'stdarg.h'], 
+			\ ['errno',  'errno.h'], 
 			\]
 
 let struct_type_header_maps=[  
@@ -38,7 +39,7 @@ function! C_complete_header(...)
 						for j in range(len(man_output)-1,0,-1)
 							let include_idx=match(man_output,'#include\s*<[^>]\+>',j) 
 							if include_idx !=-1
-								call C_insert_header(matchstr(man_output[include_idx],'[a-zA-Z_0-9]\+\.h'))
+								call C_insert_header(matchstr(man_output[include_idx],'[a-zA-Z_0-9/]\+\.h'))
 								return
 							endif
 						endfor
