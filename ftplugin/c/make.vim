@@ -18,8 +18,10 @@ function! C_make()
 	for line in split(compiler_output,'[\r\n]\+')
 		if stridx(line,expand('%:p:t')) != -1
 			if stridx(line,"implicit declaration of function") !=-1
-				let func_name=substitute(line,".*implicit declaration of function", "", "")
-				let func_name=substitute(func_name,'[^a-zA-Z0-9_]\+', "", "g")
+				let func_name=substitute(line,".*implicit declaration of function .", "", "")
+				echo func_name
+				let func_name=substitute(func_name,'. \[.*', "", "g")
+				echo func_name
 				call C_complete_header("f",func_name)
 			endif
 		endif

@@ -9,7 +9,7 @@ let macro_header_maps=[
 			\ ['UINT_MAX', 'INT_MAX',  'limits.h'], 
 			\ ['SIZE_MAX',  'stdint.h'], 
 			\ ['SIGCHLD', 'SIGPIPE' , 'SIG_IGN', 'signal.h'], 
-			\ ['PRIu64', 'uint64_t', 'PRIi64', 'INT64_MIN', 'INT64_MAX', 'inttypes.h'], 
+			\ ['PRIu64', 'uint64_t', 'uint32_t' , 'PRIi64', 'INT64_MIN', 'INT64_MAX', 'inttypes.h'], 
 			\ ['size_t', 'NULL',  'stdlib.h'], 
 			\ ['va_list',  'stdarg.h'], 
 			\ ['errno',  'errno.h'], 
@@ -29,6 +29,7 @@ function! C_complete_header(...)
 				for page_num in [2,3]
 					" 通过man得知头文件名
 					let man_cmd="set -o pipefail && ". "man ".page_num." ".a:000[i]." | col -b"
+					echo man_cmd
 					let man_output=split(system(man_cmd),'[\r\n]\+')
 					if v:shell_error
 						continue
@@ -58,6 +59,8 @@ function! C_complete_header(...)
 			for func_header_map in reverse(copy(g:func_header_maps))
 				for i in range(len(func_header_map)-1)
 					let func_name=func_header_map[i]
+
+		echo func_name
 					if search('\<'.func_name.'\>'.g:space.'(',"wn") !=0
 						if search('#'.g:space.'include'.g:some_space.'<'.escape(func_header_map[-1],'/'),"wn") ==0
 							call C_insert_header(func_header_map[-1])
