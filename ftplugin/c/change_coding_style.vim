@@ -1,6 +1,9 @@
 scripte utf-8
 let s:styles=['执行以下全部修改']
 let s:styles+=[{'指针变量和星号结合': '%s/\(\<[a-zA-Z1-9_]\+\>\)\(\*\+\) /\1 \2/ge'}]
+let s:styles+=[{'去除!=左右空格': '%s/[ ]\?!=[ ]\?/!=/ge'}]
+let s:styles+=[{'去除==左右空格': '%s/[ ]\?==[ ]\?/==/ge'}]
+let s:styles+=[{'去除=左右空格': '%s/[ ]\?=[ ]\?/=/ge'}]
 
 function! C_change_coding_style()
 	let l:index=Show_options("请选择以下选项",s:styles)

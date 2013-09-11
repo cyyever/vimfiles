@@ -29,7 +29,6 @@ function! C_complete_header(...)
 				for page_num in [2,3]
 					" 通过man得知头文件名
 					let man_cmd="set -o pipefail && ". "man ".page_num." ".a:000[i]." | col -b"
-					echo man_cmd
 					let man_output=split(system(man_cmd),'[\r\n]\+')
 					if v:shell_error
 						continue
@@ -60,7 +59,6 @@ function! C_complete_header(...)
 				for i in range(len(func_header_map)-1)
 					let func_name=func_header_map[i]
 
-		echo func_name
 					if search('\<'.func_name.'\>'.g:space.'(',"wn") !=0
 						if search('#'.g:space.'include'.g:some_space.'<'.escape(func_header_map[-1],'/'),"wn") ==0
 							call C_insert_header(func_header_map[-1])
@@ -103,7 +101,7 @@ function! C_insert_header(include)
 	let save_cursor = getpos(".")
 	call setpos('.',[0,1,1,0])
 	let file_content=[]
-	
+
 	let include_begin='^\s*#\s*include\s\+<'
 	let include_end='>\s*$'
 
