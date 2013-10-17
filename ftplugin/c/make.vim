@@ -19,7 +19,7 @@ function! C_make()
 		if stridx(line,expand('%:p:t')) != -1
 			if stridx(line,"implicit declaration of function") !=-1
 				let func_name=substitute(line,".*implicit declaration of function .", "", "")
-				let func_name=substitute(func_name,'. \[.*', "", "g")
+				let func_name=substitute(func_name,"’.*","","")
 				call C_complete_header("f",func_name)
 			endif
 		endif
