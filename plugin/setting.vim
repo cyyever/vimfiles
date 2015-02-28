@@ -2,8 +2,10 @@
 set nocompatible
 "备份文件
 set backup
-"使用文件类型插件
-filetype plugin on
+"头文件优先判断为c
+let c_syntax_for_h=1
+"语法高亮
+syntax on
 "使用文件类型缩进
 filetype indent on
 "设置编码
@@ -13,8 +15,6 @@ if has("multi_byte")
 else
 	echo "no multi_byte support"
 endif
-"语法高亮
-syntax on
 "设置注释为绿色，否则伤眼
 highlight Comment ctermfg=green
 "递增查询
@@ -36,3 +36,4 @@ set statusline=%F%50l:%c/%L
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
+
