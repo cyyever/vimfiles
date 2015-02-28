@@ -1,4 +1,7 @@
 scripte utf-8
+if exists("did_load_filetypes")
+	finish
+endif
 function! Change_Setting()
 	let s:suffix=expand("%:p:e") "获取文件后缀
 	"功能键说明
@@ -12,6 +15,4 @@ function! Change_Setting()
 	map <F12> :echo g:Fkeys_msg<cr>
 endfunction
 
-if &filetype == "cpp"
-	call Change_Setting()
-endif
+call Change_Setting()
