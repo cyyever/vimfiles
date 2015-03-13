@@ -6,6 +6,8 @@ set backup
 let c_syntax_for_h=1
 "语法高亮
 syntax on
+"使用文件类型插件
+filetype plugin on
 "使用文件类型缩进
 filetype indent on
 "设置编码
@@ -36,4 +38,3 @@ set statusline=%F%50l:%c/%L
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
-

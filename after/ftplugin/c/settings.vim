@@ -1,7 +1,4 @@
 scripte utf-8
-if exists("did_load_filetypes")
-	finish
-endif
 function! Change_Setting()
 	let s:suffix=expand("%:p:e") "获取文件后缀
 	if (s:suffix=="c")
@@ -30,3 +27,5 @@ function! Change_Setting()
 endfunction
 
 call Change_Setting()
+au BufEnter *.c call Change_Setting() 
+au BufEnter *.h call Change_Setting() 
