@@ -26,7 +26,7 @@ function! Bind_Key()
 		map <F4> :call CPP_open_relate_header()<cr>
 		map <F5> :call CPP_make()<cr>
 		map <F12> :echo g:Fkeys_msg<CR>
-	elseif (&filetype=="vim" || filetype=="perl")
+	elseif (&filetype=="vim" || &filetype=="perl")
 		"绑定功能键
 		let g:Fkeys_msg="F2 增加头部注释 F12 帮助"
 		map <F2> :call Comment_header()<cr>
