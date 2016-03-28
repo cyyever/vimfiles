@@ -4,6 +4,12 @@ if !exists("*H_open_relate_c_source")
 		if(!filereadable(c_file))
 			let c_file=expand("%:p:s?\.h$?.C?")
 		endif
+		if(!filereadable(c_file))
+			let c_file=expand("%:p:s?\.h$?.cpp?")
+		endif
+		if(!filereadable(c_file))
+			let c_file=expand("%:p:s?\.h$?.cxx?")
+		endif
 		if(!bufloaded(c_file))
 			exe 'w'
 			exe 'sp '.c_file
