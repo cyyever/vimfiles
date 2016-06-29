@@ -22,14 +22,13 @@ highlight Comment ctermfg=green
 "递增查询
 set incsearch
 "设置页号
-set nu
+set number
 "打开文件跳转到上次阅读地方
 autocmd BufReadPost * call cursor(line("'\""),1)
 "检索高亮
 set hlsearch
 "映射到切换大小写
 nmap <Space> :call Switch_case()<cr>
-
 "关键字搜索当前目录
 set cpt+=k*
 " 状态栏
@@ -38,3 +37,6 @@ set statusline=%F%50l:%c/%L
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
+
+"缩进宽度
+set shiftwidth=2
