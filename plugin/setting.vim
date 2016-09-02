@@ -3,7 +3,7 @@ set nocompatible
 "备份文件
 set backup
 "头文件优先判断为c
-let c_syntax_for_h=1
+"let c_syntax_for_h=1
 "语法高亮
 syntax on
 "使用文件类型插件
@@ -40,3 +40,15 @@ set backspace=indent,eol,start
 
 "缩进宽度
 set shiftwidth=2
+
+"创建脚本时设置可执行
+autocmd BufWritePost *.sh call setfperm(expand("%:p"),substitute(getfperm(expand("%:p")),'^\(..\).','\1x',"g"))
+
+"补全时忽略大小写
+set wildignorecase
+"set infercase
+
+"检索时的大小写处理
+set ignorecase
+set smartcase
+set tagcase=match
