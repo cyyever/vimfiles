@@ -8,7 +8,7 @@ scripte utf-8
 
 function! Comment_begin_block()
 	if &filetype=="c" || &filetype=="cpp"
-		return '/*'
+		return '/*!'
 	else
 		return Comment_in_block()
 endfunction
@@ -34,7 +34,7 @@ function! Comment_end_block()
 endfunction
 
 function! Comment_header()
-	let file_content=[Comment_begin_block(),Comment_in_block()."\t程序名：".expand("%:t"),Comment_in_block()."\t作者：陈源源",Comment_in_block()."\t日期：".strftime("%Y-%m-%d"),Comment_in_block()."\t功能：",Comment_end_block()]
+	let file_content=[Comment_begin_block(),Comment_in_block()." \\file ".expand("%:t"),Comment_in_block(),Comment_in_block()." \\brief",Comment_in_block()." \\author cyy",Comment_in_block()." \\date ".strftime("%Y-%m-%d"),Comment_end_block()]
 	call append(0,file_content)
 endfunction
 
