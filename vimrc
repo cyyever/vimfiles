@@ -2,6 +2,7 @@
 set nocompatible
 "备份文件
 set backup
+set dir=.
 
 "设置编码
 if has("multi_byte")
