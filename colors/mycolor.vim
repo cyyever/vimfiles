@@ -1,7 +1,9 @@
 "语法高亮
 syntax on
 "设置终端颜色
-set t_Co=256
+if &term == "xterm-color"
+  set term=xterm-256color
+endif
 highlight Comment ctermfg=green
 highlight LineNr ctermfg=cyan
 highlight Statement ctermfg=cyan
