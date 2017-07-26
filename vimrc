@@ -4,6 +4,8 @@ set nocompatible
 set backup
 set dir=.
 
+set showcmd
+
 "设置编码
 if has("multi_byte")
 	"设置写入文件编码
