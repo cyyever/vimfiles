@@ -8,5 +8,5 @@ highlight Comment ctermfg=green
 highlight LineNr ctermfg=cyan
 highlight Statement ctermfg=cyan
 highlight StatusLine cterm=italic ctermfg=yellow
-highlight Search ctermbg=lightred ctermfg=black
+highlight Search ctermbg=cyan ctermfg=yellow
 highlight Visual ctermbg=darkgreen ctermfg=black
