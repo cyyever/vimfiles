@@ -6,6 +6,8 @@ set dir=.
 
 set showcmd
 
+set hidden
+
 "设置编码
 if has("multi_byte")
 	"设置写入文件编码
@@ -18,6 +20,7 @@ endif
 "文件类型选项
 filetype plugin on
 filetype indent on
+
 
 "颜色方案
 colorscheme mycolor
