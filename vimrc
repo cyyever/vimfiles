@@ -18,9 +18,9 @@ else
 endif
 
 "文件类型选项
+let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
-
 
 "颜色方案
 colorscheme mycolor
@@ -53,3 +53,4 @@ set ignorecase
 set smartcase
 set tagcase=match
 set mouse=r
+
