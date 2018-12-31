@@ -44,6 +44,7 @@ set backspace=indent,eol,start
 
 "缩进宽度
 set shiftwidth=2
+set tabstop=4 expandtab
 
 "补全时忽略大小写
 set wildignorecase
