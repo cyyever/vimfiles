@@ -4,6 +4,7 @@ syntax on
 if &term == "xterm-color"
   set term=xterm-256color
 endif
+highlight Normal ctermbg=black
 highlight Comment ctermfg=green
 highlight PreProc ctermfg=darkgrey
 highlight LineNr ctermfg=cyan
@@ -11,3 +12,4 @@ highlight Statement ctermfg=cyan
 highlight StatusLine cterm=italic ctermfg=yellow
 highlight Search ctermbg=cyan ctermfg=yellow
 highlight Visual ctermbg=darkgreen ctermfg=black
+highlight htmlLink ctermfg=green
