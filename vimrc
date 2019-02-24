@@ -55,3 +55,4 @@ set smartcase
 set tagcase=match
 set mouse=r
 
+set spelllang=en
