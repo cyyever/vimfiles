@@ -56,3 +56,8 @@ set tagcase=match
 set mouse=r
 
 set spelllang=en
+if has('win32')
+  set spellfile=$HOME/vimfiles/spell/programming.utf-8.add
+else
+  set spellfile=$HOME/.vim/spell/programming.utf-8.add
+endif
