@@ -60,6 +60,6 @@ set shellslash
 set spelllang=en,cjk
 let &spellfile= expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
 
-autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && !filereadable(sfile . '.spl') | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
+autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 
 "let g:languagetool_jar="/home/cyy/languagetool/languagetool-standalone/target/LanguageTool-4.5-SNAPSHOT/LanguageTool-4.5-SNAPSHOT/languagetool-commandline.jar"
