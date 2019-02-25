@@ -55,7 +55,7 @@ set smartcase
 set tagcase=match
 set mouse=r
 
-set spelllang=en
+set spelllang=en,cjk
 if has('win32')
   set spellfile=$HOME/vimfiles/spell/programming.utf-8.add
 else
