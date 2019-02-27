@@ -58,8 +58,19 @@ set mouse=r
 " 拼写检查
 set shellslash
 set spelllang=en,cjk
-let &spellfile= expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
+let &spellfile=expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 
-"let g:languagetool_jar="/home/cyy/languagetool/languagetool-standalone/target/LanguageTool-4.5-SNAPSHOT/LanguageTool-4.5-SNAPSHOT/languagetool-commandline.jar"
+" English grammar checking
+if has("win32")
+else
+  let g:languagetool_jar=$HOME."/languagetool/languagetool-standalone/target/LanguageTool-4.5-SNAPSHOT/LanguageTool-4.5-SNAPSHOT/languagetool-commandline.jar"
+endif
+
+" 生成文档
+let doc_dir=expand("<sfile>:p:h") ."/doc"
+
+if !filereadable(doc_dir."/tags")
+  exec "helptags ".doc_dir
+endif
