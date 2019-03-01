@@ -63,10 +63,7 @@ let &spellfile=expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 
 " English grammar checking
-if has("win32")
-else
-  let g:languagetool_jar=$HOME."/languagetool/languagetool-standalone/target/LanguageTool-4.5-SNAPSHOT/LanguageTool-4.5-SNAPSHOT/languagetool-commandline.jar"
-endif
+let g:languagetool_jar=$HOME."/opt/LanguageTool-4.4.1/languagetool-commandline.jar"
 
 " 生成文档
 let doc_dir=expand("<sfile>:p:h") ."/doc"
