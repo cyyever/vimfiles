@@ -32,8 +32,8 @@ set laststatus=2
 set statusline=%F%50l:%c/%L
 "递增查询
 set incsearch
-"打开文件跳转到上次阅读地方
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+"打开文件跳转到上次阅读地方且居中
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
 "检索高亮
 set hlsearch
 "关键字搜索当前目录
