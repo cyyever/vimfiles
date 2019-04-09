@@ -34,7 +34,6 @@ function! Comment_end_block()
 endfunction
 
 function! Comment_header()
-	let file_content=[Comment_begin_block(),Comment_in_block()." \\file ".expand("%:t"),Comment_in_block(),Comment_in_block()." \\brief",Comment_in_block()." \\author cyy",Comment_in_block()." \\date ".strftime("%Y-%m-%d"),Comment_end_block()]
+	let file_content=[Comment_begin_block(),Comment_in_block()." \\file ".expand("%:t"),Comment_in_block(),Comment_in_block()." \\brief",Comment_end_block()]
 	call append(0,file_content)
 endfunction
-
