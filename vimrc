@@ -46,13 +46,16 @@ set backspace=indent,eol,start
 set shiftwidth=2
 set tabstop=4 expandtab
 
-"补全时忽略大小写
+"补全选项
 set wildignorecase
+set infercase
 
 "检索时的大小写处理
 set ignorecase
 set smartcase
 set tagcase=match
+
+"鼠标
 set mouse=r
 
 set wildignore=.git
