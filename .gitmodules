@@ -4,3 +4,6 @@
 [submodule "pack/git_packs/start/vim-LanguageTool"]
 	path = pack/git_packs/start/vim-LanguageTool
 	url = git@github.com:dpelle/vim-LanguageTool.git
+[submodule "pack/git_packs/start/vimtex"]
+	path = pack/git_packs/start/vimtex
+	url = git@github.com:lervag/vimtex.git
