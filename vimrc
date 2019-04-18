@@ -69,12 +69,3 @@ autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) 
 
 " English grammar checking
 let g:languagetool_jar=$HOME."/opt/LanguageTool-4.4.1/languagetool-commandline.jar"
-
-" 生成文档
-let doc_dirs=glob(expand("<sfile>:p:h") ."/**/doc",0,1)
-
-for doc_dir in doc_dirs
-  if !filereadable(doc_dir."/tags")
-    exec "helptags ".doc_dir
-  endif
-endfor
