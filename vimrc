@@ -4,10 +4,6 @@ set nocompatible
 set backup
 set dir=.
 
-set showcmd
-
-set hidden
-
 "设置编码
 if has("multi_byte")
   "设置写入文件编码
@@ -16,6 +12,9 @@ if has("multi_byte")
 else
   echo "no multi_byte support"
 endif
+
+"增加检索路径
+set path+=$HOME/opt/bin,$HOME/opt/include
 
 "文件类型选项
 let g:sql_type_default = 'mysql'
@@ -27,15 +26,19 @@ colorscheme mycolor
 
 "设置页号
 set number
+
 "状态栏
 set laststatus=2
 set statusline=%F%50l:%c/%L
+set showcmd
+
 "递增查询
 set incsearch
-"打开文件跳转到上次阅读地方且居中
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
 "检索高亮
 set hlsearch
+
+"打开文件跳转到上次阅读地方且居中
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
 "关键字搜索当前目录
 set cpt+=k*
 
@@ -58,7 +61,7 @@ set tagcase=match
 "鼠标
 set mouse=r
 
-set wildignore=.git
+set wildignore+=*.o,*.obj,*.git
 
 "if has("win32")
 "  " set powershell on windows

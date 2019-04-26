@@ -7,3 +7,9 @@
 [submodule "pack/git_packs/start/vimtex"]
 	path = pack/git_packs/start/vimtex
 	url = git@github.com:lervag/vimtex.git
+[submodule "pack/git_packs/start/Dockerfile.vim"]
+	path = pack/git_packs/start/Dockerfile.vim
+	url = https://github.com/ekalinin/Dockerfile.vim.git
+[submodule "pack/git_packs/start/vim-cmake-syntax"]
+	path = pack/git_packs/start/vim-cmake-syntax
+	url = git://github.com/pboettch/vim-cmake-syntax.git
