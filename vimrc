@@ -10,11 +10,11 @@ set hidden
 
 "设置编码
 if has("multi_byte")
-	"设置写入文件编码
-	set fencs=utf-8,chinese
-	set enc=utf-8
+  "设置写入文件编码
+  set fencs=utf-8,chinese
+  set enc=utf-8
 else
-	echo "no multi_byte support"
+  echo "no multi_byte support"
 endif
 
 "文件类型选项
@@ -59,6 +59,15 @@ set tagcase=match
 set mouse=r
 
 set wildignore=.git
+
+"if has("win32")
+"  " set powershell on windows
+"  let s:ps_path=exepath("powershell")
+"  if s:ps_path!=""
+"    let &shell=s:ps_path
+"    set shellcmdflag=-NoLogo\ -NonInteractive\ -Command
+"  endif
+"endif
 
 " 拼写检查
 set shellslash
