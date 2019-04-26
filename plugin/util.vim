@@ -11,3 +11,12 @@ function! Split_file_with_suffix(suffix_list)
     endif
   endfor
 endfunction
+
+function! Executable_any(path_list)
+  for path in a:path_list
+    if executable(path) == 1
+      return path
+    endif
+  endfor
+  return ""
+endfunction
