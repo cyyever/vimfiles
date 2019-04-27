@@ -64,15 +64,6 @@ set mouse=r
 set wildignore+=*.o,*.obj,*.git
 
 
-"if has("win32")
-"  " set powershell on windows
-"  let s:ps_path=exepath("powershell")
-"  if s:ps_path!=""
-"    let &shell=s:ps_path
-"    set shellcmdflag=-NoLogo\ -NonInteractive\ -Command
-"  endif
-"endif
-
 " 拼写检查
 set shellslash
 set spelllang=en,cjk
@@ -80,11 +71,18 @@ let &spellfile=expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 
-" 插件
 let g:vim_plug_dir=expand("<sfile>:p:h") . '/plugged'
-
 call plug#begin(g:vim_plug_dir)
+
 " English grammar checking
 let g:languagetool_jar=$HOME."/opt/LanguageTool-4.4.1/languagetool-commandline.jar"
 Plug 'dpelle/vim-LanguageTool'
+
+let g:gutentags_project_root = ['Makefile']
+Plug 'ludovicchabant/vim-gutentags'
+if !isdirectory(g:vim_plug_dir."/vim-gutentags")
+  PlugInstall
+endif
+set statusline+=%{gutentags#statusline()}
+
 call plug#end()
