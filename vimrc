@@ -90,10 +90,10 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 call plug#end()
 
-let s:vim_plug_update_tag_path=g:vim_plug_dir."/update_tag"
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand("%:p")) > getftime(s:vim_plug_update_tag_path)
+let s:vim_plug_update_tag_path=g:vim_plug_dir."/.update_tag"
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand("<sfile>:p")) > getftime(s:vim_plug_update_tag_path)
   PlugInstall
   let s:a= writefile([],s:vim_plug_update_tag_path)
 endif
 
-set statusline+=%{gutentags#statusline()}
+set statusline+=\ %{gutentags#statusline()}
