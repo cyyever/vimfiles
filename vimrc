@@ -85,4 +85,5 @@ if !isdirectory(g:vim_plug_dir."/vim-gutentags")
 endif
 set statusline+=%{gutentags#statusline()}
 
+Plug 'w0rp/ale'
 call plug#end()
