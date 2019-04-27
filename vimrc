@@ -86,4 +86,6 @@ endif
 set statusline+=%{gutentags#statusline()}
 
 Plug 'w0rp/ale'
+let g:ale_lint_on_text_changed='never'
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 call plug#end()
