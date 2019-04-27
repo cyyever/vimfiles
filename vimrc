@@ -80,12 +80,20 @@ Plug 'dpelle/vim-LanguageTool'
 
 let g:gutentags_project_root = ['Makefile']
 Plug 'ludovicchabant/vim-gutentags'
-if !isdirectory(g:vim_plug_dir."/vim-gutentags")
-  PlugInstall
-endif
-set statusline+=%{gutentags#statusline()}
 
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed='never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_fixers = {
+      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \}
+let g:ale_fix_on_save = 1
 call plug#end()
+
+let s:vim_plug_update_tag_path=g:vim_plug_dir."/update_tag"
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand("%:p")) > getftime(s:vim_plug_update_tag_path)
+  PlugInstall
+  let s:a= writefile([],s:vim_plug_update_tag_path)
+endif
+
+set statusline+=%{gutentags#statusline()}
