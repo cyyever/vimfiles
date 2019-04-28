@@ -96,4 +96,6 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
   let s:a= writefile([],s:vim_plug_update_tag_path)
 endif
 
-set statusline+=\ %{gutentags#statusline()}
+if  exists("*gutentags#statusline")
+  set statusline+=\ %{gutentags#statusline()}
+endif
