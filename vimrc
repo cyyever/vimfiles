@@ -2,15 +2,18 @@
 set nocompatible
 "备份文件
 set backup
-set dir=.
 
-"设置编码
-if has("multi_byte")
+if !has('win32')
+  let $PATH .= ':/snap/bin'
+endif
+
+if has('multi_byte')
   "设置写入文件编码
-  set fencs=utf-8,chinese
-  set enc=utf-8
+  set fileencodings=utf-8,chinese
+  "设置编码
+  set encoding=utf-8
 else
-  echo "no multi_byte support"
+  echo 'no multi_byte support'
 endif
 
 "增加检索路径
@@ -40,7 +43,7 @@ set hlsearch
 "打开文件跳转到上次阅读地方且居中
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
 "关键字搜索当前目录
-set cpt+=k*
+set complete+=k*
 
 "插入模式可以使用退格
 set backspace=indent,eol,start
@@ -67,19 +70,22 @@ set wildignore+=*.o,*.obj,*.git
 " 拼写检查
 set shellslash
 set spelllang=en,cjk
-let &spellfile=expand("<sfile>:p:h") . '/spell/programming.utf-8.add'
+let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 
-let g:vim_plug_dir=expand("<sfile>:p:h") . '/plugged'
+" 插件
+let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
 " English grammar checking
-let g:languagetool_jar=$HOME."/opt/LanguageTool-4.4.1/languagetool-commandline.jar"
+let g:languagetool_jar=$HOME.'/opt/LanguageTool-4.4.1/languagetool-commandline.jar'
 Plug 'dpelle/vim-LanguageTool'
 
-let g:gutentags_project_root = ['Makefile']
-Plug 'ludovicchabant/vim-gutentags'
+if executable('ctags')
+  let g:gutentags_project_root = ['Makefile']
+  Plug 'ludovicchabant/vim-gutentags'
+endif
 
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed='never'
@@ -90,12 +96,12 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 call plug#end()
 
-let s:vim_plug_update_tag_path=g:vim_plug_dir."/.update_tag"
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand("<sfile>:p")) > getftime(s:vim_plug_update_tag_path)
+let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)
   PlugInstall
   let s:a= writefile([],s:vim_plug_update_tag_path)
 endif
 
-if  exists("*gutentags#statusline")
+if exists('*gutentags#statusline')
   set statusline+=\ %{gutentags#statusline()}
 endif
