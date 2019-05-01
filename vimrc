@@ -94,6 +94,15 @@ let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \}
 let g:ale_fix_on_save = 1
+
+
+if !has('win32')
+Plug 'Valloric/YouCompleteMe',{'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
+else
+Plug 'Valloric/YouCompleteMe'
+",{'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
+endif
+
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
@@ -104,4 +113,11 @@ endif
 
 if exists('*gutentags#statusline')
   set statusline+=\ %{gutentags#statusline()}
+endif
+
+if exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers =  {
+        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{3}'],
+        \ 'cs,lua,javascript': ['re!\w{3}'],
+        \ }
 endif
