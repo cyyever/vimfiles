@@ -7,3 +7,4 @@ if s:clang_format_exe  !=#''
 endif
 let b:ale_c_clangformat_options='-style=file -assume-filename="'.expand('%:p').'" '
 let b:ale_fixers= ['clang-format']
+let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
