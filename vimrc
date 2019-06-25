@@ -97,9 +97,9 @@ let g:ale_fix_on_save = 1
 
 
 if !has('win32')
-Plug 'Valloric/YouCompleteMe',{'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
+Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
 else
-Plug 'Valloric/YouCompleteMe' ,{'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\";cmake --build . --config release'}
+Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\";cmake --build . --config release'}
 endif
 
 call plug#end()
