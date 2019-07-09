@@ -4,7 +4,7 @@ set nocompatible
 set backup
 
 if !has('win32')
-  let $PATH .= ':/snap/bin:'.$HOME.'/opt/bin'
+  let $PATH .= ':/snap/bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin'
 else
   let $PATH .= ';'.$HOME.'\opt\bin'
 endif
@@ -99,16 +99,16 @@ let g:ale_fix_on_save = 1
 
 
 if !has('win32')
-  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
+  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
 else
-  "Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
+  Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
 endif
 
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)
-  PlugInstall
+  PlugUpdate!
   let s:a= writefile([],s:vim_plug_update_tag_path)
 endif
 
