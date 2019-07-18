@@ -2,6 +2,13 @@
 set nocompatible
 "备份文件
 set backup
+if has('nvim')
+  let s:back_dir=stdpath('data').'/backup'
+  if !isdirectory(s:back_dir)
+    call mkdir(s:back_dir)
+  endif
+  let &backupdir=s:back_dir
+endif
 
 if !has('win32')
   let $PATH .= ':/snap/bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin'
@@ -64,7 +71,11 @@ set smartcase
 set tagcase=match
 
 "鼠标
-set mouse=r
+if has('nvim')
+  set mouse=a
+else
+  set mouse=r
+endif
 
 set wildignore+=*.o,*.obj,*.git
 
