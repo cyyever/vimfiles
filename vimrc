@@ -3,7 +3,7 @@ set nocompatible
 "备份文件
 set backup
 if has('nvim')
-  let s:back_dir=stdpath('data').'/backup'
+  let s:back_dir=stdpath('data').'/backup//'
   if !isdirectory(s:back_dir)
     call mkdir(s:back_dir)
   endif
@@ -34,6 +34,9 @@ filetype plugin on
 filetype indent on
 
 "颜色方案
+if has('nvim')
+  set termguicolors
+endif
 colorscheme mycolor
 
 "设置页号
@@ -72,7 +75,7 @@ set tagcase=match
 
 "鼠标
 if has('nvim')
-  set mouse=a
+  set mouse=nv
 else
   set mouse=r
 endif
@@ -118,7 +121,7 @@ endif
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
   PlugUpdate!
   let s:a= writefile([],s:vim_plug_update_tag_path)
 endif
