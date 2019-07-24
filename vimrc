@@ -97,7 +97,9 @@ call plug#begin(g:vim_plug_dir)
 
 " English grammar checking
 let g:languagetool_jar=$HOME.'/opt/LanguageTool-4.4.1/languagetool-commandline.jar'
-Plug 'dpelle/vim-LanguageTool'
+if exists(g:languagetool_jar)
+  Plug 'dpelle/vim-LanguageTool'
+endif
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
