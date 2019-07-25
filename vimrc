@@ -11,9 +11,9 @@ if has('nvim')
 endif
 
 if !has('win32')
-  let $PATH .= ':/snap/bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin'
+  let $PATH = $HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
 else
-  let $PATH .= ';'.$HOME.'\opt\bin'
+  let $PATH = $HOME.'\opt\bin;'.$PATH
 endif
 
 if has('multi_byte')
