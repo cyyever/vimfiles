@@ -101,6 +101,8 @@ if exists(g:languagetool_jar)
   Plug 'dpelle/vim-LanguageTool'
 endif
 
+Plug 'lervag/vimtex'
+
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
   Plug 'ludovicchabant/vim-gutentags'
