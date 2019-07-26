@@ -1,12 +1,12 @@
-let s:cnt= 1
+let b:cnt= 1
 while 1
-  let s:path= findfile('__init__.py','.;',s:cnt)
-  echo s:path
-  if s:path==#''
+  let b:path= findfile('__init__.py','.;',b:cnt)
+  echo b:path
+  if b:path==#''
     break
   endif
-  let $PYTHONPATH = $PYTHONPATH.':'.fnamemodify(s:path, ':p:h')
-  let s:cnt=s:cnt+1
+  let $PYTHONPATH = $PYTHONPATH.':'.fnamemodify(b:path, ':p:h')
+  let b:cnt=b:cnt+1
 endwhile
 let $MYPYPATH = $PYTHONPATH
 
