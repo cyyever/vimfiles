@@ -1,3 +1,9 @@
+"设置写入文件编码
+set fileencodings=utf-8,chinese
+"设置编码
+set encoding=utf-8
+scriptencoding utf-8
+
 "不要兼容vi
 set nocompatible
 "备份文件
@@ -14,15 +20,6 @@ if !has('win32')
   let $PATH = $HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
 else
   let $PATH = $HOME.'\opt\bin;'.$PATH
-endif
-
-if has('multi_byte')
-  "设置写入文件编码
-  set fileencodings=utf-8,chinese
-  "设置编码
-  set encoding=utf-8
-else
-  echo 'no multi_byte support'
 endif
 
 "增加检索路径
@@ -115,6 +112,8 @@ let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \}
 let g:ale_fix_on_save = 1
+let g:ale_open_list = 1
+let g:ale_list_window_size = 5
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
