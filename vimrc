@@ -115,6 +115,11 @@ let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_list_window_size = 5
 
+augroup CloseLoclistWindowGroup
+  autocmd!
+  autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
