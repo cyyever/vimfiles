@@ -17,7 +17,7 @@ if has('nvim')
 endif
 
 if !has('win32')
-  let $PATH = $HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
+  let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
 else
   let $PATH = $HOME.'\opt\bin;'.$PATH
 endif
