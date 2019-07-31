@@ -130,6 +130,8 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 Plug 'deoplete-plugins/deoplete-jedi'
+let g:deoplete#sources#clang#libclang_path="/usr/lib/llvm-8/lib/libclang.so"
+Plug 'deoplete-plugins/deoplete-clang'
 
 if !has('win32')
  " Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
