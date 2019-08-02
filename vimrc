@@ -7,7 +7,7 @@ scriptencoding utf-8
 let s:vimrc=expand('<sfile>:p')
 let s:vimrc_dir=expand('<sfile>:p:h')
 let s:vimrc_update_tag_path=s:vimrc_dir.'/.update_tag'
-if !filereadable(s:vimrc_update_tag_path) || getftime(s:vimrc) > getftime(s:vimrc_update_tag_path)
+if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_update_tag_path)+3600
   if executable('git')
     call writefile([],s:vimrc_update_tag_path)
     call system('cd '.s:vimrc_dir.' && git update && git submodule update --init')
