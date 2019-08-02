@@ -79,6 +79,15 @@ endif
 
 set wildignore+=*.o,*.obj,*.git
 
+"python
+if has('nvim')
+  let g:loaded_python_provider = 1
+  if executable('python3')
+    let g:python3_host_prog="python3"
+  elseif executable('python')
+    let g:python3_host_prog="python"
+  endif
+endif
 
 " 拼写检查
 set shellslash
