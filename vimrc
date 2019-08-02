@@ -32,11 +32,12 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-"if has('win32')
-  "let $PATH = $HOME.'\opt\bin;'.$PATH
-"else
 "endif
-let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
+let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME."/opt:".$PATH
+if has('win32')
+  let $PATH= substitute($PATH, '/', '\','g')
+  let $PATH= substitute($PATH, ':', ';','g')
+endif
 
 "增加检索路径
 set path+=$HOME/opt/bin,$HOME/opt/include
