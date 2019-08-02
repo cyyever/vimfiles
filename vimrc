@@ -17,8 +17,11 @@ if !filereadable(s:vimrc_update_tag_path) || getftime(s:vimrc) > getftime(s:vimr
   endif
 endif
 
-"不要兼容vi
-set nocompatible
+if !has('nvim')
+  "不要兼容vi
+  set nocompatible
+endif
+
 "备份文件
 set backup
 if has('nvim')
@@ -29,11 +32,11 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-if !has('win32')
-  let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
-else
-  let $PATH = $HOME.'\opt\bin;'.$PATH
-endif
+"if has('win32')
+  "let $PATH = $HOME.'\opt\bin;'.$PATH
+"else
+"endif
+let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$PATH
 
 "增加检索路径
 set path+=$HOME/opt/bin,$HOME/opt/include
@@ -92,13 +95,13 @@ endif
 
 set wildignore+=*.o,*.obj,*.git
 
-"python
+" python
 if has('nvim')
   let g:loaded_python_provider = 1
   if executable('python3')
-    let g:python3_host_prog="python3"
+    let g:python3_host_prog='python3'
   elseif executable('python')
-    let g:python3_host_prog="python"
+    let g:python3_host_prog='python'
   endif
 endif
 
@@ -153,7 +156,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 Plug 'deoplete-plugins/deoplete-jedi'
 if !has('win32')
-  let g:deoplete#sources#clang#libclang_path="/usr/lib/llvm-8/lib/libclang.so"
+  let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-8/lib/libclang.so'
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 
@@ -168,7 +171,6 @@ call plug#end()
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
   PlugUpdate!
-  UpdateRemotePlugins!
   call writefile([],s:vim_plug_update_tag_path)
 endif
 
