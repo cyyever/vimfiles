@@ -50,7 +50,7 @@ filetype indent on
 if has('nvim')
   set termguicolors
 endif
-if exists("$eink")
+if exists('$eink')
   colorscheme eink
 else
   colorscheme mycolor
@@ -116,7 +116,6 @@ let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 set spell
-autocmd Filetype qf setlocal nospell
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
@@ -144,7 +143,6 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_list_window_size = 5
-"let g:ale_writegood_executable = "node_modules/write-good/bin/write-good.js"
 
 augroup CloseLoclistWindowGroup
   autocmd!
