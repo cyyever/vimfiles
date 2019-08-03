@@ -32,8 +32,7 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-"endif
-let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME."/opt:".$PATH
+let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
   let $PATH= substitute($PATH, ':', ';','g')
@@ -51,7 +50,11 @@ filetype indent on
 if has('nvim')
   set termguicolors
 endif
-colorscheme mycolor
+if exists("$eink")
+  colorscheme eink
+else
+  colorscheme mycolor
+endif
 
 "设置页号
 set number
@@ -113,6 +116,7 @@ let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
 set spell
+autocmd Filetype qf setlocal nospell
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
