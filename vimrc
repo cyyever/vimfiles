@@ -103,7 +103,7 @@ set wildignore+=*.o,*.obj,*.git
 if has('nvim')
   let g:loaded_python_provider = 1
   if executable('python3')
-    let g:python3_host_prog='python3'
+    let g:python3_host_prog=exepath('python3')
   elseif executable('python')
     let g:python3_host_prog='python'
   endif
