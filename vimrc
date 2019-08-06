@@ -115,8 +115,9 @@ endif
 set shellslash
 set spelllang=en,cjk
 let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
-
-autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
+if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&spellfile) > getftime(&spellfile . '.spl'))
+  exec 'mkspell! ' . fnameescape(&spellfile)
+endif
 set spell
 
 " 插件
