@@ -6,7 +6,6 @@ let $PYTHONPATH = $PYTHONPATH.':'.g:py_sys_path
 let b:cnt= 1
 while 1
   let b:path= findfile('__init__.py','.;',b:cnt)
-  echo b:path
   if b:path==#''
     break
   endif
