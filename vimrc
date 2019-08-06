@@ -105,7 +105,7 @@ if has('nvim')
   if executable('python3')
     let g:python3_host_prog=exepath('python3')
   elseif executable('python')
-    let g:python3_host_prog='python'
+    let g:python3_host_prog=exepath('python')
   endif
 endif
 
