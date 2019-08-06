@@ -10,7 +10,7 @@ let s:vimrc_update_tag_path=s:vimrc_dir.'/.update_tag'
 if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_update_tag_path)+3600
   if executable('git')
     call writefile([],s:vimrc_update_tag_path)
-    call system('cd '.s:vimrc_dir.' && git update && git submodule update --init')
+    call system('cd '.s:vimrc_dir.' && git pull && git submodule update --init')
 	if !v:shell_error
       source %
 	endif
