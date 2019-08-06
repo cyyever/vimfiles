@@ -1,3 +1,0 @@
-[submodule "pack/git_packs/start/vimtex"]
-	path = pack/git_packs/start/vimtex
-	url = git@github.com:lervag/vimtex.git

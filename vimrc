@@ -1,21 +1,41 @@
-"不要兼容vi
-set nocompatible
-"备份文件
-set backup
+"设置写入文件编码
+set fileencodings=utf-8,chinese
+"设置编码
+set encoding=utf-8
+scriptencoding utf-8
 
-if !has('win32')
-  let $PATH .= ':/snap/bin:'.$HOME.'/opt/bin'
-else
-  let $PATH .= ';'.$HOME.'\opt\bin'
+let s:vimrc=expand('<sfile>:p')
+let s:vimrc_dir=expand('<sfile>:p:h')
+let s:vimrc_update_tag_path=s:vimrc_dir.'/.update_tag'
+if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_update_tag_path)+3600
+  if executable('git')
+    call writefile([],s:vimrc_update_tag_path)
+    call system('cd '.s:vimrc_dir.' && git update && git submodule update --init')
+	if !v:shell_error
+      source %
+	endif
+  endif
 endif
 
-if has('multi_byte')
-  "设置写入文件编码
-  set fileencodings=utf-8,chinese
-  "设置编码
-  set encoding=utf-8
-else
-  echo 'no multi_byte support'
+if !has('nvim')
+  "不要兼容vi
+  set nocompatible
+endif
+
+"备份文件
+set backup
+if has('nvim')
+  let s:back_dir=stdpath('data').'/backup//'
+  if !isdirectory(s:back_dir)
+    call mkdir(s:back_dir)
+  endif
+  let &backupdir=s:back_dir
+endif
+
+let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$PATH
+if has('win32')
+  let $PATH= substitute($PATH, '/', '\','g')
+  let $PATH= substitute($PATH, ':', ';','g')
 endif
 
 "增加检索路径
@@ -27,7 +47,14 @@ filetype plugin on
 filetype indent on
 
 "颜色方案
-colorscheme mycolor
+if has('nvim')
+  set termguicolors
+endif
+if exists('$eink')
+  colorscheme eink
+else
+  colorscheme mycolor
+endif
 
 "设置页号
 set number
@@ -64,10 +91,23 @@ set smartcase
 set tagcase=match
 
 "鼠标
-set mouse=r
+if has('nvim')
+  set mouse=nv
+else
+  set mouse=r
+endif
 
 set wildignore+=*.o,*.obj,*.git
 
+" python
+if has('nvim')
+  let g:loaded_python_provider = 1
+  if executable('python3')
+    let g:python3_host_prog=exepath('python3')
+  elseif executable('python')
+    let g:python3_host_prog=exepath('python')
+  endif
+endif
 
 " 拼写检查
 set shellslash
@@ -75,6 +115,7 @@ set spelllang=en,cjk
 let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
 
 autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
+set spell
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
@@ -82,7 +123,11 @@ call plug#begin(g:vim_plug_dir)
 
 " English grammar checking
 let g:languagetool_jar=$HOME.'/opt/LanguageTool-4.4.1/languagetool-commandline.jar'
-Plug 'dpelle/vim-LanguageTool'
+if exists(g:languagetool_jar)
+  Plug 'dpelle/vim-LanguageTool'
+endif
+
+Plug 'lervag/vimtex'
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
@@ -96,29 +141,49 @@ let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \}
 let g:ale_fix_on_save = 1
+let g:ale_open_list = 1
+let g:ale_list_window_size = 5
 
+augroup CloseLoclistWindowGroup
+  autocmd!
+  autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
 
-if !has('win32')
-  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make install'}
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  "Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+let g:deoplete#enable_at_startup = 1
+Plug 'deoplete-plugins/deoplete-jedi'
+if !has('win32')
+  let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-8/lib/libclang.so'
+endif
+Plug 'deoplete-plugins/deoplete-clang'
+
+"if !has('win32')
+" " Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
+"else
+" " Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
+"endif
 
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)
-  PlugInstall
-  let s:a= writefile([],s:vim_plug_update_tag_path)
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
+  PlugUpdate!
+  call writefile([],s:vim_plug_update_tag_path)
 endif
 
-if exists('*gutentags#statusline')
-  set statusline+=\ %{gutentags#statusline()}
-endif
+"if exists('*gutentags#statusline')
+"  set statusline+=\ %{gutentags#statusline()}
+"endif
 
-if exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers =  {
-        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{3}'],
-        \ 'cs,lua,javascript': ['re!\w{3}'],
-        \ }
-endif
+"if exists('g:ycm_semantic_triggers')
+"  let g:ycm_semantic_triggers =  {
+"        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{3}'],
+"        \ 'cs,lua,javascript': ['re!\w{3}'],
+"        \ }
+"endif
