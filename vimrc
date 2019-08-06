@@ -131,6 +131,7 @@ if exists(g:languagetool_jar)
 endif
 
 Plug 'lervag/vimtex'
+Plug 'tpope/vim-surround'
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
