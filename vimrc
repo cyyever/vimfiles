@@ -132,6 +132,7 @@ endif
 
 Plug 'lervag/vimtex'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
