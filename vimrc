@@ -46,15 +46,6 @@ let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
 
-"颜色方案
-if has('nvim')
-  set termguicolors
-endif
-if exists('$eink')
-  colorscheme eink
-else
-  colorscheme mycolor
-endif
 
 "设置页号
 set number
@@ -133,6 +124,7 @@ endif
 Plug 'lervag/vimtex'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'wellle/targets.vim'
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
@@ -192,3 +184,14 @@ endif
 "        \ 'cs,lua,javascript': ['re!\w{3}'],
 "        \ }
 "endif
+"
+
+"颜色方案
+if exists('$eink')
+  colorscheme eink
+else
+  if has('nvim')
+    set termguicolors
+  endif
+  colorscheme mycolor
+endif
