@@ -12,8 +12,8 @@ if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_upda
     call writefile([],s:vimrc_update_tag_path)
     call system('cd '.s:vimrc_dir.' && git pull && git submodule update --init')
 	if !v:shell_error
-      source %
-	endif
+      exec "source ".s:vimrc
+    endif
   endif
 endif
 
@@ -51,7 +51,7 @@ syntax on
 if has('nvim')
   set termguicolors
 endif
-if exists('$eink')
+if exists('$eink_screen')
   colorscheme eink
 else
   colorscheme mycolor
