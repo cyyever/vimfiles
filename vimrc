@@ -46,6 +46,16 @@ let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
 
+"颜色方案
+syntax on
+if has('nvim')
+  set termguicolors
+endif
+if exists('$eink')
+  colorscheme eink
+else
+  colorscheme mycolor
+endif
 
 "设置页号
 set number
@@ -185,13 +195,3 @@ endif
 "        \ }
 "endif
 "
-
-"颜色方案
-if exists('$eink')
-  colorscheme eink
-else
-  if has('nvim')
-    set termguicolors
-  endif
-  colorscheme mycolor
-endif
