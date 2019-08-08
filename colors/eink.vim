@@ -5,6 +5,8 @@ highlight Identifier cterm=bold ctermfg=white ctermbg=black guifg=white guibg=bl
 highlight PreProc cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Statement cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Constant ctermfg=white ctermbg=black guifg=white guibg=black
+highlight Delimiter ctermfg=white ctermbg=black guifg=white guibg=black
+highlight Special ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Type ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Comment ctermfg=white ctermbg=black guifg=white guibg=black

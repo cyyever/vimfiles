@@ -46,17 +46,6 @@ let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
 
-"颜色方案
-syntax on
-if has('nvim')
-  set termguicolors
-endif
-if exists('$eink_screen')
-  colorscheme eink
-else
-  colorscheme mycolor
-endif
-
 "设置页号
 set number
 
@@ -112,6 +101,17 @@ else
   endif
 endif
 
+"颜色方案
+syntax on
+if has('nvim')
+  set termguicolors
+endif
+if exists('$eink_screen')
+  colorscheme eink
+else
+  colorscheme mycolor
+endif
+
 " 拼写检查
 set shellslash
 set spelllang=en,cjk
@@ -120,6 +120,7 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
   exec 'mkspell! ' . fnameescape(&spellfile)
 endif
 set spell
+
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
@@ -156,6 +157,7 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -170,12 +172,6 @@ if !has('win32')
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 
-"if !has('win32')
-" " Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
-"else
-" " Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
-"endif
-
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
@@ -183,15 +179,3 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
-
-"if exists('*gutentags#statusline')
-"  set statusline+=\ %{gutentags#statusline()}
-"endif
-
-"if exists('g:ycm_semantic_triggers')
-"  let g:ycm_semantic_triggers =  {
-"        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{3}'],
-"        \ 'cs,lua,javascript': ['re!\w{3}'],
-"        \ }
-"endif
-"
