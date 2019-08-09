@@ -1,13 +1,15 @@
 "语法高亮
-highlight Normal ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Pmenu cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Identifier cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
-highlight PreProc cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Statement cterm=bold ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Constant ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Delimiter ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Special ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Type ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
-highlight Comment ctermfg=white ctermbg=black guifg=white guibg=black
-highlight SpellBad cterm=underline ctermfg=white ctermbg=black guifg=white guibg=black
+highlight Normal ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Pmenu cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Identifier cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight PreProc cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Statement cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Constant ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Delimiter ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Special ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Directory ctermfg=black ctermbg=white guifg=black guibg=white
+highlight LineNR ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Type ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Search ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Comment ctermfg=black ctermbg=white guifg=black guibg=white
+highlight SpellBad cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white

@@ -12,7 +12,7 @@ if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_upda
     call writefile([],s:vimrc_update_tag_path)
     call system('cd '.s:vimrc_dir.' && git pull && git submodule update --init')
 	if !v:shell_error
-      exec "source ".s:vimrc
+      exec 'source '.s:vimrc
     endif
   endif
 endif
@@ -121,6 +121,8 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
 endif
 set spell
 
+" 终端模式
+tnoremap <Esc> <C-\><C-n>
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
