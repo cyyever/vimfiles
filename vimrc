@@ -12,7 +12,7 @@ if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_upda
     call writefile([],s:vimrc_update_tag_path)
     call system('cd '.s:vimrc_dir.' && git update && git submodule update --init')
 	if !v:shell_error
-      source %
+      source s:vimrc
 	endif
   endif
 endif
