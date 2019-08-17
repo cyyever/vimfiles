@@ -1,18 +1,15 @@
 "语法高亮
-highlight Normal ctermfg=white ctermbg=black
-highlight Pmenu cterm=bold ctermfg=white ctermbg=black
-highlight Identifier cterm=bold ctermfg=white ctermbg=black
-highlight Statement cterm=bold ctermfg=white ctermbg=black
-highlight Constant ctermfg=white ctermbg=black
-highlight Search ctermbg=black ctermfg=white
-highlight Comment ctermbg=black ctermfg=white
-highlight SpellBad cterm=underline ctermbg=black ctermfg=white
-
-"highlight Comment ctermfg=white ctermbg=black
-"highlight PreProc ctermfg=darkgrey
-"highlight LineNr ctermfg=cyan
-"highlight Statement ctermfg=cyan
-"highlight StatusLine cterm=italic ctermbg=black ctermfg=yellow
-"highlight Visual ctermbg=darkgreen ctermfg=white
-"highlight htmlLink ctermfg=green
-"highlight Identifier ctermbg=black ctermfg=LightYellow
+highlight Normal ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Pmenu cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Identifier cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight PreProc cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Statement cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Constant ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Delimiter ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Special ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Directory ctermfg=black ctermbg=white guifg=black guibg=white
+highlight LineNR ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Type ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Search ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Comment ctermfg=black ctermbg=white guifg=black guibg=white
+highlight SpellBad cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white

@@ -10,10 +10,10 @@ let s:vimrc_update_tag_path=s:vimrc_dir.'/.update_tag'
 if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_update_tag_path)+3600
   if executable('git')
     call writefile([],s:vimrc_update_tag_path)
-    call system('cd '.s:vimrc_dir.' && git update && git submodule update --init')
+    call system('cd '.s:vimrc_dir.' && git pull && git submodule update --init')
 	if !v:shell_error
-      source s:vimrc
-	endif
+      exec 'source '.s:vimrc
+    endif
   endif
 endif
 
@@ -45,16 +45,6 @@ set path+=$HOME/opt/bin,$HOME/opt/include
 let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
-
-"颜色方案
-if has('nvim')
-  set termguicolors
-endif
-if exists('$eink')
-  colorscheme eink
-else
-  colorscheme mycolor
-endif
 
 "设置页号
 set number
@@ -100,22 +90,39 @@ endif
 set wildignore+=*.o,*.obj,*.git
 
 " python
-if has('nvim')
-  let g:loaded_python_provider = 1
-  if executable('python3')
-    let g:python3_host_prog=exepath('python3')
-  elseif executable('python')
+let g:loaded_python_provider = 1
+if has('win32')
+  if executable('python')
     let g:python3_host_prog=exepath('python')
   endif
+else
+  if executable('python3')
+    let g:python3_host_prog=exepath('python3')
+  endif
+endif
+
+"颜色方案
+syntax on
+if has('nvim')
+  set termguicolors
+endif
+if exists('$eink_screen')
+  colorscheme eink
+else
+  colorscheme mycolor
 endif
 
 " 拼写检查
 set shellslash
 set spelllang=en,cjk
 let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
-
-autocmd OptionSet spell for sfile in split(&spellfile) | if filereadable(sfile) && (!filereadable(sfile . '.spl') || getftime(sfile) > getftime(sfile . '.spl')) | exec 'mkspell! ' . fnameescape(sfile) | endif | endfor
+if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&spellfile) > getftime(&spellfile . '.spl'))
+  exec 'mkspell! ' . fnameescape(&spellfile)
+endif
 set spell
+
+" 终端模式
+tnoremap <Esc> <C-\><C-n>
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
@@ -128,6 +135,9 @@ if exists(g:languagetool_jar)
 endif
 
 Plug 'lervag/vimtex'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'wellle/targets.vim'
 
 if executable('ctags')
   let g:gutentags_project_root = ['Makefile']
@@ -149,6 +159,7 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -163,12 +174,6 @@ if !has('win32')
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 
-"if !has('win32')
-" " Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
-"else
-" " Plug 'Valloric/YouCompleteMe' ,{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
-"endif
-
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
@@ -176,14 +181,3 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
-
-"if exists('*gutentags#statusline')
-"  set statusline+=\ %{gutentags#statusline()}
-"endif
-
-"if exists('g:ycm_semantic_triggers')
-"  let g:ycm_semantic_triggers =  {
-"        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{3}'],
-"        \ 'cs,lua,javascript': ['re!\w{3}'],
-"        \ }
-"endif
