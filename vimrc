@@ -120,6 +120,9 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
   exec 'mkspell! ' . fnameescape(&spellfile)
 endif
 set spell
+if has('nvim')
+  au TermOpen * setlocal nospell
+endif
 
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
