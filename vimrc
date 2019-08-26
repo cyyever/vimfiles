@@ -147,7 +147,7 @@ if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
 endif
 
-Plug 'w0rp/ale'
+Plug 'cyyever/ale', { 'branch': 'cyy' }
 let g:ale_lint_on_text_changed='never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_fixers = {
