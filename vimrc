@@ -131,12 +131,6 @@ tnoremap <Esc> <C-\><C-n>
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
-" English grammar checking
-let g:languagetool_jar=$HOME.'/opt/LanguageTool-4.4.1/languagetool-commandline.jar'
-if exists(g:languagetool_jar)
-  Plug 'dpelle/vim-LanguageTool'
-endif
-
 Plug 'lervag/vimtex'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
