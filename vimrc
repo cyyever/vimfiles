@@ -154,7 +154,9 @@ let s:languagetool_jar=$HOME.'/opt/LanguageTool-4.7-SNAPSHOT/languagetool-comman
 if filereadable(s:languagetool_jar)
  let g:ale_languagetool_commandline_jar=s:languagetool_jar
 endif
-let g:ale_writegood_options="--no-passive"
+let g:ale_writegood_options='--no-passive'
+let g:ale_c_parse_compile_commands=1
+let g:ale_c_parse_makefile=1
 
 augroup CloseLoclistWindowGroup
   autocmd!
