@@ -32,7 +32,7 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$PATH
+let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
   let $PATH= substitute($PATH, ':', ';','g')
@@ -174,7 +174,11 @@ endif
 let g:deoplete#enable_at_startup = 1
 Plug 'deoplete-plugins/deoplete-jedi'
 if !has('win32')
-  let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-8/lib/libclang.so'
+  for path in ['/usr/local/llvm90/lib/libclang.so','/usr/lib/llvm-8/lib/libclang.so']
+    if filereadable(path)
+      let g:deoplete#sources#clang#libclang_path=path
+    endif
+  endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 
