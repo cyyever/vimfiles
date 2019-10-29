@@ -171,7 +171,9 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-let g:deoplete#enable_at_startup = 1
+" Enable deoplete when InsertEnter.
+let g:deoplete#enable_at_startup = 0
+autocmd InsertEnter * call deoplete#enable()
 Plug 'deoplete-plugins/deoplete-jedi'
 if !has('win32')
   for path in ['/usr/local/llvm90/lib/libclang.so','/usr/lib/llvm-8/lib/libclang.so']
