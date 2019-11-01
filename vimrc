@@ -87,6 +87,8 @@ else
   set mouse=r
 endif
 
+set clipboard+=unnamedplus
+
 set wildignore+=*.o,*.obj,*.git
 
 " python
