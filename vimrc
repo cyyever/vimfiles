@@ -108,10 +108,16 @@ syntax on
 if has('nvim')
   set termguicolors
 endif
-if exists('$eink_screen')
+
+if exists('$eink_screen') && $eink_screen==1
   colorscheme eink
 else
   colorscheme mycolor
+endif
+
+" there are some bugs in nvim cursor code, so I disable it.
+if has('nvim')
+  set guicursor=
 endif
 
 " 拼写检查
