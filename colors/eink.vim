@@ -10,6 +10,6 @@ highlight Special ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Directory ctermfg=black ctermbg=white guifg=black guibg=white
 highlight LineNR ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Type ctermfg=black ctermbg=white guifg=black guibg=white
-highlight Search ctermfg=black ctermbg=white guifg=black guibg=white
+highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
 highlight Comment ctermfg=black ctermbg=white guifg=black guibg=white
 highlight SpellBad cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white
