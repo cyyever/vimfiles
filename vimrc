@@ -1,8 +1,10 @@
+scriptencoding utf-8
+
 "设置写入文件编码
+set fileencoding=utf-8
 set fileencodings=utf-8,chinese
 "设置编码
 set encoding=utf-8
-scriptencoding utf-8
 
 let s:vimrc=expand('<sfile>:p')
 let s:vimrc_dir=expand('<sfile>:p:h')
