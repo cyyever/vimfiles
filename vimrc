@@ -1,8 +1,8 @@
 scriptencoding utf-8
 
 "设置写入文件编码
-set fileencoding=utf-8
 set fileencodings=utf-8,chinese
+au BufReadPost * set fenc=utf-8
 "设置编码
 set encoding=utf-8
 
