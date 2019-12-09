@@ -34,7 +34,7 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-let $PATH = $HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
+let $PATH = $HOME.'/opt/pip:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
   let $PATH= substitute($PATH, ':', ';','g')
@@ -184,9 +184,12 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 " Enable deoplete when InsertEnter.
 let g:deoplete#enable_at_startup = 0
-autocmd InsertEnter * call deoplete#enable()
+if exists("*deoplete#enable")
+  autocmd InsertEnter * call deoplete#enable()
+endif
 Plug 'deoplete-plugins/deoplete-jedi'
 if !has('win32')
   for path in ['/usr/local/llvm90/lib/libclang.so','/usr/lib/llvm-8/lib/libclang.so']
@@ -201,7 +204,7 @@ call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
-  PlugUpgrade!
+  PlugUpgrade
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
