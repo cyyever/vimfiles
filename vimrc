@@ -140,7 +140,9 @@ tnoremap <Esc> <C-\><C-n>
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
-Plug 'lervag/vimtex'
+if executable('latexmk')
+  Plug 'lervag/vimtex'
+endif
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
