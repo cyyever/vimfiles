@@ -121,8 +121,10 @@ if has('nvim')
   set guicursor=
 endif
 
+" shell
+set noshellslash
+
 " 拼写检查
-set shellslash
 set spelllang=en,cjk
 let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
 if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&spellfile) > getftime(&spellfile . '.spl'))
@@ -199,6 +201,7 @@ call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
+  PlugUpgrade!
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
