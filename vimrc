@@ -34,7 +34,7 @@ if has('nvim')
   let &backupdir=s:back_dir
 endif
 
-let $PATH = $HOME.'/opt/pip::'.$HOME.'/opt/node_modules/.bin::'.$HOME.'/opt/bin::'.$HOME.'/opt/gopath/bin::'.$HOME.'/opt::'.$HOME.'/.local/bin::'.$PATH
+let $PATH = $HOME.'/opt/pip/bin::'.$HOME.'/opt/node_modules/.bin::'.$HOME.'/opt/bin::'.$HOME.'/opt/gopath/bin::'.$HOME.'/opt::'.$HOME.'/.local/bin::'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
   let $PATH= substitute($PATH, '::', ';','g')

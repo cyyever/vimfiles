@@ -1,17 +1,25 @@
 if !exists("g:py_sys_path")
-  let g:py_sys_path=execute('py3 import sys;print(":".join(sys.path))')
+  let g:py_sys_path=execute('py3 import sys;print("::".join(sys.path))')
   let g:py_sys_path = substitute(g:py_sys_path, '[\n\r ]*', '', '')
 endif
-let $PYTHONPATH = $PYTHONPATH.':'.g:py_sys_path
+let $PYTHONPATH = $PYTHONPATH.'::'.g:py_sys_path
 let b:cnt= 1
 while 1
   let b:path= findfile('__init__.py','.;',b:cnt)
   if b:path==#''
     break
   endif
-  let $PYTHONPATH = $PYTHONPATH.':'.fnamemodify(b:path, ':p:h')
+  let $PYTHONPATH = $PYTHONPATH.'::'.fnamemodify(b:path, ':p:h')
   let b:cnt=b:cnt+1
 endwhile
+
+if has('win32')
+  let $PYTHONPATH= substitute($PYTHONPATH, '/', '\','g')
+  let $PYTHONPATH= substitute($PYTHONPATH, '::', ';','g')
+else
+  let $PYTHONPATH= substitute($PYTHONPATH, '::', ':','g')
+endif
+
 let $MYPYPATH = $PYTHONPATH
 
 let b:ale_fixers= ['black','autopep8']
