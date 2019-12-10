@@ -1,4 +1,4 @@
-let b:ale_linters=  ['clang', 'clangd', 'clangtidy', 'cppcheck', 'flawfinder' , 'gcc','pvsstudio']
+let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'flawfinder' , 'gcc','pvsstudio']
 let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
 let b:ale_cpp_clang_options='-Wall -std=c++2a'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
