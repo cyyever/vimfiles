@@ -10,6 +10,10 @@ highlight Special ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Directory ctermfg=black ctermbg=white guifg=black guibg=white
 highlight LineNR ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Type ctermfg=black ctermbg=white guifg=black guibg=white
-highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
+if not has('win32')
+  highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
+  highlight IncSearch ctermfg=white ctermbg=black guifg=white guibg=black
+endif()
 highlight Comment ctermfg=black ctermbg=white guifg=black guibg=white
 highlight SpellBad cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white
+highlight SpellCap cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white
