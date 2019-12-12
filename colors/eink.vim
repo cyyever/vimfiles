@@ -1,4 +1,3 @@
-"语法高亮
 highlight Normal ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Pmenu cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Identifier cterm=bold ctermfg=black ctermbg=white guifg=black guibg=white
@@ -10,10 +9,10 @@ highlight Special ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Directory ctermfg=black ctermbg=white guifg=black guibg=white
 highlight LineNR ctermfg=black ctermbg=white guifg=black guibg=white
 highlight Type ctermfg=black ctermbg=white guifg=black guibg=white
-if not has('win32')
+if !has('win32')
   highlight Search ctermfg=white ctermbg=black guifg=white guibg=black
   highlight IncSearch ctermfg=white ctermbg=black guifg=white guibg=black
-endif()
+endif
 highlight Comment ctermfg=black ctermbg=white guifg=black guibg=white
 highlight SpellBad cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white
 highlight SpellCap cterm=underline ctermfg=black ctermbg=white guifg=black guibg=white
