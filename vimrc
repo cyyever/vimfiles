@@ -165,7 +165,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_list_window_size = 5
-let s:languagetool_jar=$HOME.'/opt/LanguageTool-4.7-SNAPSHOT/languagetool-commandline.jar'
+let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
 if filereadable(s:languagetool_jar)
  let g:ale_languagetool_commandline_jar=s:languagetool_jar
 endif
