@@ -167,7 +167,8 @@ let g:ale_open_list = 1
 let g:ale_list_window_size = 5
 let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
 if filereadable(s:languagetool_jar)
- let g:ale_languagetool_commandline_jar=s:languagetool_jar
+  let g:ale_languagetool_executable='java'
+  let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
 endif
 let g:ale_writegood_options='--no-passive'
 let g:ale_c_parse_compile_commands=1
