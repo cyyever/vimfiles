@@ -2,8 +2,7 @@ let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'flawfinder' , 'gcc','pv
 let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
 let b:ale_cpp_clang_options='-Wall -std=c++2a'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
-let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=all'
-let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=all'
+let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'
 
 let s:clang_format_exe=Executable_any(['clang-format-devel','clang-format','clang-format-8'])
 if s:clang_format_exe  !=#''
