@@ -9,3 +9,4 @@ endif
 let b:ale_c_clangformat_options='-style=file -fallback-style=none'
 let b:ale_fixers= ['clang-format','clangtidy']
 let b:ale_c_build_dir_names = ['aa','bb','a','b','build2','build']
+let b:ale_c_clangtidy_fix_errors=0
