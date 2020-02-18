@@ -22,6 +22,11 @@ endif
 
 let $MYPYPATH = $PYTHONPATH
 
+if has('win32')
+  let $pip_site_path=substitute( execute("py3 import site;print( site.USER_SITE)"),"[ \r\n]","",'g')."\Scripts"
+  let $PATH = $pip_site_path.'::'.$PATH
+endif
+
 let b:ale_fixers= ['black','autopep8']
 let b:ale_linters=  ['vulture','flake8', 'mypy', 'pylint','pyflakes','pyre']
 let b:ale_python_pylint_options = "--disable=missing-docstring --disable=invalid-name --disable=too-few-public-methods --disable=broad-except --disable=bad-continuation --disable=wrong-import-position --disable=ungrouped-imports --disable=relative-beyond-top-level --generated-members='numpy.*,torch.*'"
