@@ -201,6 +201,7 @@ if !has('win32')
   endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
+Plug 'PProvost/vim-ps1'
 
 call plug#end()
 
