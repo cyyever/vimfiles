@@ -23,8 +23,8 @@ endif
 let $MYPYPATH = $PYTHONPATH
 
 if has('win32')
-  let $pip_site_path=substitute( execute("py3 import site;print( site.USER_SITE)"),"[ \r\n]","",'g')."\Scripts"
-  let $PATH = $pip_site_path.'::'.$PATH
+  let $pip_site_path=substitute( execute("py3 import site;print( site.USER_SITE)"),"[ \r\n]","",'g').'\..\Scripts'
+  let $PATH = $pip_site_path.';'.$PATH
 endif
 
 let b:ale_fixers= ['black','autopep8']
