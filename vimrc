@@ -1,10 +1,10 @@
+set encoding=utf-8
+
 scriptencoding utf-8
 
 "设置写入文件编码
 set fileencodings=utf-8,chinese,cp936,cp950,big5,euc-tw
 au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
-"设置编码
-set encoding=utf-8
 
 let s:vimrc=expand('<sfile>:p')
 let s:vimrc_dir=expand('<sfile>:p:h')
@@ -170,9 +170,8 @@ if filereadable(s:languagetool_jar)
   let g:ale_languagetool_executable='java'
   let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
 endif
+let g:ale_linter_aliases = {'ps1': 'powershell'}
 let g:ale_writegood_options='--no-passive'
-let g:ale_c_parse_compile_commands=1
-let g:ale_c_parse_makefile=1
 
 augroup CloseLoclistWindowGroup
   autocmd!
@@ -190,7 +189,7 @@ endif
 
 " Enable deoplete when InsertEnter.
 let g:deoplete#enable_at_startup = 0
-if exists("*deoplete#enable")
+if exists('*deoplete#enable')
   autocmd InsertEnter * call deoplete#enable()
 endif
 Plug 'deoplete-plugins/deoplete-jedi'
@@ -202,6 +201,7 @@ if !has('win32')
   endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
+Plug 'PProvost/vim-ps1'
 
 call plug#end()
 
