@@ -34,3 +34,8 @@ let b:ale_python_autopep8_options='--ignore E402 --aggressive --aggressive'
 let b:ale_python_flake8_options='--ignore=E501,W504,W503,E402'
 let b:ale_python_vulture_options='--min-confidence=90'
 let b:ale_python_vulture_change_directory=0
+
+let b:mypy_config_file= $HOME.'/opt/cli_tool_configs/mypy.ini'
+if filereadable(b:mypy_config_file)
+  b:ale_python_mypy_options='--config-file '.b:mypy_config_file
+endif
