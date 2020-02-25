@@ -189,15 +189,20 @@ endif
 
 " Enable deoplete when InsertEnter.
 let g:deoplete#enable_at_startup = 0
-if exists('*deoplete#enable')
-  autocmd InsertEnter * call deoplete#enable()
-endif
+
+augroup EnableDeoplete
+  autocmd!
+  autocmd InsertEnter * try | call deoplete#enable() | catch | endtry
+augroup END
+
 Plug 'deoplete-plugins/deoplete-jedi'
 if !has('win32')
-  for path in ['/usr/local/llvm90/lib/libclang.so','/usr/lib/llvm-8/lib/libclang.so']
-    if filereadable(path)
-      let g:deoplete#sources#clang#libclang_path=path
-    endif
+  for llvm_version in range(20,9,-1)
+    for path in ['/usr/lib/llvm-'.string(llvm_version).'/lib/libclang.so','/usr/local/llvm'.string(llvm_version).'0/lib/libclang.so']
+      if filereadable(path)
+        let g:deoplete#sources#clang#libclang_path=path
+      endif
+    endfor
   endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
