@@ -52,10 +52,6 @@ filetype indent on
 
 "设置页号
 set number
-
-"状态栏
-set laststatus=2
-set statusline=%F%50l:%c/%L
 set showcmd
 
 "递增查询
@@ -147,6 +143,7 @@ call plug#begin(g:vim_plug_dir)
 if executable('latexmk')
   Plug 'lervag/vimtex'
 endif
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
@@ -207,6 +204,12 @@ if !has('win32')
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 Plug 'PProvost/vim-ps1'
+
+" remove sections
+let g:airline_section_b=''
+let g:airline_section_x=''
+let g:airline_extensions = []
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
 
