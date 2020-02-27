@@ -216,6 +216,8 @@ Plug 'vim-airline/vim-airline'
 
 if !has('win32')
   let g:keysound_enable = 1
+  let g:keysound_py_version = 3
+  let g:keysound_volume = 700
   let g:keysound_theme = 'typewriter'
   Plug 'skywind3000/vim-keysound'
 
