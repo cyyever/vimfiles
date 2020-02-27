@@ -148,10 +148,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
 
-if executable('ctags')
-  let g:gutentags_project_root = ['Makefile']
-  Plug 'ludovicchabant/vim-gutentags'
-endif
+" if executable('ctags')
+"   let g:gutentags_project_root = ['Makefile']
+"   Plug 'ludovicchabant/vim-gutentags'
+" endif
 
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 let g:ale_lint_on_text_changed='never'
