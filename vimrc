@@ -203,18 +203,25 @@ if !has('win32')
   endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
-Plug 'PProvost/vim-ps1'
+
+if  has('win32')
+  Plug 'PProvost/vim-ps1'
+endif
 
 " remove sections
 let g:airline_section_b=''
 let g:airline_section_x=''
 let g:airline_extensions = []
 Plug 'vim-airline/vim-airline'
+
 if !has('win32')
   let g:keysound_enable = 1
   let g:keysound_theme = 'typewriter'
   Plug 'skywind3000/vim-keysound'
+
+  Plug 'dag/vim-fish'
 endif
+
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
