@@ -1,10 +1,9 @@
 set encoding=utf-8
-set makeencoding=utf-8
 
 scriptencoding utf-8
 
 "设置写入文件编码
-set fileencodings=utf-8,chinese,cp936,cp950,big5,euc-tw
+set fileencodings=utf-8,gb18030,cp950,euc-tw
 au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
 
 let s:vimrc=expand('<sfile>:p')
@@ -201,6 +200,12 @@ if !has('win32')
         let g:deoplete#sources#clang#libclang_path=path
       endif
     endfor
+  endfor
+else
+  for path in ['C:/Program Files/LLVM/bin/libclang.dll']
+    if filereadable(path)
+      let g:deoplete#sources#clang#libclang_path=path
+    endif
   endfor
 endif
 Plug 'deoplete-plugins/deoplete-clang'
