@@ -109,7 +109,6 @@ endif
 
 if exists('$eink_screen') && $eink_screen==1
   colorscheme eink
-  set notermguicolors
 else
   colorscheme mycolor
 endif

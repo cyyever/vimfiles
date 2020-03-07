@@ -1,3 +1,4 @@
+set notermguicolors
 for group_name in [ 'Normal','Constant','Delimiter','Special','Directory','LineNR','Type']
   exec 'highlight '.group_name.' ctermfg=black ctermbg=white guifg=black guibg=white'
 endfor
