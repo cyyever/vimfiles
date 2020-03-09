@@ -191,21 +191,32 @@ augroup EnableDeoplete
   autocmd InsertEnter * try | call deoplete#enable() | catch | endtry
 augroup END
 
-Plug 'deoplete-plugins/deoplete-jedi'
+let s:llvm_dir=''
 if !has('win32')
   for llvm_version in range(20,9,-1)
-    for path in ['/usr/lib/llvm-'.string(llvm_version).'/lib/libclang.so','/usr/local/llvm'.string(llvm_version).'0/lib/libclang.so']
-      if filereadable(path)
-        let g:deoplete#sources#clang#libclang_path=path
+    for path in ['/usr/lib/llvm-'.string(llvm_version),'/usr/local/llvm'.string(llvm_version).'0']
+      if isdirectory(path)
+        let s:llvm_dir=path
       endif
     endfor
   endfor
 else
-  for path in ['C:/Program Files/LLVM/bin/libclang.dll']
-    if filereadable(path)
-      let g:deoplete#sources#clang#libclang_path=path
+  for path in ['C:/Program Files/LLVM']
+    if isdirectory(path)
+      let s:llvm_dir=path
     endif
   endfor
+endif
+
+Plug 'deoplete-plugins/deoplete-jedi'
+if !has('win32')
+  if filereadable(s:llvm_dir.'/lib/libclang.so')
+    let g:deoplete#sources#clang#libclang_path=s:llvm_dir.'/lib/libclang.so'
+  endif
+else
+  if filereadable(s:llvm_dir.'/bin/libclang.dll')
+    let g:deoplete#sources#clang#libclang_path=s:llvm_dir.'/bin/libclang.dll'
+  endif
 endif
 Plug 'deoplete-plugins/deoplete-clang'
 
@@ -227,6 +238,18 @@ Plug 'skywind3000/vim-keysound'
 
 if !has('win32')
   Plug 'dag/vim-fish'
+endif
+
+" if !has('win32')
+"   Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=/usr/lib/llvm-8/ -DUSE_PYTHON2=off ..;make'}
+" else
+"   Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir build;cd build;cmake -DUSE_PYTHON2=off -DPATH_TO_LLVM_ROOT=\"C:/Program Files/LLVM\" .. ;cmake --build . --config release'}
+" endif
+
+if exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers =  {
+        \ 'c,cpp,python,go': ['re!\w{3}'],
+        \ }
 endif
 
 call plug#end()
