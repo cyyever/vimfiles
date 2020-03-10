@@ -89,8 +89,11 @@ endif
 
 set wildignore+=*.o,*.obj,*.git
 
+" provider
+let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
 " python
-let g:loaded_python_provider = 1
+let g:loaded_python_provider = 0
 if has('win32')
   if executable('python')
     let g:python3_host_prog=exepath('python')
@@ -175,21 +178,21 @@ augroup CloseLoclistWindowGroup
 augroup END
 
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 
-" Enable deoplete when InsertEnter.
-let g:deoplete#enable_at_startup = 0
+" " Enable deoplete when InsertEnter.
+" let g:deoplete#enable_at_startup = 0
 
-augroup EnableDeoplete
-  autocmd!
-  autocmd InsertEnter * try | call deoplete#enable() | catch | endtry
-augroup END
+" augroup EnableDeoplete
+"   autocmd!
+"   autocmd InsertEnter * try | call deoplete#enable() | catch | endtry
+" augroup END
 
 let g:llvm_dir=''
 if !has('win32')
@@ -208,17 +211,17 @@ else
   endfor
 endif
 
-Plug 'deoplete-plugins/deoplete-jedi'
-if !has('win32')
-  if filereadable(g:llvm_dir.'/lib/libclang.so')
-    let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/lib/libclang.so'
-  endif
-else
-  if filereadable(g:llvm_dir.'/bin/libclang.dll')
-    let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/bin/libclang.dll'
-  endif
-endif
-Plug 'deoplete-plugins/deoplete-clang'
+" Plug 'deoplete-plugins/deoplete-jedi'
+" if !has('win32')
+"   if filereadable(g:llvm_dir.'/lib/libclang.so')
+"     let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/lib/libclang.so'
+"   endif
+" else
+"   if filereadable(g:llvm_dir.'/bin/libclang.dll')
+"     let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/bin/libclang.dll'
+"   endif
+" endif
+" Plug 'deoplete-plugins/deoplete-clang'
 
 if  has('win32')
   Plug 'PProvost/vim-ps1'
@@ -241,7 +244,7 @@ if !has('win32')
 endif
 
 if !has('win32')
-  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=\"'+g:llvm_dir+'\" . ;cmake --build . --config release'}
+  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=\"'+g:llvm_dir+'\" .. ;cmake --build . --config release'}
 endif
 
 if exists('g:ycm_semantic_triggers')
