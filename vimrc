@@ -89,8 +89,12 @@ endif
 
 set wildignore+=*.o,*.obj,*.git
 
+" provider
+let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
 " python
-let g:loaded_python_provider = 1
+let g:loaded_python_provider = 0
+
 if has('win32')
   if executable('python')
     let g:python3_host_prog=exepath('python')
