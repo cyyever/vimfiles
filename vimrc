@@ -56,6 +56,9 @@ set showcmd
 
 "递增查询
 set incsearch
+if has('nvim')
+  set inccommand=nosplit
+endif
 "检索高亮
 set hlsearch
 
@@ -92,6 +95,7 @@ set wildignore+=*.o,*.obj,*.git
 " provider
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
+let g:loaded_node_provider = 0
 " python
 let g:loaded_python_provider = 0
 
