@@ -182,23 +182,6 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-
-" if has('nvim')
-"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-"   Plug 'Shougo/deoplete.nvim'
-"   Plug 'roxma/nvim-yarp'
-"   Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-
-" " Enable deoplete when InsertEnter.
-" let g:deoplete#enable_at_startup = 0
-
-" augroup EnableDeoplete
-"   autocmd!
-"   autocmd InsertEnter * try | call deoplete#enable() | catch | endtry
-" augroup END
-
 let g:llvm_dir=''
 if !has('win32')
   for llvm_version in range(20,9,-1)
@@ -215,18 +198,6 @@ else
     endif
   endfor
 endif
-
-" Plug 'deoplete-plugins/deoplete-jedi'
-" if !has('win32')
-"   if filereadable(g:llvm_dir.'/lib/libclang.so')
-"     let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/lib/libclang.so'
-"   endif
-" else
-"   if filereadable(g:llvm_dir.'/bin/libclang.dll')
-"     let g:deoplete#sources#clang#libclang_path=g:llvm_dir.'/bin/libclang.dll'
-"   endif
-" endif
-" Plug 'deoplete-plugins/deoplete-clang'
 
 if  has('win32')
   Plug 'PProvost/vim-ps1'
@@ -248,9 +219,7 @@ if !has('win32')
   Plug 'dag/vim-fish'
 endif
 
-if !has('win32')
-  Plug 'Valloric/YouCompleteMe',{'branch':'master' ,'do':'cd \"'.g:vim_plug_dir.'/YouCompleteMe/third_party/ycmd/cpp\";mkdir -p build;cd build;cmake -DPATH_TO_LLVM_ROOT=\"'+g:llvm_dir+'\" .. ;cmake --build . --config release'}
-endif
+Plug 'Valloric/YouCompleteMe', {'branch':'master' ,'do':g:python3_host_prog.' install.py'}
 
 if exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers =  {
