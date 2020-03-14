@@ -2,6 +2,11 @@ set encoding=utf-8
 
 scriptencoding utf-8
 
+if !has('nvim')
+  echo 'This is a nvim only configuration.'
+  exit
+endif
+
 "设置写入文件编码
 set fileencodings=utf-8,gb18030,cp950,euc-tw
 au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
@@ -19,20 +24,14 @@ if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_upda
   endif
 endif
 
-if !has('nvim')
-  "不要兼容vi
-  set nocompatible
-endif
 
 "备份文件
 set backup
-if has('nvim')
-  let s:back_dir=stdpath('data').'/backup//'
-  if !isdirectory(s:back_dir)
-    call mkdir(s:back_dir)
-  endif
-  let &backupdir=s:back_dir
+let s:back_dir=stdpath('data').'/backup//'
+if !isdirectory(s:back_dir)
+  call mkdir(s:back_dir)
 endif
+let &backupdir=s:back_dir
 
 let $PATH = $HOME.'/opt/pip/bin::'.$HOME.'/opt/node_modules/.bin::'.$HOME.'/opt/bin::'.$HOME.'/opt/gopath/bin::'.$HOME.'/opt::'.$HOME.'/.local/bin::'.$PATH
 if has('win32')
@@ -56,9 +55,7 @@ set showcmd
 
 "递增查询
 set incsearch
-if has('nvim')
-  set inccommand=nosplit
-endif
+set inccommand=nosplit
 "检索高亮
 set hlsearch
 
@@ -84,11 +81,7 @@ set smartcase
 set tagcase=match
 
 "鼠标
-if has('nvim')
-  set mouse=nv
-else
-  set mouse=r
-endif
+set mouse=nv
 
 set wildignore+=*.o,*.obj,*.git
 
@@ -111,9 +104,7 @@ endif
 
 "颜色方案
 syntax on
-if has('nvim')
-  set termguicolors
-endif
+set termguicolors
 
 if exists('$eink_screen') && $eink_screen==1
   colorscheme eink
@@ -122,9 +113,7 @@ else
 endif
 
 " there are some bugs in nvim cursor code, so I disable it.
-if has('nvim')
-  set guicursor=
-endif
+set guicursor=
 
 " shell
 set noshellslash
@@ -136,9 +125,7 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
   exec 'mkspell! ' . fnameescape(&spellfile)
 endif
 set spell
-if has('nvim')
-  au TermOpen * setlocal nospell
-endif
+au TermOpen * setlocal nospell
 
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
