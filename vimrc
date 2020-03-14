@@ -59,6 +59,8 @@ set inccommand=nosplit
 "检索高亮
 set hlsearch
 
+set autoread
+
 "打开文件跳转到上次阅读地方且居中
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
 "关键字搜索当前目录
