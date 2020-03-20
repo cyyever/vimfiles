@@ -208,13 +208,11 @@ if !has('win32')
   Plug 'dag/vim-fish'
 endif
 
-Plug 'Valloric/YouCompleteMe', {'branch':'master' ,'do':g:python3_host_prog.' install.py'}
+Plug 'Valloric/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
-if exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers =  {
+let g:ycm_semantic_triggers =  {
         \ 'c,cpp,python,go': ['re!\w{3}'],
         \ }
-endif
 
 call plug#end()
 
