@@ -1,5 +1,6 @@
 let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'flawfinder' , 'gcc','pvsstudio']
 let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
+let b:ale_cpp_clang_executable                     =exepath( g:llvm_dir.'/bin/clang++')
 let b:ale_cpp_clang_options='-Wall -std=c++2a'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
 let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'

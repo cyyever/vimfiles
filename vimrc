@@ -132,6 +132,8 @@ au TermOpen * setlocal nospell
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
 
+let mapleader = ","
+
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
@@ -177,8 +179,12 @@ if !has('win32')
     for path in ['/usr/lib/llvm-'.string(llvm_version),'/usr/local/llvm'.string(llvm_version).'0']
       if isdirectory(path)
         let g:llvm_dir=path
+        break
       endif
     endfor
+    if g:llvm_dir!=''
+      break
+    endif
   endfor
 else
   for path in ['C:/Program Files/LLVM']
@@ -208,12 +214,13 @@ if !has('win32')
   Plug 'dag/vim-fish'
 endif
 
-Plug 'Valloric/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
+Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
-let g:ycm_semantic_triggers =  {
-        \ 'c,cpp,python,go': ['re!\w{3}'],
-        \ }
+let g:ycm_clangd_binary_path = exepath("clangd")
+nnoremap <Leader>d :YcmCompleter GoTo<CR>
+nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 call plug#end()
 
