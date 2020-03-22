@@ -14,9 +14,10 @@ endfunction
 
 function! Executable_any(path_list)
   for path in a:path_list
-    if executable(path) == 1
-      return path
+    let full_path=exepath(path)
+    if full_path !=''
+      return full_path
     endif
   endfor
-  return ""
+  return ''
 endfunction
