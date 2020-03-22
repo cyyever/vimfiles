@@ -210,6 +210,7 @@ endif
 
 Plug 'Valloric/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
+let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
 let g:ycm_semantic_triggers =  {
         \ 'c,cpp,python,go': ['re!\w{3}'],
         \ }
