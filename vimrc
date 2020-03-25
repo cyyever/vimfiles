@@ -224,6 +224,7 @@ let g:ycm_clangd_binary_path = exepath("clangd")
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
+Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
