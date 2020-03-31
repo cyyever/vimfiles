@@ -132,7 +132,7 @@ au TermOpen * setlocal nospell
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
 
-let mapleader = ","
+let mapleader = ";"
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
