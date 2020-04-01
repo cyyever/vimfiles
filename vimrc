@@ -132,7 +132,7 @@ au TermOpen * setlocal nospell
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
 
-let mapleader = ";"
+let mapleader = ';'
 
 " 插件
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
@@ -184,7 +184,7 @@ if !has('win32')
         break
       endif
     endfor
-    if g:llvm_dir!=''
+    if !empty(g:llvm_dir)
       break
     endif
   endfor
@@ -196,7 +196,7 @@ else
   endfor
 endif
 
-if  has('win32')
+if has('win32')
   Plug 'PProvost/vim-ps1'
 endif
 
@@ -206,11 +206,13 @@ let g:airline_section_x=''
 let g:airline_extensions = []
 Plug 'vim-airline/vim-airline'
 
-let g:keysound_enable = 1
-let g:keysound_py_version = 3
-let g:keysound_volume = 700
-let g:keysound_theme = 'typewriter'
-Plug 'skywind3000/vim-keysound'
+if !exists('$SSH_CONNECTION')
+  let g:keysound_enable = 1
+  let g:keysound_py_version = 3
+  let g:keysound_volume = 700
+  let g:keysound_theme = 'typewriter'
+  Plug 'skywind3000/vim-keysound'
+endif
 
 if !has('win32')
   Plug 'dag/vim-fish'
@@ -220,7 +222,7 @@ Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
-let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_binary_path = exepath('clangd')
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
