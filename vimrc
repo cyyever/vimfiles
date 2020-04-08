@@ -176,7 +176,7 @@ augroup END
 let g:llvm_dir=''
 let g:llvm_version=''
 if !has('win32')
-  for llvm_version in range(20,9,-1)
+  for llvm_version in range(10,9,-1)
     for path in ['/usr/lib/llvm-'.string(llvm_version),'/usr/local/llvm'.string(llvm_version).'0']
       if isdirectory(path)
         let g:llvm_dir=path
@@ -211,7 +211,7 @@ if !exists('$SSH_CONNECTION')
   let g:keysound_py_version = 3
   let g:keysound_volume = 700
   let g:keysound_theme = 'typewriter'
-  Plug 'skywind3000/vim-keysound'
+  " Plug 'skywind3000/vim-keysound'
 endif
 
 if !has('win32')
