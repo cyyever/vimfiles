@@ -140,6 +140,10 @@ call plug#begin(g:vim_plug_dir)
 
 if executable('latexmk')
   Plug 'lervag/vimtex'
+  augroup vimtex_config
+    autocmd!
+    autocmd User VimtexEventInitPost VimtexCompile
+  augroup END
 endif
 
 Plug 'tpope/vim-surround'
