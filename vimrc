@@ -222,14 +222,13 @@ let g:ycm_clangd_binary_path = exepath('clangd')
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
-if executable('latexmk')
-  Plug 'lervag/vimtex'
-  augroup vimtex_config
-    autocmd!
-    autocmd User VimtexEventInitPost VimtexCompile
-    autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
-  augroup END
-endif
+let g:vimtex_compiler_progname = 'nvr'
+Plug 'lervag/vimtex'
+augroup vimtex_config
+  autocmd!
+  autocmd User VimtexEventInitPost VimtexCompile
+  autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+augroup END
 
 Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
