@@ -138,14 +138,6 @@ let mapleader = ';'
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
-if executable('latexmk')
-  Plug 'lervag/vimtex'
-  augroup vimtex_config
-    autocmd!
-    autocmd User VimtexEventInitPost VimtexCompile
-  augroup END
-endif
-
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
@@ -229,6 +221,15 @@ let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
 let g:ycm_clangd_binary_path = exepath('clangd')
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
+
+if executable('latexmk')
+  Plug 'lervag/vimtex'
+  augroup vimtex_config
+    autocmd!
+    autocmd User VimtexEventInitPost VimtexCompile
+    autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+  augroup END
+endif
 
 Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
