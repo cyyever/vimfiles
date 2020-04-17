@@ -106,9 +106,7 @@ endif
 
 "颜色方案
 syntax on
-if !has('win32')
-  set termguicolors
-endif
+set termguicolors
 
 if exists('$eink_screen') && $eink_screen==1
   colorscheme eink
