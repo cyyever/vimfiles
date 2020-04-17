@@ -163,6 +163,7 @@ if filereadable(s:languagetool_jar)
 endif
 let g:ale_linter_aliases = {'ps1': 'powershell'}
 let g:ale_writegood_options='--no-passive'
+let g:ale_textlint_options='--rule languagetool'
 
 augroup CloseLoclistWindowGroup
   autocmd!
