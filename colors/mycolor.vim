@@ -13,5 +13,5 @@ highlight StatusLine cterm=italic ctermbg=black guibg=black ctermfg=yellow guifg
 highlight Search ctermbg=darkblue guibg=darkblue ctermfg=yellow guifg=yellow
 highlight Visual ctermbg=darkgreen guibg=darkgreen ctermfg=black guifg=black
 highlight htmlLink ctermfg=green guifg=green
-highlight Identifier ctermbg=black guibg=black ctermfg=LightYellow guifg=LightYellow
+highlight Identifier ctermbg=black guibg=black ctermfg=magenta guifg=magenta
 highlight SpellBad ctermbg=black guibg=black ctermfg=red guifg=red
