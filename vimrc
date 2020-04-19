@@ -224,6 +224,12 @@ nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_use_temp_files=1
+let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
+
+if !has('win32')
+  let g:vimtex_view_method = 'mupdf'
+endif
 Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
