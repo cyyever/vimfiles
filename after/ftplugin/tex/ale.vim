@@ -1,4 +1,4 @@
-let b:ale_linters=  ['alex', 'chktex', 'lacheck',   'textlint','textidote']
+let b:ale_linters=  ['alex', 'chktex' , 'textlint','textidote']
 let b:ale_fixers= ['latexindent']
 
 let b:textidote_jar=$HOME.'/opt/textidote/textidote.jar'
