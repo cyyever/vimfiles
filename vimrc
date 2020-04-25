@@ -229,6 +229,7 @@ let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
 
 if !has('win32')
   let g:vimtex_view_method = 'mupdf'
+  let g:vimtex_view_mupdf_options = '-r 200'
 endif
 Plug 'lervag/vimtex'
 augroup vimtex_config
