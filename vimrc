@@ -229,7 +229,11 @@ let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
 
 if !has('win32')
   let g:vimtex_view_method = 'mupdf'
-  let g:vimtex_view_mupdf_options = '-r 200'
+  if exists('$eink_screen') && $eink_screen==1
+    let g:vimtex_view_mupdf_options = '-r 288'
+  else
+    let g:vimtex_view_mupdf_options = '-r 200'
+  endif
 else
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
