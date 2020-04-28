@@ -162,7 +162,6 @@ if filereadable(s:languagetool_jar)
   let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
 endif
 let g:ale_linter_aliases = {'ps1': 'powershell'}
-let g:ale_writegood_options='--no-passive'
 let g:ale_textlint_options='--rule languagetool'
 
 augroup CloseLoclistWindowGroup
@@ -247,6 +246,11 @@ augroup vimtex_config
 augroup END
 
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_logfile = tempname()
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
