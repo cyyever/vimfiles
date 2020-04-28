@@ -214,17 +214,17 @@ if !has('win32')
   Plug 'dag/vim-fish'
 endif
 
-Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
-
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
 let g:ycm_clangd_binary_path = exepath('clangd')
+
+Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
+
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_use_temp_files=1
-let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
 
 if !has('win32')
   let g:vimtex_view_method = 'mupdf'
@@ -241,6 +241,7 @@ Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
   autocmd User VimtexEventInitPost VimtexCompile
+  autocmd User VimtexEventInitPost let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
   autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
 augroup END
