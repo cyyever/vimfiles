@@ -218,6 +218,12 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
 let g:ycm_clangd_binary_path = exepath('clangd')
 
+if !has('win32')
+  if filereadable(getcwd().'/compile_commands.json')
+    let g:ycm_clangd_args=["--compile-commands-dir='.getcwd().'"]
+  endif
+endif
+
 Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
 nnoremap <Leader>d :YcmCompleter GoTo<CR>
