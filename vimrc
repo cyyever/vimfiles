@@ -254,9 +254,10 @@ augroup END
 
 Plug 'octol/vim-cpp-enhanced-highlight'
 
-let g:instant_markdown_slow = 1
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_autostart = 0
-" let g:instant_markdown_logfile = tempname()
+let g:instant_markdown_logfile = tempname()
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 call plug#end()
 
