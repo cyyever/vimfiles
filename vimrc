@@ -231,6 +231,7 @@ nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_use_temp_files=1
+let g:vimtex_quickfix_enabled=0
 
 if !has('win32')
   let g:vimtex_view_method = 'mupdf'
