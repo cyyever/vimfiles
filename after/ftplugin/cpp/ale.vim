@@ -1,14 +1,17 @@
+let s:cur_dir=expand('<sfile>:p:h')
+exec 'source '.s:cur_dir.'/llvm.vim'
 let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
+let g:__gcc_exe=Executable_any(['gcc-10','gcc'])
+if g:__gcc_exe !=#''
+  let b:ale_cpp_gcc_executable = g:__gcc_exe
+endif
+
 let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
 let b:ale_cpp_clang_executable=exepath( g:llvm_dir.'/bin/clang++')
 let b:ale_cpp_clang_options='-Wall -std=c++2a -Wno-return-std-move-in-c++11'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
 let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'
 
-" let s:clang_format_exe=Executable_any(['clang-format-devel','clang-format','clang-format-8'])
-" if s:clang_format_exe  !=#''
-"   let b:ale_c_clangformat_executable=s:clang_format_exe
-" endif
 let b:ale_fixers= ['clang-format','clangtidy']
 if g:llvm_version !=''
   let b:ale_c_clangformat_executable='clang-format-'.g:llvm_version

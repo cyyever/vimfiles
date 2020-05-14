@@ -169,28 +169,6 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-let g:llvm_dir=''
-let g:llvm_version=''
-if !has('win32')
-  for llvm_version in range(10,9,-1)
-    for path in ['/usr/lib/llvm-'.string(llvm_version),'/usr/local/llvm'.string(llvm_version).'0']
-      if isdirectory(path)
-        let g:llvm_dir=path
-        let g:llvm_version=llvm_version
-        break
-      endif
-    endfor
-    if !empty(g:llvm_dir)
-      break
-    endif
-  endfor
-else
-  for path in ['C:/Program Files/LLVM']
-    if isdirectory(path)
-      let g:llvm_dir=path
-    endif
-  endfor
-endif
 
 if has('win32')
   Plug 'PProvost/vim-ps1'
@@ -202,13 +180,13 @@ let g:airline_section_x=''
 let g:airline_extensions = []
 Plug 'vim-airline/vim-airline'
 
-if !exists('$SSH_CONNECTION')
-  let g:keysound_enable = 1
-  let g:keysound_py_version = 3
-  let g:keysound_volume = 700
-  let g:keysound_theme = 'typewriter'
-  " Plug 'skywind3000/vim-keysound'
-endif
+" if !exists('$SSH_CONNECTION')
+"   let g:keysound_enable = 1
+"   let g:keysound_py_version = 3
+"   let g:keysound_volume = 700
+"   let g:keysound_theme = 'typewriter'
+"   " Plug 'skywind3000/vim-keysound'
+" endif
 
 if !has('win32')
   Plug 'dag/vim-fish'
