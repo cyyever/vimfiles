@@ -4,11 +4,11 @@ if exists('llvm_dir')  && exists('llvm_version')
 let g:llvm_dir=''
 let g:llvm_version=''
 if !has('win32')
-  for llvm_version in range(10,9,-1)
-    for path in ['/usr/lib/llvm-'.string(llvm_version),'/usr/local/llvm'.string(llvm_version).'0']
+  for _llvm_version in range(10,9,-1)
+    for path in ['/usr/lib/llvm-'.string(_llvm_version),'/usr/local/llvm'.string(_llvm_version).'0']
       if isdirectory(path)
         let g:llvm_dir=path
-        let g:llvm_version=llvm_version
+        let g:llvm_version=_llvm_version
         break
       endif
     endfor
