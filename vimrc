@@ -211,12 +211,8 @@ let g:vimtex_compiler_progname = 'nvr'
 " let g:vimtex_view_use_temp_files=1
 
 if !has('win32')
-  let g:vimtex_view_method = 'mupdf'
-  if exists('$eink_screen') && $eink_screen==1
-    let g:vimtex_view_mupdf_options = '-r 288'
-  else
-    let g:vimtex_view_mupdf_options = '-r 200'
-  endif
+  let g:vimtex_view_method = 'zathura'
+  let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
 else
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
