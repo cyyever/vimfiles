@@ -1,4 +1,4 @@
-if !exists("g:py_sys_path")
+if !exists('g:py_sys_path')
   let g:py_sys_path=execute('py3 import sys;print("::".join(sys.path))')
   let g:py_sys_path = substitute(g:py_sys_path, '[\n\r ]*', '', '')
 endif
@@ -23,19 +23,20 @@ endif
 let $MYPYPATH = $PYTHONPATH
 
 if has('win32')
-  let $pip_site_path=substitute( execute("py3 import site;print( site.USER_SITE)"),"[ \r\n]","",'g').'\..\Scripts'
+  let $pip_site_path=substitute( execute('py3 import site;print( site.USER_SITE)'),"[ \r\n]","",'g').'\..\Scripts'
   let $PATH = $pip_site_path.';'.$PATH
 endif
 
 let b:ale_fixers= ['black','autopep8']
 let b:ale_linters=  ['vulture','flake8', 'mypy', 'pylint','pyflakes','pyre']
-let b:ale_python_pylint_options = "--disable=missing-docstring --disable=invalid-name --disable=too-few-public-methods --disable=broad-except --disable=bad-continuation --disable=wrong-import-position --disable=ungrouped-imports --disable=relative-beyond-top-level --disable=redefined-outer-name --disable=protected-access --disable=no-name-in-module --generated-members='numpy.*,torch.*'"
+let s:pylint_config_file= $HOME.'/opt/cli_tool_configs/pylintrc'
+let b:ale_python_pylint_options = '--rcfile='.s:pylint_config_file
 let b:ale_python_autopep8_options='--ignore E402 --aggressive --aggressive'
 let b:ale_python_flake8_options='--ignore=E501,W504,W503,E402'
 let b:ale_python_vulture_options='--min-confidence=90'
 let b:ale_python_vulture_change_directory=0
 
-let b:mypy_config_file= $HOME.'/opt/cli_tool_configs/mypy.ini'
-if filereadable(b:mypy_config_file)
-  let b:ale_python_mypy_options='--config-file '.b:mypy_config_file
+let s:mypy_config_file= $HOME.'/opt/cli_tool_configs/mypy.ini'
+if filereadable(s:mypy_config_file)
+  let b:ale_python_mypy_options='--config-file '.s:mypy_config_file
 endif
