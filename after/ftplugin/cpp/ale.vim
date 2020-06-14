@@ -1,14 +1,19 @@
 let s:cur_dir=expand('<sfile>:p:h')
 exec 'source '.s:cur_dir.'/llvm.vim'
+exec 'source '.s:cur_dir.'/gcc.vim'
 let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
-let g:__gcc_exe=Executable_any(['gcc-10','gcc'])
-if g:__gcc_exe !=#''
-  let b:ale_cpp_gcc_executable = g:__gcc_exe
+if g:gcc_dir!=''
+  let b:ale_cpp_gcc_executable = g:gcc_dir."/bin/g++"
+else
+  let g:__gcc_exe=Executable_any(['gcc-10','gcc'])
+  if g:__gcc_exe !=#''
+    let b:ale_cpp_gcc_executable = g:__gcc_exe
+  endif
 endif
 
 let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
 let b:ale_cpp_clang_executable=exepath( g:llvm_dir.'/bin/clang++')
-let b:ale_cpp_clang_options='-Wall -std=c++2a -Wno-return-std-move-in-c++11'
+let b:ale_cpp_clang_options='-Wall -std=c++2a -Wno-return-std-move-in-c++11 -isystem/opt/home/cyy/opt/include/c++'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
 let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'
 
