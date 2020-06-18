@@ -1,7 +1,8 @@
 let s:cur_dir=expand('<sfile>:p:h')
 exec 'source '.s:cur_dir.'/llvm.vim'
 exec 'source '.s:cur_dir.'/gcc.vim'
-let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
+" let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
+let b:ale_linters=  ['cppcheck', 'gcc','pvsstudio']
 if g:gcc_dir!=''
   let b:ale_cpp_gcc_executable = g:gcc_dir."/bin/g++"
 else
