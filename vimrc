@@ -33,6 +33,7 @@ if !isdirectory(s:back_dir)
 endif
 let &backupdir=s:back_dir
 
+" set path
 let $PATH = $HOME.'/opt/pip/bin::'.$HOME.'/opt/node_modules/.bin::'.$HOME.'/opt/bin::'.$HOME.'/opt/gopath/bin::'.$HOME.'/opt::'.$HOME.'/.local/bin::'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
@@ -224,8 +225,10 @@ augroup vimtex_config
   autocmd User VimtexEventInitPost let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
   autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
-augroup END
+augroup end
 
+let g:c_no_bracket_error=1
+let g:c_no_curly_error=1
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 let g:instant_markdown_slow = 0
