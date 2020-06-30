@@ -236,6 +236,14 @@ let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_autostart = 0
 let g:instant_markdown_logfile = tempname()
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+let g:fzf_action = { 'enter': 'split' }
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+nnoremap <Leader>sp :GFiles<CR>
+
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
