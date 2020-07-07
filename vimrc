@@ -217,9 +217,11 @@ augroup vimtex_config
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
 augroup end
 
-let g:c_no_bracket_error=1
-let g:c_no_curly_error=1
-Plug 'octol/vim-cpp-enhanced-highlight'
+if g:use_eink==0
+  let g:c_no_bracket_error=1
+  let g:c_no_curly_error=1
+  Plug 'octol/vim-cpp-enhanced-highlight'
+endif
 
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autoscroll = 1
@@ -233,12 +235,16 @@ Plug 'junegunn/fzf.vim'
 
 nnoremap <Leader>sp :GFiles<CR>
 
-Plug 'luochen1990/rainbow'
+if g:use_eink==0
+  let g:rainbow_active=1
+  Plug 'luochen1990/rainbow'
+endif
+
 Plug 'jiangmiao/auto-pairs'
 Plug 'zxqfl/tabnine-vim'
 call plug#end()
 
-let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
+let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
   PlugUpgrade
   PlugUpdate!
