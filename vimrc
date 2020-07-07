@@ -231,6 +231,7 @@ Plug 'junegunn/fzf.vim'
 nnoremap <Leader>sp :GFiles<CR>
 
 Plug 'jiangmiao/auto-pairs'
+Plug 'zxqfl/tabnine-vim'
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
