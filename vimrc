@@ -143,12 +143,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
 
-" if executable('ctags')
-"   let g:gutentags_project_root = ['Makefile']
-"   Plug 'ludovicchabant/vim-gutentags'
-" endif
-
-Plug 'cyyever/ale', { 'branch': 'cyy' }
 let g:ale_lint_on_text_changed='never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_fixers = {
@@ -169,6 +163,7 @@ augroup CloseLoclistWindowGroup
   autocmd!
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
+Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
 if has('win32')
@@ -180,14 +175,6 @@ let g:airline_section_b=''
 let g:airline_section_x=''
 let g:airline_extensions = []
 Plug 'vim-airline/vim-airline'
-
-" if !exists('$SSH_CONNECTION')
-"   let g:keysound_enable = 1
-"   let g:keysound_py_version = 3
-"   let g:keysound_volume = 700
-"   let g:keysound_theme = 'typewriter'
-"   " Plug 'skywind3000/vim-keysound'
-" endif
 
 if !has('win32')
   Plug 'dag/vim-fish'
@@ -209,7 +196,6 @@ nnoremap <Leader>d :YcmCompleter GoTo<CR>
 nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 let g:vimtex_compiler_progname = 'nvr'
-" let g:vimtex_view_use_temp_files=1
 
 if !has('win32')
   let g:vimtex_view_method = 'zathura'
@@ -244,6 +230,7 @@ Plug 'junegunn/fzf.vim'
 
 nnoremap <Leader>sp :GFiles<CR>
 
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag'
