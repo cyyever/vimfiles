@@ -109,7 +109,11 @@ endif
 syntax on
 set termguicolors
 
+let g:use_eink=0
 if exists('$eink_screen') && $eink_screen==1
+  let g:use_eink=1
+endif
+if g:use_eink==1
   colorscheme eink
 else
   colorscheme mycolor
@@ -224,12 +228,12 @@ let g:instant_markdown_logfile = tempname()
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 let g:fzf_action = { 'enter': 'split' }
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 nnoremap <Leader>sp :GFiles<CR>
 
+Plug 'luochen1990/rainbow'
 Plug 'jiangmiao/auto-pairs'
 Plug 'zxqfl/tabnine-vim'
 call plug#end()
