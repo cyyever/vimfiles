@@ -190,7 +190,7 @@ let g:ycm_clangd_binary_path = exepath('clangd')
 
 if !has('win32')
   if filereadable(getcwd().'/compile_commands.json')
-    let g:ycm_clangd_args=["--compile-commands-dir='.getcwd().'"]
+    let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
   endif
 endif
 
