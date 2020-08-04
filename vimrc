@@ -113,11 +113,6 @@ let g:use_eink=0
 if exists('$eink_screen') && $eink_screen==1
   let g:use_eink=1
 endif
-if g:use_eink==1
-  colorscheme eink
-else
-  colorscheme mycolor
-endif
 
 " there are some bugs in nvim cursor code, so I disable it.
 set guicursor=
@@ -143,6 +138,7 @@ let mapleader = ';'
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
+Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'wellle/targets.vim'
@@ -194,11 +190,19 @@ if !has('win32')
   endif
 endif
 
-Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
+" Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
 
-nnoremap <Leader>d :YcmCompleter GoTo<CR>
-nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
+" nnoremap <Leader>d :YcmCompleter GoTo<CR>
+" nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('doHover')
+nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
+nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
+nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
 let g:vimtex_compiler_progname = 'nvr'
 
 if !has('win32')
@@ -208,6 +212,8 @@ else
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
 endif
+
+let g:tex_flavor='latex'
 Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
@@ -221,6 +227,8 @@ if g:use_eink==0
   let g:c_no_bracket_error=1
   let g:c_no_curly_error=1
   Plug 'octol/vim-cpp-enhanced-highlight'
+  let g:semshi#mark_selected_nodes=0
+  Plug 'numirias/semshi'
 endif
 
 let g:instant_markdown_slow = 0
@@ -241,12 +249,17 @@ if g:use_eink==0
 endif
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'zxqfl/tabnine-vim'
+" Plug 'zxqfl/tabnine-vim'
 call plug#end()
-
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
   PlugUpgrade
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
+endif
+if g:use_eink==1
+  colorscheme eink
+else
+  " set background=light
+  colorscheme gruvbox
 endif
