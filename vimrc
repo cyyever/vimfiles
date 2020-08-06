@@ -196,7 +196,7 @@ endif
 " nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 
-Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python'}
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('doHover')
@@ -249,8 +249,9 @@ if g:use_eink==0
 endif
 
 Plug 'jiangmiao/auto-pairs'
-" Plug 'zxqfl/tabnine-vim'
+Plug 'wlangstroth/vim-racket'
 call plug#end()
+
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
   PlugUpgrade
