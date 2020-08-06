@@ -196,7 +196,7 @@ endif
 " nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd'}
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('doHover')
@@ -219,7 +219,7 @@ augroup vimtex_config
   autocmd!
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
-  autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+  " autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
 augroup end
 
