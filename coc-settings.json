@@ -1,0 +1,4 @@
+{
+  "coc.preferences.enableFloatHighlight": false,
+  "python.linting.enabled": false
+}
