@@ -228,7 +228,7 @@ if g:use_eink==0
   let g:c_no_curly_error=1
   Plug 'octol/vim-cpp-enhanced-highlight'
   let g:semshi#mark_selected_nodes=0
-  Plug 'numirias/semshi'
+  Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
 endif
 
 let g:instant_markdown_slow = 0
