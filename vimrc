@@ -195,7 +195,7 @@ endif
 " nnoremap <Leader>d :YcmCompleter GoTo<CR>
 " nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
-
+let b:coc_diagnostic_disable=1
 Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python'}
 
 " Highlight the symbol and its references when holding the cursor.
@@ -203,6 +203,13 @@ autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
 nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
+
+if !has('win32')
+  if filereadable(getcwd().'/compile_commands.json')
+    let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
+  endif
+endif
+
 let g:vimtex_compiler_progname = 'nvr'
 
 if !has('win32')
