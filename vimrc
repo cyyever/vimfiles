@@ -27,7 +27,7 @@ endif
 " diff
 set diffopt+=horizontal,algorithm:patience
 if &diff
-  set wrap
+  au VimEnter * if &diff | execute 'windo set wrap' | endif
 endif
 
 "备份文件
