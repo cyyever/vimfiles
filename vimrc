@@ -24,6 +24,11 @@ if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_upda
   endif
 endif
 
+" diff
+set diffopt+=horizontal,algorithm:patience
+if &diff
+  set wrap
+endif
 
 "备份文件
 set backup
