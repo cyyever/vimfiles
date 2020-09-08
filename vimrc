@@ -262,6 +262,7 @@ endif
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'wlangstroth/vim-racket'
+Plug 'cyyever/vim-mma'
 call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
