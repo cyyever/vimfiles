@@ -1,8 +1,9 @@
 let s:cur_dir=expand('<sfile>:p:h')
+let s:customer_libs_dir=expand('~/opt')
 exec 'source '.s:cur_dir.'/llvm.vim'
 exec 'source '.s:cur_dir.'/gcc.vim'
 " let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
-let b:ale_linters=  ['cppcheck', 'gcc','pvsstudio']
+let b:ale_linters=  ['clang' , 'cppcheck', 'gcc','pvsstudio']
 if g:gcc_dir!=#''
   let b:ale_cpp_gcc_executable = g:gcc_dir.'/master/bin/g++'
 else
@@ -12,9 +13,10 @@ else
   endif
 endif
 
-let b:ale_cpp_gcc_options = '-std=c++2a -Wall'
+let s:common_cpp_options = '-std=c++2a -Wall -I'.s:customer_libs_dir.'/include'
+let b:ale_cpp_gcc_options = s:common_cpp_options
 let b:ale_cpp_clang_executable=exepath( g:llvm_dir.'/master/bin/clang++')
-let b:ale_cpp_clang_options='-Wall -std=c++2a -Wno-return-std-move-in-c++11 -isystem/opt/home/cyy/opt/include/c++'
+let b:ale_cpp_clang_options=s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.s:customer_libs_dir.'llvm/master/include/c++ -isystem'.s:customer_libs_dir.'gcc/master/include/c++'
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:ale_cpp_clang_options.'\"'
 let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'
 
