@@ -1,4 +1,17 @@
 {
   "coc.preferences.enableFloatHighlight": false,
-  "python.linting.enabled": false
+  "python.linting.enabled": false,
+  "languageserver": {
+    "racket-languageserver": {
+      "command": "racket",
+      "args": [
+        "-l",
+        "racket-langserver"
+      ],
+      "trace.server": "verbose",
+      "filetypes": [
+        "racket"
+      ]
+    }
+  }
 }
