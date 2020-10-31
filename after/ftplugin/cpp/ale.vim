@@ -22,7 +22,7 @@ elseif g:llvm_dir !=#''
 endif
 
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:__clang_options.'\"'
-let b:ale_cpp_cppcheck_options='--template=cppcheck1 --enable=warning,style,performance,portability,information'
+let b:ale_cpp_cppcheck_options=' --enable=warning,style,performance,portability,information'
 
 let b:ale_fixers= ['clang-format','clangtidy']
 if g:llvm_version !=#''
