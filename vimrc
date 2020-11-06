@@ -97,7 +97,6 @@ set wildignore+=*.o,*.obj,*.git
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
-" python
 let g:loaded_python_provider = 0
 
 if has('win32')
@@ -209,11 +208,11 @@ nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
 nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
 
-if !has('win32')
-  if filereadable(getcwd().'/compile_commands.json')
-    let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
-  endif
-endif
+" if !has('win32')
+"   if filereadable(getcwd().'/compile_commands.json')
+"     let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
+"   endif
+" endif
 
 let g:vimtex_compiler_progname = 'nvr'
 
