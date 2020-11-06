@@ -184,20 +184,6 @@ if !has('win32')
   Plug 'dag/vim-fish'
 endif
 
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf=s:vimrc_dir.'/ycm_extra_conf.py'
-let g:ycm_clangd_binary_path = exepath('clangd')
-
-if !has('win32')
-  if filereadable(getcwd().'/compile_commands.json')
-    let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
-  endif
-endif
-
-" Plug 'ycm-core/YouCompleteMe', {'dir':$HOME.'/opt/YouCompleteMe'}
-
-" nnoremap <Leader>d :YcmCompleter GoTo<CR>
-" nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
 
 let b:coc_diagnostic_disable=1
 Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python coc-cmake'}
@@ -207,12 +193,6 @@ autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
 nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
-
-" if !has('win32')
-"   if filereadable(getcwd().'/compile_commands.json')
-"     let g:ycm_clangd_args=['--compile-commands-dir='.getcwd()]
-"   endif
-" endif
 
 let g:vimtex_compiler_progname = 'nvr'
 
@@ -230,7 +210,6 @@ augroup vimtex_config
   autocmd!
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost let g:vimtex_compiler_latexmk = {'build_dir' : tempname()}
-  " autocmd User VimtexEventInitPost let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
 augroup end
 
