@@ -186,7 +186,7 @@ endif
 
 
 let b:coc_diagnostic_disable=1
-Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python coc-cmake'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python coc-cmake coc-vimtex'}
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('doHover')
@@ -219,6 +219,7 @@ if g:use_eink==0
   Plug 'octol/vim-cpp-enhanced-highlight'
   let g:semshi#mark_selected_nodes=0
   Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
+  autocmd VimEnter * if exists(":UpdateRemotePlugins") | execute 'UpdateRemotePlugins' | endif
 endif
 
 let g:instant_markdown_slow = 0
