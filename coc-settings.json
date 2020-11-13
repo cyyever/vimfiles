@@ -1,6 +1,7 @@
 {
   "coc.preferences.enableFloatHighlight": false,
   "python.linting.enabled": false,
+  "python.setInterpreter": "~/opt/python/bin/python3",
   "languageserver": {
     "racket-languageserver": {
       "command": "racket",
