@@ -4,8 +4,8 @@ endif
 let g:llvm_dir=''
 let g:llvm_version=''
 
-if isdirectory($HOME.'/opt/llvm')
-  let g:llvm_dir=$HOME.'/opt/llvm'
+if isdirectory($HOME.'/opt/llvm/llvmorg-12-init')
+  let g:llvm_dir=$HOME.'/opt/llvm/llvmorg-12-init'
   let g:llvm_version=''
   finish
 endif

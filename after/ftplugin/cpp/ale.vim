@@ -6,15 +6,15 @@ exec 'source '.s:cur_dir.'/gcc.vim'
 let b:ale_linters=  [ 'cc', 'cppcheck', 'pvsstudio']
 
 let s:common_cpp_options = '-std=c++2a -Wall -I'.s:customer_libs_dir.'/include'
-let b:__clang_options= s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.s:customer_libs_dir.'llvm/master/include/c++ -isystem'.s:customer_libs_dir.'gcc/master/include/c++'
+let b:__clang_options= s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.g:llvm_dir.'/include/c++ -isystem'.g:gcc_dir.'/include/c++'
 if g:gcc_dir!=#''
-  let g:__gcc_exe=Executable_any([g:gcc_dir.'/master/bin/g++' ])
+  let g:__gcc_exe=Executable_any([g:gcc_dir.'/bin/g++' ])
   if g:__gcc_exe !=#''
     let b:ale_cpp_cc_executable= g:__gcc_exe
     let b:ale_cpp_cc_options = s:common_cpp_options
   endif
 elseif g:llvm_dir !=#''
-  let g:__clang_exe=Executable_any([g:llvm_dir.'/master/bin/clang++'])
+  let g:__clang_exe=Executable_any([g:llvm_dir.'/bin/clang++'])
   if g:__clang_exe !=#''
     let b:ale_cpp_cc_executable= g:__clang_exe
     let b:ale_cpp_cc_options = g:__clang_options
