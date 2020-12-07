@@ -31,8 +31,8 @@ let b:ale_fixers= ['black','autopep8']
 let b:ale_linters=  ['flake8', 'mypy', 'pylint','pyflakes','pyre']
 let s:pylint_config_file= $HOME.'/opt/cli_tool_configs/pylintrc'
 let b:ale_python_pylint_options = '--rcfile='.s:pylint_config_file
-let b:ale_python_autopep8_options='--ignore E402 --aggressive --aggressive'
-let b:ale_python_flake8_options='--ignore=E501,W504,W503,E402'
+let b:ale_python_autopep8_options='--ignore E402 --aggressive'
+let b:ale_python_flake8_options='--ignore=E501,W504,W503,E402,I100'
 
 let s:mypy_config_file= $HOME.'/opt/cli_tool_configs/mypy.ini'
 if filereadable(s:mypy_config_file)
