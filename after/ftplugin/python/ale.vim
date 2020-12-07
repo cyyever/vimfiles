@@ -27,7 +27,7 @@ if has('win32')
   let $PATH = $pip_site_path.';'.$PATH
 endif
 
-let b:ale_fixers= ['black','autopep8']
+let b:ale_fixers= ['black','autopep8','isort']
 let b:ale_linters=  ['flake8', 'mypy', 'pylint','pyflakes','pyre']
 let s:pylint_config_file= $HOME.'/opt/cli_tool_configs/pylintrc'
 let b:ale_python_pylint_options = '--rcfile='.s:pylint_config_file
