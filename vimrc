@@ -189,7 +189,7 @@ let b:coc_diagnostic_disable=1
 Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-python coc-cmake coc-vimtex'}
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('doHover')
+" autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
 nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
