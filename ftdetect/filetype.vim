@@ -4,5 +4,6 @@ augroup filetypedetect
   au BufRead,BufNewFile *.json.conf setfiletype json
   au BufRead,BufNewFile *.ps1 setfiletype ps1.powershell
   au BufRead,BufNewFile *.fish setfiletype fish
+  au BufRead,BufNewFile Vagrantfile setfiletype ruby
   au BufNewFile,BufRead [Dd]ockerfile,Dockerfile.* setfiletype dockerfile
 augroup END
