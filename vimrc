@@ -249,6 +249,12 @@ nnoremap <Leader>f :NERDTreeFind<CR>
 
 Plug 'ryanoasis/vim-devicons'
 
+function! TreeSitterUpdate(info)
+  TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
+  TSUpdate
+endfunction
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TreeSitterUpdate') }  " We recommend updating the parsers on update
 
 call plug#end()
 
