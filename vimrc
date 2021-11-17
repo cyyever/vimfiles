@@ -218,6 +218,7 @@ if g:use_eink==0
   let g:c_no_curly_error=1
   Plug 'octol/vim-cpp-enhanced-highlight'
   let g:semshi#mark_selected_nodes=0
+  " Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
   Plug 'cyyever/semshi' ,{ 'do': ':UpdateRemotePlugins','branch':'cyy' }
   autocmd VimEnter * if exists(":UpdateRemotePlugins") | execute 'UpdateRemotePlugins' | endif
   Plug 'ntpeters/vim-better-whitespace'
