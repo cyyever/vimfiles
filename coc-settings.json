@@ -1,5 +1,6 @@
 {
   "coc.preferences.enableFloatHighlight": false,
+  "powershell.integratedConsole.showOnStartup": false,
   "python.linting.enabled": false,
   "python.setInterpreter": "~/opt/python/bin/python3",
   "suggest.removeDuplicateItems": true,
