@@ -30,6 +30,8 @@ if &diff
   au VimEnter * if &diff | execute 'windo set wrap' | endif
 endif
 
+set clipboard=unnamed
+
 "备份文件
 set backup
 let s:back_dir=stdpath('data').'/backup//'
