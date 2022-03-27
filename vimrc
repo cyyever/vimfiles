@@ -30,6 +30,8 @@ if &diff
   au VimEnter * if &diff | execute 'windo set wrap' | endif
 endif
 
+set clipboard=unnamed
+
 "备份文件
 set backup
 let s:back_dir=stdpath('data').'/backup//'
@@ -186,7 +188,7 @@ endif
 
 
 let b:coc_diagnostic_disable=1
-Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell'}
 
 " Highlight the symbol and its references when holding the cursor.
 " autocmd CursorHold * silent call CocActionAsync('doHover')
@@ -218,7 +220,8 @@ if g:use_eink==0
   let g:c_no_curly_error=1
   Plug 'octol/vim-cpp-enhanced-highlight'
   let g:semshi#mark_selected_nodes=0
-  Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
+  " Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
+  Plug 'cyyever/semshi' ,{ 'do': ':UpdateRemotePlugins','branch':'cyy' }
   autocmd VimEnter * if exists(":UpdateRemotePlugins") | execute 'UpdateRemotePlugins' | endif
   Plug 'ntpeters/vim-better-whitespace'
 endif
