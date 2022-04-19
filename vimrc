@@ -207,7 +207,8 @@ else
 endif
 
 let g:tex_flavor='latex'
-let g:vimtex_build_dir = &backupdir.getcwd()
+let g:vimtex_build_dir = &backupdir.'/vimtex/'.getcwd()
+call delete(g:vimtex_build_dir,'rf')
 let g:vimtex_compiler_latexmk = {'build_dir' : g:vimtex_build_dir}
 Plug 'lervag/vimtex'
 augroup vimtex_config
@@ -215,7 +216,7 @@ augroup vimtex_config
   autocmd User VimtexEventInitPost VimtexClean!
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
-  autocmd User VimtexEventCompileSuccess call system("cp ".g:vimtex_build_dir."/**/*.pdf ".getcwd())
+  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1),' ').' '.getcwd())
 augroup end
 
 if g:use_eink==0
