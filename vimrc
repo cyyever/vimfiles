@@ -212,6 +212,7 @@ let g:vimtex_compiler_latexmk = {'build_dir' : g:vimtex_build_dir}
 Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
+  autocmd User VimtexEventInitPost VimtexClean!
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
   autocmd User VimtexEventCompileSuccess call system("cp ".g:vimtex_build_dir."/**/*.pdf ".getcwd())
