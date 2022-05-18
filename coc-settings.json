@@ -5,21 +5,6 @@
   "python.setInterpreter": "~/opt/python/bin/python3",
   "suggest.removeDuplicateItems": true,
   "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json"
-      ],
-      "filetypes": [
-        "c",
-        "cc",
-        "cpp",
-        "c++",
-        "objc",
-        "objcpp"
-      ]
-    },
     "racket-languageserver": {
       "command": "racket",
       "args": [
