@@ -1,4 +1,3 @@
-UpdateRemotePlugins
 if !exists('g:py_sys_path')
   let g:py_sys_path=execute("py3 import sys;print('::'.join(sys.path))")
   let g:py_sys_path = substitute(g:py_sys_path, '[\n\r ]*', '', '')
