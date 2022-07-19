@@ -188,7 +188,7 @@ endif
 
 
 let b:coc_diagnostic_disable=1
-Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-python'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell'}
 
 " Highlight the symbol and its references when holding the cursor.
 " autocmd CursorHold * silent call CocActionAsync('doHover')
