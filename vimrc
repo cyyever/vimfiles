@@ -207,6 +207,7 @@ endif
 
 let g:tex_flavor='latex'
 let g:vimtex_build_dir = &backupdir.'/vimtex/'.substitute(substitute(getcwd(), '\', '/','g'),'C:/','/','g')
+let g:vimtex_build_dir= substitute(g:vimtex_build_dir, '[/]\+', '/','g')
 call delete(g:vimtex_build_dir,'rf')
 let g:vimtex_compiler_latexmk = {
       \ 'build_dir' : g:vimtex_build_dir,
