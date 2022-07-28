@@ -208,7 +208,6 @@ endif
 let g:tex_flavor='latex'
 let g:vimtex_build_dir = &backupdir.'/vimtex/'.substitute(substitute(getcwd(), '\', '/','g'),'C:/','/','g')
 let g:vimtex_build_dir= substitute(g:vimtex_build_dir, '[/]\+', '/','g')
-call delete(g:vimtex_build_dir,'rf')
 let g:vimtex_compiler_latexmk = {
       \ 'build_dir' : g:vimtex_build_dir,
       \ 'callback' : 1,
@@ -226,8 +225,10 @@ let g:vimtex_compiler_latexmk = {
 Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
+  autocmd User VimtexEventInitPost call delete(g:vimtex_build_dir,'rf')
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
+  autocmd User VimtexEventInitPost call system("cp -r ".getcwd().' '.g:vimtex_build_dir)
   autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1),' ').' '.getcwd())
 augroup end
 
