@@ -144,6 +144,7 @@ let mapleader = ';'
 let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
 call plug#begin(g:vim_plug_dir)
 
+let g:gruvbox_italic=1
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
