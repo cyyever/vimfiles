@@ -1,5 +1,5 @@
 let b:ale_linters=  ['alex', 'chktex' , 'textlint','textidote']
-let b:ale_fixers= ['latexindent']
+let b:ale_fixers= ['latexindent','remove_trailing_lines','trim_whitespace']
 
 let b:textidote_jar=$HOME.'/opt/textidote/textidote.jar'
 if filereadable(b:textidote_jar)
