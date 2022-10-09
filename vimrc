@@ -41,12 +41,12 @@ endif
 let &backupdir=s:back_dir
 
 " set path
-let $PATH = $HOME.'/opt/python/bin::'.$HOME.'/opt/pip/bin::'.$HOME.'/opt/node_modules/.bin::'.$HOME.'/opt/bin::'.$HOME.'/opt/gopath/bin::'.$HOME.'/opt::'.$HOME.'/.local/bin::'.$PATH
+let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/pip/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
-  let $PATH= substitute($PATH, '::', ';','g')
+  let $PATH= substitute($PATH, ':\+', ';','g')
 else
-  let $PATH= substitute($PATH, '::', ':','g')
+  let $PATH= substitute($PATH, ':\+', ':','g')
 endif
 
 "增加检索路径
@@ -75,7 +75,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set complete+=k*
 
 "插入模式可以使用退格
-set backspace=indent,eol,start
+" set backspace=indent,eol,start
 
 "缩进宽度
 set shiftwidth=2
