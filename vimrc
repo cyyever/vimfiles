@@ -203,6 +203,7 @@ if has('win32')
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
 elseif has('mac')
   let g:vimtex_view_method = 'skim'
+  let g:vimtex_view_skim_sync=1
 else
   let g:vimtex_view_method = 'zathura'
   let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
