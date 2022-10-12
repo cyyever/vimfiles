@@ -198,12 +198,14 @@ nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
 
 
-if !has('win32')
-  let g:vimtex_view_method = 'zathura'
-  let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
-else
+if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
+elseif has('mac')
+  let g:vimtex_view_method = 'skim'
+else
+  let g:vimtex_view_method = 'zathura'
+  let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
 endif
 
 let g:tex_flavor='latex'
