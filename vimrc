@@ -202,8 +202,8 @@ if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
 elseif has('mac')
-  let g:vimtex_view_method = 'skim'
-  let g:vimtex_view_skim_sync=1
+  let g:vimtex_view_method = 'sioyek'
+  let g:vimtex_view_sioyek_exe= '/Applications/sioyek.app/Contents/MacOS/sioyek'
 else
   let g:vimtex_view_method = 'zathura'
   let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
