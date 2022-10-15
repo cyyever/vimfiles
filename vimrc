@@ -237,13 +237,6 @@ augroup vimtex_config
 augroup end
 
 if g:use_eink==0
-  let g:c_no_bracket_error=1
-  let g:c_no_curly_error=1
-  Plug 'octol/vim-cpp-enhanced-highlight'
-  let g:semshi#mark_selected_nodes=0
-  " Plug 'numirias/semshi' ,{ 'do': ':UpdateRemotePlugins' }
-  Plug 'cyyever/semshi' ,{ 'do': ':UpdateRemotePlugins','branch':'cyy' }
-  " autocmd VimEnter * if exists(":UpdateRemotePlugins") | execute 'UpdateRemotePlugins' | endif
   Plug 'ntpeters/vim-better-whitespace'
 endif
 
@@ -276,12 +269,26 @@ Plug 'ryanoasis/vim-devicons'
 
 function! TreeSitterUpdate(info)
   TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
-  TSUpdate
 endfunction
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TreeSitterUpdate') }  " We recommend updating the parsers on update
 
 call plug#end()
+
+if g:use_eink==0
+  lua << EOF
+  require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+  }
+EOF
+endif
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
