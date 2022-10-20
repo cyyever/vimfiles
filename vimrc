@@ -276,6 +276,12 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TreeSitterUpdate') }  "
 
 call plug#end()
 
+let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
+if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
+  PlugUpgrade
+  PlugUpdate!
+  call writefile([],s:vim_plug_update_tag_path)
+endif
 if g:use_eink==0
   lua << EOF
   require'nvim-treesitter.configs'.setup {
@@ -291,12 +297,6 @@ if g:use_eink==0
 EOF
 endif
 
-let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
-  PlugUpgrade
-  PlugUpdate!
-  call writefile([],s:vim_plug_update_tag_path)
-endif
 if g:use_eink==1
   colorscheme eink
 else
