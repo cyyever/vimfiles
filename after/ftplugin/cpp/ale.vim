@@ -6,7 +6,7 @@ exec 'source '.s:cur_dir.'/gcc.vim'
 let b:ale_linters=  [ 'cc', 'pvsstudio']
 
 let s:common_cpp_options = '-std=c++2a -Wall -I'.s:customer_libs_dir.'/include'
-let b:__clang_options= s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.g:llvm_dir.'/include/c++ -isystem'.g:gcc_dir.'/include/c++'
+let b:__clang_options= s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.g:llvm_dir.'/include/c++ -isystem'.g:gcc_dir.'/include/c++ -Wno-unused-command-line-argument'
 let b:ale_cpp_cc_executable= '<auto>'
 let b:ale_cpp_cc_options = s:common_cpp_options
 " if g:gcc_dir!=#''
