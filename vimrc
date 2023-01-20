@@ -272,7 +272,7 @@ function! TreeSitterUpdate(info)
   TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
 endfunction
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TreeSitterUpdate') }  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TSUpdate') }  " We recommend updating the parsers on update
 
 call plug#end()
 
@@ -282,7 +282,7 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
-if g:use_eink==0
+if g:use_eink==0 && exists('TSUpdate')
   lua << EOF
   require 'nvim-treesitter.configs'.setup {
     highlight = {
