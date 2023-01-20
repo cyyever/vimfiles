@@ -284,7 +284,7 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
 endif
 if g:use_eink==0
   lua << EOF
-  require'nvim-treesitter.configs'.setup {
+  require 'nvim-treesitter.configs'.setup {
     highlight = {
       enable = true,
       -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
