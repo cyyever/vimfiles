@@ -272,7 +272,7 @@ function! TreeSitterUpdate(info)
   TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
 endfunction
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': function('TSUpdate') }  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate' }  " We recommend updating the parsers on update
 
 call plug#end()
 
@@ -301,5 +301,5 @@ if g:use_eink==1
   colorscheme eink
 else
   " set background=light
-  colorscheme gruvbox
+  silent colorscheme gruvbox
 endif
