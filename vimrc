@@ -301,5 +301,5 @@ if g:use_eink==1
   colorscheme eink
 else
   " set background=light
-  silent colorscheme gruvbox
+  silent! colorscheme gruvbox
 endif
