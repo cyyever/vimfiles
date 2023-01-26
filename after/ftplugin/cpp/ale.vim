@@ -13,7 +13,7 @@ let b:ale_cpp_cc_options = s:common_cpp_options
 let b:ale_cpp_clangcheck_options='-extra-arg=\"'.b:__clang_options.'\"'
 let b:ale_cpp_cppcheck_options=' --enable=warning,style,performance,portability,information'
 
-let b:ale_fixers= ['clang-format','clangtidy']
+let b:ale_fixers= ['clang-format']
 if g:llvm_version !=#''
   let b:ale_c_clangformat_executable='clang-format-'.g:llvm_version
   let b:ale_cpp_clangtidy_executable ='clang-tidy-'.g:llvm_version
