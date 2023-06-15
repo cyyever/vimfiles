@@ -119,9 +119,6 @@ if exists('$eink_screen') && $eink_screen==1
   let g:use_eink=1
 endif
 
-" there are some bugs in nvim cursor code, so I disable it.
-set guicursor=
-
 " 拼写检查
 set spelllang=en,cjk
 let &spellfile=expand('<sfile>:p:h') . '/spell/programming.utf-8.add'
