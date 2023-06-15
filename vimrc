@@ -227,9 +227,9 @@ augroup vimtex_config
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
   autocmd User VimtexEventInitPost call system("cp -r ".getcwd().' '.g:vimtex_build_dir)
-  autocmd User VimtexEventInitPost call system("rm -f ".getcwd().'/main.pdf')
-  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1),' ').' '.getcwd())
-  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/*.bbl",0,1),' ').' '.getcwd())
+  autocmd User VimtexEventInitPost call system("rm -f ".getcwd().'/'.expand('%:t:r').'.pdf')
+  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".pdf",0,1),' ').' '.getcwd())
+  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".bbl",0,1),' ').' '.getcwd())
 augroup end
 
 if g:use_eink==0
