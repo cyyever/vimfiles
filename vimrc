@@ -99,7 +99,6 @@ set wildignore+=*.o,*.obj,*.git
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
-let g:loaded_python_provider = 0
 
 if has('win32')
   if executable('python')
@@ -122,9 +121,6 @@ endif
 
 " there are some bugs in nvim cursor code, so I disable it.
 set guicursor=
-
-" shell
-set noshellslash
 
 " 拼写检查
 set spelllang=en,cjk
