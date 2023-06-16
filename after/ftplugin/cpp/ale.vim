@@ -3,7 +3,8 @@ let s:customer_libs_dir=expand('~/opt')
 exec 'source '.s:cur_dir.'/llvm.vim'
 exec 'source '.s:cur_dir.'/gcc.vim'
 " let b:ale_linters=  ['clang',  'clangtidy', 'cppcheck', 'gcc','pvsstudio']
-let b:ale_linters=  [ 'cc']
+" let b:ale_linters=  [ 'cc']
+let b:ale_linters=  [ ]
 
 let s:common_cpp_options = '-std=c++2b -Wall -I'.s:customer_libs_dir.'/include'
 let b:__clang_options= s:common_cpp_options.' -Wno-return-std-move-in-c++11 -isystem'.g:llvm_dir.'/include/c++ -isystem'.g:gcc_dir.'/include/c++ -Wno-unused-command-line-argument'
