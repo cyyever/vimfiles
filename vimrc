@@ -193,10 +193,10 @@ else
 endif
 
 let g:tex_flavor='latex'
-let g:vimtex_build_dir = &backupdir.'/vimtex/'.substitute(substitute(getcwd(), '\', '/','g'),'C:/','/','g')
-let g:vimtex_build_dir= substitute(g:vimtex_build_dir, '[/]\+', '/','g')
+" let g:vimtex_build_dir = &backupdir.'/vimtex/'.substitute(substitute(getcwd(), '\', '/','g'),'C:/','/','g')
+" let g:vimtex_build_dir= substitute(g:vimtex_build_dir, '[/]\+', '/','g')
+"       \ 'build_dir' : g:vimtex_build_dir,
 let g:vimtex_compiler_latexmk = {
-      \ 'build_dir' : g:vimtex_build_dir,
       \ 'callback' : 1,
       \ 'continuous' : 1,
       \ 'executable' : 'latexmk',
@@ -212,14 +212,14 @@ let g:vimtex_compiler_latexmk = {
 Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
-  autocmd User VimtexEventInitPost call system("rm ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1)))
-  autocmd User VimtexEventInitPost call system("rm ".join(glob(g:vimtex_build_dir."/**/*.bbl",0,1)))
+  " autocmd User VimtexEventInitPost call system("rm ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1)))
+  " autocmd User VimtexEventInitPost call system("rm ".join(glob(g:vimtex_build_dir."/**/*.bbl",0,1)))
   autocmd User VimtexEventInitPost VimtexCompile
   autocmd User VimtexEventInitPost nnoremap <Leader>v :VimtexView<CR>
-  autocmd User VimtexEventInitPost call system("cp -r ".getcwd().' '.g:vimtex_build_dir)
-  autocmd User VimtexEventInitPost call system("rm -f ".getcwd().'/'.expand('%:t:r').'.pdf')
-  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".pdf",0,1),' ').' '.getcwd())
-  autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".bbl",0,1),' ').' '.getcwd())
+  " autocmd User VimtexEventInitPost call system("cp -r ".getcwd().' '.g:vimtex_build_dir)
+  " autocmd User VimtexEventInitPost call system("rm -f ".getcwd().'/'.expand('%:t:r').'.pdf')
+  " autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".pdf",0,1),' ').' '.getcwd())
+  " autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".bbl",0,1),' ').' '.getcwd())
 augroup end
 
 if g:use_eink==0
