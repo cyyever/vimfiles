@@ -60,15 +60,6 @@ filetype indent on
 
 "设置页号
 set number
-set showcmd
-
-"递增查询
-set incsearch
-set inccommand=nosplit
-"检索高亮
-set hlsearch
-
-set autoread
 
 "打开文件跳转到上次阅读地方且居中
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
@@ -97,16 +88,17 @@ set wildignore+=*.o,*.obj,*.git
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
+let g:loaded_python3_provider = 0
 
-if has('win32')
-  if executable('python')
-    let g:python3_host_prog=exepath('python')
-  endif
-else
-  if executable('python3')
-    let g:python3_host_prog=exepath('python3')
-  endif
-endif
+" if has('win32')
+"   if executable('python')
+"     let g:python3_host_prog=exepath('python')
+"   endif
+" else
+"   if executable('python3')
+"     let g:python3_host_prog=exepath('python3')
+"   endif
+" endif
 
 "颜色方案
 syntax on
