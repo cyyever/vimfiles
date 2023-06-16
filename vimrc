@@ -7,6 +7,9 @@ if !has('nvim')
   exit
 endif
 
+let g:loaded_netrw=1
+let g:loaded_netrwPlugin=1
+
 "设置写入文件编码
 set fileencodings=utf-8,gb18030,cp950,euc-tw
 set fileencoding=utf-8
@@ -247,11 +250,14 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'wlangstroth/vim-racket'
 Plug 'voldikss/vim-mma'
 
-Plug 'preservim/nerdtree'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons'
+" Plug 'preservim/nerdtree'
+" Plug 'ryanoasis/vim-devicons'
+" nnoremap <Leader>f :NvimTreeToggle<CR>
 
-nnoremap <Leader>f :NERDTreeFind<CR>
+nnoremap <Leader>f :NvimTreeToggle<CR>
 
-Plug 'ryanoasis/vim-devicons'
 
 function! TreeSitterUpdate(info)
   TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
@@ -282,6 +288,10 @@ if g:use_eink==0 && exists('TSUpdate')
   }
 EOF
 endif
+lua << EOF
+require 'nvim-tree'.setup {
+}
+EOF
 
 if g:use_eink==1
   colorscheme eink
