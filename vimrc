@@ -91,17 +91,12 @@ set wildignore+=*.o,*.obj,*.git
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
-let g:loaded_python3_provider = 0
 
-" if has('win32')
-"   if executable('python')
-"     let g:python3_host_prog=exepath('python')
-"   endif
-" else
-"   if executable('python3')
-"     let g:python3_host_prog=exepath('python3')
-"   endif
-" endif
+if has('win32')
+  if executable('python')
+    let g:python3_host_prog=exepath('python')
+  endif
+endif
 
 "颜色方案
 syntax on
