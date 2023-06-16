@@ -141,11 +141,11 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_list_window_size = 5
-let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
-if filereadable(s:languagetool_jar)
-  let g:ale_languagetool_executable='java'
-  let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
-endif
+" let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
+" if filereadable(s:languagetool_jar)
+"   let g:ale_languagetool_executable='java'
+"   let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
+" endif
 let g:ale_linter_aliases = {'ps1': 'powershell'}
 let g:ale_textlint_options='--rule languagetool'
 
@@ -226,17 +226,17 @@ if g:use_eink==0
   Plug 'ntpeters/vim-better-whitespace'
 endif
 
-let g:instant_markdown_slow = 0
-let g:instant_markdown_autoscroll = 1
-let g:instant_markdown_autostart = 0
-let g:instant_markdown_logfile = tempname()
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+" let g:instant_markdown_slow = 0
+" let g:instant_markdown_autoscroll = 1
+" let g:instant_markdown_autostart = 0
+" let g:instant_markdown_logfile = tempname()
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
-let g:fzf_action = { 'enter': 'split' }
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" let g:fzf_action = { 'enter': 'split' }
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 
-nnoremap <Leader>sp :GFiles<CR>
+" nnoremap <Leader>sp :GFiles<CR>
 
 if g:use_eink==0
   let g:rainbow_active=1
