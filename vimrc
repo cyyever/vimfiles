@@ -9,7 +9,8 @@ endif
 
 "设置写入文件编码
 set fileencodings=utf-8,gb18030,cp950,euc-tw
-au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
+set fileencoding=utf-8
+" au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
 
 let s:vimrc=expand('<sfile>:p')
 let s:vimrc_dir=expand('<sfile>:p:h')
@@ -41,7 +42,7 @@ endif
 let &backupdir=s:back_dir
 
 " set path
-let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/pip/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
+let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
 if has('win32')
   let $PATH= substitute($PATH, '/', '\','g')
   let $PATH= substitute($PATH, ':\+', ';','g')
@@ -74,9 +75,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 "关键字搜索当前目录
 set complete+=k*
 
-"插入模式可以使用退格
-" set backspace=indent,eol,start
-
 "缩进宽度
 set shiftwidth=2
 set tabstop=4 expandtab
@@ -99,7 +97,6 @@ set wildignore+=*.o,*.obj,*.git
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
-let g:loaded_python_provider = 0
 
 if has('win32')
   if executable('python')
@@ -122,9 +119,6 @@ endif
 
 " there are some bugs in nvim cursor code, so I disable it.
 set guicursor=
-
-" shell
-set noshellslash
 
 " 拼写检查
 set spelllang=en,cjk
