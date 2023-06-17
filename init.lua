@@ -29,9 +29,62 @@ if not vim.fn.isdirectory(back_dir) then
   vim.fn.mkdir(back_dir)
 end
 --设置页号
-vim.o.number=false
+vim.o.number=true
 
-vim.opt.runtimepath:prepend(config_dir.."/vimfiles")
 vim.opt.runtimepath:prepend(config_dir.."/vimfiles/after")
+vim.opt.runtimepath:prepend(config_dir.."/vimfiles")
 vim.o.packpath=vim.o.runtimepath
+
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+require('packer').startup(function(use)
+	  use 'wbthomason/packer.nvim'
+  use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
+
+end)
+
+if vim.g.use_eink==0 then
+require'nvim-treesitter.configs'.setup {
+  ensure_installed ="all",
+  auto_install = true,
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+else
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = false,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+end
 vim.cmd('source '..config_dir..'/vimfiles/vimrc')
