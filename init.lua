@@ -34,4 +34,4 @@ vim.o.number=false
 vim.opt.runtimepath:prepend(config_dir.."/vimfiles")
 vim.opt.runtimepath:prepend(config_dir.."/vimfiles/after")
 vim.o.packpath=vim.o.runtimepath
-vim.cmd('source'..config_dir..'/vimfiles/vimrc')
+vim.cmd('source '..config_dir..'/vimfiles/vimrc')
