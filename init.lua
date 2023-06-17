@@ -12,8 +12,8 @@ if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.f
   if vim.fn.executable('git') then
     vim.fn.writefile({},config_update_tag_path)
     vim.fn.system('cd '..config_dir..' && git pull && git submodule update --init')
-	if vim.v.shell_error then
-      vim.cmd('exec source '..config_dir.."/vimrc")
+    if vim.v.shell_error then
+	vim.cmd('source '..config_dir..'/vimfiles/vimrc')
     end
   end
 end
