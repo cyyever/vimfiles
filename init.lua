@@ -59,6 +59,7 @@ end)
 config_update_tag_path=config_dir..'/.update_tag'
 if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path)+3600 then
 	vim.cmd('PackerSync')
+    vim.fn.writefile({},config_update_tag_path)
 end
 
 if vim.g.use_eink==0 then
