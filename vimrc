@@ -1,48 +1,16 @@
-set encoding=utf-8
 
 scriptencoding utf-8
 
-if !has('nvim')
-  echo 'This is a nvim only configuration.'
-  exit
-endif
 
-let g:loaded_netrw=1
-let g:loaded_netrwPlugin=1
 
-"设置写入文件编码
-set fileencodings=utf-8,gb18030,cp950,euc-tw
-set fileencoding=utf-8
 " au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
 
-let s:vimrc=expand('<sfile>:p')
-let s:vimrc_dir=expand('<sfile>:p:h')
-let s:vimrc_update_tag_path=s:vimrc_dir.'/.update_tag'
-if !filereadable(s:vimrc_update_tag_path) || localtime() > getftime(s:vimrc_update_tag_path)+3600
-  if executable('git')
-    call writefile([],s:vimrc_update_tag_path)
-    call system('cd '.s:vimrc_dir.' && git pull && git submodule update --init')
-	if !v:shell_error
-      exec 'source '.s:vimrc
-    endif
-  endif
-endif
-
-" diff
-set diffopt+=horizontal,algorithm:patience
 if &diff
   au VimEnter * if &diff | execute 'windo set wrap' | endif
 endif
 
-set clipboard=unnamed
 
-"备份文件
-set backup
-let s:back_dir=stdpath('data').'/backup//'
-if !isdirectory(s:back_dir)
-  call mkdir(s:back_dir)
-endif
-let &backupdir=s:back_dir
+" let &backupdir=s:back_dir
 
 " set path
 let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
@@ -61,8 +29,6 @@ let g:sql_type_default = 'mysql'
 filetype plugin on
 filetype indent on
 
-"设置页号
-set number
 
 "打开文件跳转到上次阅读地方且居中
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
@@ -122,7 +88,8 @@ tnoremap <Esc> <C-\><C-n>
 let mapleader = ';'
 
 " 插件
-let g:vim_plug_dir=expand('<sfile>:p:h') . '/plugged'
+let g:vim_plug_dir=fnamemodify($MYVIMRC,':p:h') . '/vimfiles/plugged'
+echo g:vim_plug_dir
 call plug#begin(g:vim_plug_dir)
 
 let g:gruvbox_italic=1
@@ -169,11 +136,10 @@ if !has('win32')
 endif
 
 
-let b:coc_diagnostic_disable=1
+let b:coc_diagnostic_disable=0
 Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp'}
 
 " Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
 nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
 nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
