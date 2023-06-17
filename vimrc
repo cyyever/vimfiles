@@ -219,11 +219,6 @@ Plug 'nvim-tree/nvim-web-devicons'
 nnoremap <Leader>f :NvimTreeFindFile<CR>
 
 
-" function! TreeSitterUpdate(info)
-"   TSUpdate bash bibtex c cpp cmake comment fish json latex yaml html python ruby rust
-" endfunction
-
-" Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate' }  " We recommend updating the parsers on update
 Plug 'dstein64/vim-startuptime'
 
 call plug#end()
