@@ -89,7 +89,6 @@ let mapleader = ';'
 
 " 插件
 let g:vim_plug_dir=fnamemodify($MYVIMRC,':p:h') . '/vimfiles/plugged'
-echo g:vim_plug_dir
 call plug#begin(g:vim_plug_dir)
 
 let g:gruvbox_italic=1
