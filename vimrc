@@ -251,7 +251,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'ryanoasis/vim-devicons'
 " nnoremap <Leader>f :NvimTreeToggle<CR>
 
-nnoremap <Leader>f :NvimTreeToggle<CR>
+nnoremap <Leader>f :NvimTreeFindFile<CR>
 
 
 function! TreeSitterUpdate(info)
