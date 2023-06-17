@@ -210,11 +210,11 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'wlangstroth/vim-racket'
 Plug 'voldikss/vim-mma'
 
-Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-tree/nvim-web-devicons'
-" Plug 'preservim/nerdtree'
-" Plug 'ryanoasis/vim-devicons'
-" nnoremap <Leader>f :NvimTreeToggle<CR>
+" Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-web-devicons'
+" " Plug 'preservim/nerdtree'
+" " Plug 'ryanoasis/vim-devicons'
+" " nnoremap <Leader>f :NvimTreeToggle<CR>
 
 nnoremap <Leader>f :NvimTreeFindFile<CR>
 
@@ -225,7 +225,7 @@ call plug#end()
 
 let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
 if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
-  PackerCompile
+  PackerSync
   PlugUpgrade
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)

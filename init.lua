@@ -1,6 +1,6 @@
 vim.o.encoding='utf-8'
-vim.g.loaded_netrw="1"
-vim.g.loaded_netrwPlugin="1"
+-- vim.g.loaded_netrw="1"
+-- vim.g.loaded_netrwPlugin="1"
 -- 设置写入文件编码
 vim.o.fileencodings="utf-8,gb18030,cp950,euc-tw"
 vim.o.fileencoding="utf-8"
@@ -49,42 +49,50 @@ end
 local packer_bootstrap = ensure_packer()
 
 require('packer').startup(function(use)
-	  use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
   use {
-        'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
-    }
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
+  }
 
 end)
 
 if vim.g.use_eink==0 then
-require'nvim-treesitter.configs'.setup {
-  ensure_installed ="all",
-  auto_install = true,
-  highlight = {
-    enable = true,
+  require'nvim-treesitter.configs'.setup {
+    ensure_installed ="all",
+    auto_install = true,
+    highlight = {
+      enable = true,
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+  }
 else
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = false,
+  require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = false,
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+  }
 end
+require("nvim-tree").setup()
+
 vim.cmd('source '..config_dir..'/vimfiles/vimrc')
