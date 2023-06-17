@@ -24,10 +24,11 @@ vim.o.clipboard="unnamed"
 
 --备份文件
 vim.o.backup=true
-back_dir=vim.fn.stdpath('data')..'/backup//'
+back_dir=vim.fn.stdpath('data')..'/backup/'
 if not vim.fn.isdirectory(back_dir) then
   vim.fn.mkdir(back_dir)
 end
+vim.o.backupdir=back_dir
 --设置页号
 vim.o.number=true
 
