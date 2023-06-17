@@ -7,16 +7,6 @@ vim.o.fileencoding="utf-8"
 
 config=vim.env.MYVIMRC
 config_dir=vim.fn.fnamemodify(config,":p:h")
-config_update_tag_path=config_dir..'/.update_tag'
-if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path)+3600 then
-  if vim.fn.executable('git') then
-    vim.fn.writefile({},config_update_tag_path)
-    vim.fn.system('cd '..config_dir..' && git pull && git submodule update --init')
-    if vim.v.shell_error then
-	vim.cmd('source '..config_dir..'/vimfiles/vimrc')
-    end
-  end
-end
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience")
 
@@ -66,6 +56,10 @@ require('packer').startup(function(use)
   }
 
 end)
+config_update_tag_path=config_dir..'/.update_tag'
+if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path)+3600 then
+	vim.cmd('PackerSync')
+end
 
 if vim.g.use_eink==0 then
   require'nvim-treesitter.configs'.setup {
