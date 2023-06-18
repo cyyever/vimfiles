@@ -151,10 +151,6 @@ augroup vimtex_config
   " autocmd User VimtexEventCompileSuccess call system("cp ".join(glob(g:vimtex_build_dir."/**/".expand('%:t:r').".bbl",0,1),' ').' '.getcwd())
 augroup end
 
-if g:use_eink==0
-  Plug 'ntpeters/vim-better-whitespace'
-endif
-
 " let g:instant_markdown_slow = 0
 " let g:instant_markdown_autoscroll = 1
 " let g:instant_markdown_autostart = 0
