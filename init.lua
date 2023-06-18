@@ -1,6 +1,4 @@
 vim.o.encoding='utf-8'
--- vim.g.loaded_netrw="1"
--- vim.g.loaded_netrwPlugin="1"
 -- 设置写入文件编码
 vim.o.fileencodings="utf-8,gb18030,cp950,euc-tw"
 vim.o.fileencoding="utf-8"
@@ -39,6 +37,8 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+vim.g.loaded_netrw="1"
+vim.g.loaded_netrwPlugin="1"
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use {
@@ -90,5 +90,16 @@ else
   }
 end
 require("nvim-tree").setup()
+
+-- provider
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+
+if vim.fn.has('win32') then
+  vim.g.python3_host_prog=vim.fn.exepath('python')
+end
+
+vim.o.mouse="nv"
 
 vim.cmd('source '..config_dir..'/vimfiles/vimrc')

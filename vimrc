@@ -48,21 +48,7 @@ set ignorecase
 set smartcase
 set tagcase=match
 
-"鼠标
-set mouse=nv
-
 set wildignore+=*.o,*.obj,*.git
-
-" provider
-let g:loaded_perl_provider = 0
-let g:loaded_ruby_provider = 0
-let g:loaded_node_provider = 0
-
-if has('win32')
-  if executable('python')
-    let g:python3_host_prog=exepath('python')
-  endif
-endif
 
 "颜色方案
 syntax on
