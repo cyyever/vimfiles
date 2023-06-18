@@ -120,3 +120,9 @@ end
 vim.o.mouse="nv"
 
 vim.cmd('source '..config_dir..'/vimfiles/vimrc')
+
+if vim.g.use_eink==1 then
+  vim.cmd('colorscheme eink')
+else
+  vim.cmd('colorscheme gruvbox')
+end

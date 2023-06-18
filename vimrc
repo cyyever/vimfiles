@@ -197,10 +197,3 @@ if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) ||
   PlugUpdate!
   call writefile([],s:vim_plug_update_tag_path)
 endif
-
-if g:use_eink==1
-  colorscheme eink
-else
-  " set background=light
-  silent! colorscheme gruvbox
-endif
