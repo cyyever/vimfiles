@@ -54,6 +54,10 @@ require('packer').startup(function(use)
       'nvim-tree/nvim-web-devicons', -- optional
     },
   }
+  use {
+    'PProvost/vim-ps1',
+    ft= 'ps1'
+  }
 
 end)
 config_update_tag_path=config_dir..'/.update_tag'

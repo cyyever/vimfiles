@@ -106,9 +106,6 @@ augroup END
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
-if has('win32')
-  Plug 'PProvost/vim-ps1'
-endif
 
 " remove sections
 let g:airline_section_b=''
