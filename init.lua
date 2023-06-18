@@ -5,7 +5,7 @@ else
 	vim.g.use_eink = 0
 end
 
-vim.g.mapleader = ';'
+vim.g.mapleader = ";"
 
 -- 设置写入文件编码
 vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
@@ -88,6 +88,13 @@ require("packer").startup(function(use)
 		end,
 		config = function()
 			vim.cmd("colorscheme gruvbox")
+		end,
+	})
+	use({
+		"neoclide/coc.nvim",
+		branch = "release",
+		run = function()
+			vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
 		end,
 	})
 	use({
