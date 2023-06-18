@@ -67,14 +67,10 @@ au TermOpen * setlocal nospell
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
 
-let mapleader = ';'
-
 " 插件
 let g:vim_plug_dir=fnamemodify($MYVIMRC,':p:h') . '/vimfiles/plugged'
 call plug#begin(g:vim_plug_dir)
 
-let g:gruvbox_italic=1
-Plug 'morhetz/gruvbox'
 
 let g:ale_lint_on_text_changed='never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
@@ -160,10 +156,6 @@ augroup end
 
 " nnoremap <Leader>sp :GFiles<CR>
 
-if g:use_eink==0
-  let g:rainbow_active=1
-  Plug 'luochen1990/rainbow'
-endif
 
 " Plug 'voldikss/vim-mma'
 

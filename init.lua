@@ -5,6 +5,8 @@ else
 	vim.g.use_eink = 0
 end
 
+vim.g.mapleader = ';'
+
 -- 设置写入文件编码
 vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
 vim.o.fileencoding = "utf-8"
@@ -66,9 +68,26 @@ require("packer").startup(function(use)
 	})
 
 	use({
+		"luochen1990/rainbow",
+		setup = function()
+			return vim.g.use_eink == 0
+		end,
+	})
+	use({
 		"ntpeters/vim-better-whitespace",
 		setup = function()
 			return vim.g.use_eink == 0
+		end,
+	})
+
+	use({
+		"morhetz/gruvbox",
+		setup = function()
+			vim.g.gruvbox_italic = 1
+			return vim.g.use_eink == 0
+		end,
+		config = function()
+			vim.cmd("colorscheme gruvbox")
 		end,
 	})
 	use({
@@ -139,12 +158,10 @@ if vim.fn.has("win32") then
 	vim.g.python3_host_prog = vim.fn.exepath("python")
 end
 
-vim.o.mouse = "nv"
+vim.o.mouse = "r"
 
 vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 
 if vim.g.use_eink == 1 then
 	vim.cmd("colorscheme eink")
-else
-	vim.cmd("colorscheme gruvbox")
 end
