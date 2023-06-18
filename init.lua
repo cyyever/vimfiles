@@ -1,126 +1,132 @@
-vim.o.encoding='utf-8'
-if vim.fn.exists('$eink_screen') and vim.env.eink_screen==1 then
-  vim.g.use_eink=1
+vim.o.encoding = "utf-8"
+if vim.fn.exists("$eink_screen") and vim.env.eink_screen == 1 then
+	vim.g.use_eink = 1
 else
-  vim.g.use_eink=0
+	vim.g.use_eink = 0
 end
 
 -- 设置写入文件编码
-vim.o.fileencodings="utf-8,gb18030,cp950,euc-tw"
-vim.o.fileencoding="utf-8"
+vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
+vim.o.fileencoding = "utf-8"
 
-config=vim.env.MYVIMRC
-config_dir=vim.fn.fnamemodify(config,":p:h")
+config = vim.env.MYVIMRC
+config_dir = vim.fn.fnamemodify(config, ":p:h")
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience")
 
-vim.o.clipboard="unnamed"
+vim.o.clipboard = "unnamed"
 
 --备份文件
-vim.o.backup=true
-back_dir=vim.fn.stdpath('data')..'/backup/'
+vim.o.backup = true
+back_dir = vim.fn.stdpath("data") .. "/backup/"
 if not vim.fn.isdirectory(back_dir) then
-  vim.fn.mkdir(back_dir)
+	vim.fn.mkdir(back_dir)
 end
-vim.o.backupdir=back_dir
+vim.o.backupdir = back_dir
 --设置页号
-vim.o.number=true
+vim.o.number = true
 
-vim.opt.runtimepath:prepend(config_dir.."/vimfiles/after")
-vim.opt.runtimepath:prepend(config_dir.."/vimfiles")
-vim.o.packpath=vim.o.runtimepath
+vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
+vim.opt.runtimepath:prepend(config_dir .. "/vimfiles")
+vim.o.packpath = vim.o.runtimepath
 
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 
 local packer_bootstrap = ensure_packer()
 
-vim.g.loaded_netrw="1"
-vim.g.loaded_netrwPlugin="1"
-require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = function()
-      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-      ts_update()
-    end,
-  }
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
-  }
-  use {
-    'PProvost/vim-ps1',
-    ft= 'ps1'
-  }
-  use {
-	  'ntpeters/vim-better-whitespace',
-	  setup = function()
-          return vim.g.use_eink==0
-	  end,
-  }
-  use {
-  'dag/vim-fish',
-    ft= 'fish'
-  }
-  use {
-    'wlangstroth/vim-racket',
-    ft= 'scheme'
-  }
-  use {
-    'vim-airline/vim-airline',
-    setup = function()
-	    vim.g.airline_section_b=''
-	  vim.g.airline_section_x=''
-		  vim.g.airline_extensions = {}
-    end,
-  }
-use 'dstein64/vim-startuptime'
-use 'jiangmiao/auto-pairs'
+vim.g.loaded_netrw = "1"
+vim.g.loaded_netrwPlugin = "1"
+require("packer").startup(function(use)
+	use("wbthomason/packer.nvim")
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = function()
+			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+			ts_update()
+		end,
+	})
+	use({
+		"nvim-tree/nvim-tree.lua",
+		requires = {
+			"nvim-tree/nvim-web-devicons", -- optional
+		},
+	})
+	use({
+		"PProvost/vim-ps1",
+		ft = "ps1",
+	})
+
+	use({
+		"ntpeters/vim-better-whitespace",
+		setup = function()
+			return vim.g.use_eink == 0
+		end,
+	})
+	use({
+		"dag/vim-fish",
+		ft = "fish",
+	})
+	use({
+		"wlangstroth/vim-racket",
+		ft = "scheme",
+	})
+	use({
+		"vim-airline/vim-airline",
+		setup = function()
+			vim.g.airline_section_b = ""
+			vim.g.airline_section_x = ""
+			vim.g.airline_extensions = {}
+		end,
+	})
+	use("tpope/vim-commentary")
+	use("wellle/targets.vim")
+	use("dstein64/vim-startuptime")
+	use("jiangmiao/auto-pairs")
 end)
-config_update_tag_path=config_dir..'/.update_tag'
-if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path)+3600 then
-	vim.cmd('PackerSync')
-    vim.fn.writefile({},config_update_tag_path)
+config_update_tag_path = config_dir .. "/.update_tag"
+if
+	not vim.fn.filereadable(config_update_tag_path)
+	or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path) + 3600
+then
+	vim.cmd("PackerSync")
+	vim.fn.writefile({}, config_update_tag_path)
 end
 
-if vim.g.use_eink==0 then
-  require'nvim-treesitter.configs'.setup {
-    ensure_installed ="all",
-    auto_install = true,
-    highlight = {
-      enable = true,
+if vim.g.use_eink == 0 then
+	require("nvim-treesitter.configs").setup({
+		ensure_installed = "all",
+		auto_install = true,
+		highlight = {
+			enable = true,
 
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-    },
-  }
+			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+			-- Using this option may slow down your editor, and you may see some duplicate highlights.
+			-- Instead of true it can also be a list of languages
+			additional_vim_regex_highlighting = false,
+		},
+	})
 else
-  require'nvim-treesitter.configs'.setup {
-    highlight = {
-      enable = false,
+	require("nvim-treesitter.configs").setup({
+		highlight = {
+			enable = false,
 
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-    },
-  }
+			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+			-- Using this option may slow down your editor, and you may see some duplicate highlights.
+			-- Instead of true it can also be a list of languages
+			additional_vim_regex_highlighting = false,
+		},
+	})
 end
 require("nvim-tree").setup()
 
@@ -129,16 +135,16 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
-if vim.fn.has('win32') then
-  vim.g.python3_host_prog=vim.fn.exepath('python')
+if vim.fn.has("win32") then
+	vim.g.python3_host_prog = vim.fn.exepath("python")
 end
 
-vim.o.mouse="nv"
+vim.o.mouse = "nv"
 
-vim.cmd('source '..config_dir..'/vimfiles/vimrc')
+vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 
-if vim.g.use_eink==1 then
-  vim.cmd('colorscheme eink')
+if vim.g.use_eink == 1 then
+	vim.cmd("colorscheme eink")
 else
-  vim.cmd('colorscheme gruvbox')
+	vim.cmd("colorscheme gruvbox")
 end

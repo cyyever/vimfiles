@@ -36,7 +36,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set complete+=k*
 
 "缩进宽度
-set shiftwidth=2
+set shiftwidth=4
 set tabstop=4 expandtab
 
 "补全选项
@@ -75,9 +75,6 @@ call plug#begin(g:vim_plug_dir)
 
 let g:gruvbox_italic=1
 Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'wellle/targets.vim'
 
 let g:ale_lint_on_text_changed='never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
