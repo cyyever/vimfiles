@@ -58,7 +58,20 @@ require('packer').startup(function(use)
     'PProvost/vim-ps1',
     ft= 'ps1'
   }
-
+  use {
+    'wlangstroth/vim-racket',
+    ft= 'scheme'
+  }
+  use {
+    'vim-airline/vim-airline',
+    setup = function()
+	    vim.g.airline_section_b=''
+	  vim.g.airline_section_x=''
+		  vim.g.airline_extensions = {}
+    end,
+  }
+use 'dstein64/vim-startuptime'
+use 'jiangmiao/auto-pairs'
 end)
 config_update_tag_path=config_dir..'/.update_tag'
 if not vim.fn.filereadable(config_update_tag_path) or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path)+3600 then

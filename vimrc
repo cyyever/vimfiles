@@ -106,13 +106,6 @@ augroup END
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
-
-" remove sections
-let g:airline_section_b=''
-let g:airline_section_x=''
-let g:airline_extensions = []
-Plug 'vim-airline/vim-airline'
-
 if !has('win32')
   Plug 'dag/vim-fish'
 endif
@@ -189,20 +182,12 @@ if g:use_eink==0
   Plug 'luochen1990/rainbow'
 endif
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'wlangstroth/vim-racket'
-Plug 'voldikss/vim-mma'
+" Plug 'voldikss/vim-mma'
 
-" Plug 'nvim-tree/nvim-tree.lua'
-" Plug 'nvim-tree/nvim-web-devicons'
-" " Plug 'preservim/nerdtree'
-" " Plug 'ryanoasis/vim-devicons'
-" " nnoremap <Leader>f :NvimTreeToggle<CR>
 
 nnoremap <Leader>f :NvimTreeFindFile<CR>
 
 
-Plug 'dstein64/vim-startuptime'
 
 call plug#end()
 
