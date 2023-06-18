@@ -101,12 +101,6 @@ augroup CloseLoclistWindowGroup
 augroup END
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 
-
-if !has('win32')
-  Plug 'dag/vim-fish'
-endif
-
-
 let b:coc_diagnostic_disable=0
 Plug 'neoclide/coc.nvim', {'branch': 'release','do': ':CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp'}
 

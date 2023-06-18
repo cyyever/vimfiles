@@ -65,6 +65,16 @@ require('packer').startup(function(use)
     ft= 'ps1'
   }
   use {
+	  'ntpeters/vim-better-whitespace',
+	  setup = function()
+          return vim.g.use_eink==0
+	  end,
+  }
+  use {
+  'dag/vim-fish',
+    ft= 'fish'
+  }
+  use {
     'wlangstroth/vim-racket',
     ft= 'scheme'
   }
