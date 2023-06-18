@@ -54,10 +54,6 @@ set wildignore+=*.o,*.obj,*.git
 syntax on
 set termguicolors
 
-let g:use_eink=0
-if exists('$eink_screen') && $eink_screen==1
-  let g:use_eink=1
-endif
 
 " 拼写检查
 set spelllang=en,cjk

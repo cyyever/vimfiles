@@ -1,4 +1,10 @@
 vim.o.encoding='utf-8'
+if vim.fn.exists('$eink_screen') and vim.env.eink_screen==1 then
+  vim.g.use_eink=1
+else
+  vim.g.use_eink=0
+end
+
 -- 设置写入文件编码
 vim.o.fileencodings="utf-8,gb18030,cp950,euc-tw"
 vim.o.fileencoding="utf-8"
