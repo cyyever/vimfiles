@@ -144,6 +144,14 @@ require("packer").startup(function(use)
 				vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
 			end
 		end,
+		config = function()
+			local mygroup = vim.api.nvim_create_augroup("vimtex_config", { clear = true })
+			vim.api.nvim_create_autocmd(
+				"User",
+				{ pattern = "VimtexEventInitPost", group = mygroup, command = "VimtexCompile" }
+			)
+			vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
+		end,
 		ft = "tex",
 	})
 	use("tpope/vim-commentary")
