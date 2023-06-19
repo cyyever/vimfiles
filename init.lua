@@ -61,6 +61,9 @@ require("packer").startup(function(use)
 		requires = {
 			"nvim-tree/nvim-web-devicons", -- optional
 		},
+		config = function()
+			vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
+		end,
 	})
 	use({
 		"PProvost/vim-ps1",
@@ -95,6 +98,11 @@ require("packer").startup(function(use)
 		branch = "release",
 		run = function()
 			vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
+		end,
+		config = function()
+			vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')
+			vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
+			vim.keymap.set("n", "<Leader>s", '<cmd>call CocActionAsync("doHover")<cr>')
 		end,
 	})
 	use({

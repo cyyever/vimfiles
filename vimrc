@@ -95,12 +95,6 @@ augroup END
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
-" Highlight the symbol and its references when holding the cursor.
-nnoremap <Leader>d :call CocActionAsync("jumpDefinition")<CR>
-nnoremap <Leader>r :call CocActionAsync("jumpReferences")<CR>
-nnoremap <Leader>s :call CocActionAsync("doHover")<CR>
-
-
 if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
@@ -158,7 +152,6 @@ augroup end
 " Plug 'voldikss/vim-mma'
 
 
-nnoremap <Leader>f :NvimTreeFindFile<CR>
 
 
 
