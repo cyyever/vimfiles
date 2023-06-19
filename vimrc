@@ -1,4 +1,3 @@
-
 scriptencoding utf-8
 
 
@@ -13,38 +12,18 @@ endif
 " let &backupdir=s:back_dir
 
 " set path
-let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
-if has('win32')
-  let $PATH= substitute($PATH, '/', '\','g')
-  let $PATH= substitute($PATH, ':\+', ';','g')
-else
-  let $PATH= substitute($PATH, ':\+', ':','g')
-endif
-
-"增加检索路径
-set path+=$HOME/opt/bin,$HOME/opt/include
+" let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
+" if has('win32')
+"   let $PATH= substitute($PATH, '/', '\','g')
+"   let $PATH= substitute($PATH, ':\+', ';','g')
+" else
+"   let $PATH= substitute($PATH, ':\+', ':','g')
+" endif
 
 
 
 "打开文件跳转到上次阅读地方且居中
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
-"关键字搜索当前目录
-set complete+=k*
-
-"缩进宽度
-set shiftwidth=4
-set tabstop=4 expandtab
-
-"补全选项
-set wildignorecase
-set infercase
-
-"检索时的大小写处理
-set ignorecase
-set smartcase
-set tagcase=match
-
-set wildignore+=*.o,*.obj,*.git
 
 "颜色方案
 syntax on
