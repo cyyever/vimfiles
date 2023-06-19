@@ -24,10 +24,6 @@ endif
 "增加检索路径
 set path+=$HOME/opt/bin,$HOME/opt/include
 
-"文件类型选项
-let g:sql_type_default = 'mysql'
-filetype plugin on
-filetype indent on
 
 
 "打开文件跳转到上次阅读地方且居中
@@ -67,32 +63,16 @@ au TermOpen * setlocal nospell
 " 终端模式
 tnoremap <Esc> <C-\><C-n>
 
-" 插件
-let g:vim_plug_dir=fnamemodify($MYVIMRC,':p:h') . '/vimfiles/plugged'
-call plug#begin(g:vim_plug_dir)
 
 
-let g:ale_lint_on_text_changed='never'
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_fixers = {
-      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \}
-let g:ale_fix_on_save = 1
-let g:ale_open_list = 1
-let g:ale_list_window_size = 5
 " let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
 " if filereadable(s:languagetool_jar)
 "   let g:ale_languagetool_executable='java'
 "   let g:ale_languagetool_options='-jar '.s:languagetool_jar.' --autoDetect'
 " endif
-let g:ale_linter_aliases = {'ps1': 'powershell'}
-let g:ale_textlint_options='--rule languagetool'
+" let g:ale_textlint_options='--rule languagetool'
 
-augroup CloseLoclistWindowGroup
-  autocmd!
-  autocmd QuitPre * if empty(&buftype) | lclose | endif
-augroup END
-Plug 'cyyever/ale', { 'branch': 'cyy' }
+" Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
 
@@ -111,16 +91,3 @@ Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
 " Plug 'voldikss/vim-mma'
-
-
-
-
-
-call plug#end()
-
-let s:vim_plug_update_tag_path=g:vim_plug_dir.'/.update_tag.eink.'.float2nr(g:use_eink)
-if !isdirectory(g:vim_plug_dir)  || !filereadable(s:vim_plug_update_tag_path) || getftime(expand('<sfile>:p')) > getftime(s:vim_plug_update_tag_path)+3600
-  PlugUpgrade
-  PlugUpdate!
-  call writefile([],s:vim_plug_update_tag_path)
-endif

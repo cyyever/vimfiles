@@ -13,6 +13,12 @@ vim.o.fileencoding = "utf-8"
 
 config = vim.env.MYVIMRC
 config_dir = vim.fn.fnamemodify(config, ":p:h")
+
+-- 文件类型选项
+vim.g.sql_type_default = "mysql"
+vim.cmd("filetype plugin on")
+vim.cmd("filetype indent on")
+
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience")
 
@@ -153,6 +159,27 @@ require("packer").startup(function(use)
 			vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 		end,
 		ft = "tex",
+	})
+	use({
+		"cyyever/ale",
+		branch = "cyy",
+		setup = function()
+			vim.g.ale_lint_on_text_changed = "never"
+			vim.g.ale_echo_msg_format = "[%linter%] %code: %%s"
+			vim.g.ale_fixers = { ["*"] = { "remove_trailing_lines", "trim_whitespace" } }
+			vim.g.ale_fix_on_save = 1
+			vim.g.ale_open_list = 1
+			vim.g.ale_list_window_size = 5
+			vim.g.ale_linter_aliases = { ["ps1"] = "powershell" }
+		end,
+
+		config = function()
+			local mygroup = vim.api.nvim_create_augroup("CloseLoclistWindowGroup", { clear = true })
+			vim.api.nvim_create_autocmd(
+				{ "QuitPre" },
+				{ group = mygroup, command = "if empty(&buftype) | lclose | endif" }
+			)
+		end,
 	})
 	use("tpope/vim-commentary")
 	use("wellle/targets.vim")
