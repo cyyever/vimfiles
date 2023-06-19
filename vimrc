@@ -95,35 +95,7 @@ augroup END
 Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
-if has('win32')
-  let g:vimtex_view_general_viewer = 'SumatraPDF'
-  let g:vimtex_view_general_options = '-zoom 200 -reuse-instance -forward-search @tex @line @pdf'
-elseif has('mac')
-  let g:vimtex_view_method = 'sioyek'
-  let g:vimtex_view_sioyek_exe= '/Applications/sioyek.app/Contents/MacOS/sioyek'
-else
-  let g:vimtex_view_method = 'zathura'
-  let g:vimtex_view_zathura_options = '-c ~/opt/cli_tool_configs'
-endif
 
-let g:tex_flavor='latex'
-" let g:vimtex_build_dir = &backupdir.'/vimtex/'.substitute(substitute(getcwd(), '\', '/','g'),'C:/','/','g')
-" let g:vimtex_build_dir= substitute(g:vimtex_build_dir, '[/]\+', '/','g')
-"       \ 'build_dir' : g:vimtex_build_dir,
-let g:vimtex_compiler_latexmk = {
-      \ 'callback' : 1,
-      \ 'continuous' : 1,
-      \ 'executable' : 'latexmk',
-      \ 'hooks' : [],
-      \ 'options' : [
-        \   '-verbose',
-        \   '-file-line-error',
-        \   '-synctex=1',
-        \   '-interaction=nonstopmode',
-        \ ],
-        \}
-
-Plug 'lervag/vimtex'
 augroup vimtex_config
   autocmd!
   " autocmd User VimtexEventInitPost call system("rm ".join(glob(g:vimtex_build_dir."/**/*.pdf",0,1)))

@@ -47,6 +47,7 @@ local packer_bootstrap = ensure_packer()
 
 vim.g.loaded_netrw = "1"
 vim.g.loaded_netrwPlugin = "1"
+
 require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 	use({
@@ -72,22 +73,24 @@ require("packer").startup(function(use)
 
 	use({
 		"luochen1990/rainbow",
-		setup = function()
+		cond = function()
 			return vim.g.use_eink == 0
 		end,
 	})
 	use({
 		"ntpeters/vim-better-whitespace",
-		setup = function()
+		cond = function()
 			return vim.g.use_eink == 0
 		end,
 	})
 
 	use({
 		"morhetz/gruvbox",
+		cond = function()
+			return vim.g.use_eink == 0
+		end,
 		setup = function()
 			vim.g.gruvbox_italic = 1
-			return vim.g.use_eink == 0
 		end,
 		config = function()
 			vim.cmd("colorscheme gruvbox")
@@ -113,6 +116,36 @@ require("packer").startup(function(use)
 			vim.g.airline_extensions = {}
 		end,
 	})
+	use({
+		"lervag/vimtex",
+		setup = function()
+			vim.g.tex_flavor = "latex"
+			vim.g.vimtex_compiler_latexmk = {
+				["callback"] = 1,
+				["continuous"] = 1,
+				["executable"] = "latexmk",
+				["hooks"] = {},
+				["options"] = {
+					"-verbose",
+					"-file-line-error",
+					"-synctex=1",
+					"-interaction=nonstopmode",
+				},
+			}
+			if vim.fn.has("win32") then
+				vim.g.vimtex_view_general_viewer = "SumatraPDF"
+				vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
+			else
+				vim.g.vimtex_view_method = "zathura"
+				vim.g.vimtex_view_zathura_options = "-c ~/opt/cli_tool_configs"
+			end
+			if vim.loop.os_uname().sysname == "Darwin" then
+				vim.g.vimtex_view_method = "sioyek"
+				vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
+			end
+		end,
+		ft = "tex",
+	})
 	use("tpope/vim-commentary")
 	use("wellle/targets.vim")
 	use("dstein64/vim-startuptime")
@@ -130,9 +163,11 @@ end
 if vim.g.use_eink == 0 then
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = "all",
+		ignore_install = { "latex" },
 		auto_install = true,
 		highlight = {
 			enable = true,
+			disable = { "latex" },
 
 			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
