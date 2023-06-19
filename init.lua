@@ -106,14 +106,6 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"dag/vim-fish",
-		ft = "fish",
-	})
-	use({
-		"wlangstroth/vim-racket",
-		ft = "scheme",
-	})
-	use({
 		"vim-airline/vim-airline",
 		setup = function()
 			vim.g.airline_section_b = ""
