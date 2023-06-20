@@ -1,5 +1,9 @@
 vim.o.encoding = "utf-8"
 
+-- disable netrw at the very start of your init.lua for nvim-tree.lua
+vim.g.loaded_netrw = "1"
+vim.g.loaded_netrwPlugin = "1"
+
 config = vim.env.MYVIMRC
 config_dir = vim.fn.fnamemodify(config, ":p:h")
 vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
@@ -72,9 +76,6 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
-vim.g.loaded_netrw = "1"
-vim.g.loaded_netrwPlugin = "1"
 
 require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
@@ -213,43 +214,45 @@ config_update_tag_path = config_dir .. "/.update_tag"
 if
 	not vim.fn.filereadable(config_update_tag_path)
 	or vim.fn.getftime(config) > vim.fn.getftime(config_update_tag_path)
-	or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path) + 3600 * 24 * 30
 then
 	vim.cmd("PackerSync")
 	vim.fn.writefile({}, config_update_tag_path)
 end
 
-if vim.g.use_eink == 0 then
-	require("nvim-treesitter.configs").setup({
-		ensure_installed = "all",
-		ignore_install = { "latex" },
-		auto_install = true,
-		highlight = {
-			enable = true,
-			disable = { "latex" },
+require("nvim-treesitter.configs").setup({
+	ensure_installed = {
+		"c",
+		"lua",
+		"vim",
+		"vimdoc",
+		"query",
+		"bash",
+		"bibtex",
+		"cmake",
+		"comment",
+		"cpp",
+		"cuda",
+		"diff",
+		"dockerfile",
+		"fish",
+		"go",
+		"json",
+		"python",
+		"thrift",
+		"yaml",
+	},
+	auto_install = true,
+	highlight = {
+		enable = not vim.g.use_eink,
+		disable = { "latex" },
 
-			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-			-- Using this option may slow down your editor, and you may see some duplicate highlights.
-			-- Instead of true it can also be a list of languages
-			additional_vim_regex_highlighting = false,
-		},
-	})
-else
-	require("nvim-treesitter.configs").setup({
-		ensure_installed = "all",
-		auto_install = true,
-		highlight = {
-			enable = false,
-
-			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-			-- Using this option may slow down your editor, and you may see some duplicate highlights.
-			-- Instead of true it can also be a list of languages
-			additional_vim_regex_highlighting = false,
-		},
-	})
-end
+		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+		-- Using this option may slow down your editor, and you may see some duplicate highlights.
+		-- Instead of true it can also be a list of languages
+		additional_vim_regex_highlighting = false,
+	},
+})
 require("nvim-tree").setup()
 
 -- provider
