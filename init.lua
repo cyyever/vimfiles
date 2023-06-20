@@ -165,7 +165,7 @@ require("packer").startup(function(use)
 				vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
 			end
 			if vim.loop.os_uname().sysname == "Linux" then
-                vim.g.vimtex_view_method = "zathura"
+				vim.g.vimtex_view_method = "zathura"
 				vim.g.vimtex_view_zathura_options = "-c ~/opt/cli_tool_configs"
 			end
 			if vim.loop.os_uname().sysname == "Darwin" then
@@ -212,7 +212,7 @@ end)
 config_update_tag_path = config_dir .. "/.update_tag"
 if
 	not vim.fn.filereadable(config_update_tag_path)
-	or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path) + 3600
+	or vim.fn.localtime() > vim.fn.getftime(config_update_tag_path) + 3600 * 24 * 30
 then
 	vim.cmd("PackerSync")
 	vim.fn.writefile({}, config_update_tag_path)
