@@ -163,8 +163,9 @@ require("packer").startup(function(use)
 			if vim.fn.has("win32") then
 				vim.g.vimtex_view_general_viewer = "SumatraPDF"
 				vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
-			else
-				vim.g.vimtex_view_method = "zathura"
+			end
+			if vim.loop.os_uname().sysname == "Linux" then
+                vim.g.vimtex_view_method = "zathura"
 				vim.g.vimtex_view_zathura_options = "-c ~/opt/cli_tool_configs"
 			end
 			if vim.loop.os_uname().sysname == "Darwin" then
