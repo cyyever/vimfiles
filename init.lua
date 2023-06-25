@@ -161,7 +161,7 @@ require("packer").startup(function(use)
 					"-interaction=nonstopmode",
 				},
 			}
-			if vim.fn.has("win32") then
+			if vim.loop.os_uname().sysname == "Windows_NT" then
 				vim.g.vimtex_view_general_viewer = "SumatraPDF"
 				vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
 			end
