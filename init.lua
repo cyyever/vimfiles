@@ -47,8 +47,8 @@ vim.o.backupdir = back_dir
 vim.o.number = true
 
 --缩进宽度
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
 vim.o.expandtab = true
 
 --关键字搜索当前目录
