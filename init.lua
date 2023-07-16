@@ -96,11 +96,6 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"PProvost/vim-ps1",
-		ft = "ps1",
-	})
-
-	use({
 		"luochen1990/rainbow",
 		cond = function()
 			return vim.g.use_eink == 0
