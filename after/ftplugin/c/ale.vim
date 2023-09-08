@@ -1,4 +1,5 @@
-let b:ale_linters=  ['clang', 'clangd', 'clangtidy',  'flawfinder' , 'gcc','pvsstudio']
+" let b:ale_linters=  ['clang', 'clangd', 'clangtidy',  'flawfinder' , 'gcc','pvsstudio']
+let b:ale_linters=  []
 let b:ale_c_gcc_options = '-std=c11 -Wall -Wextra -fmax-errors=1 -fopenmp'
 let b:ale_c_clang_options = '-std=c11 -Weverything  -Wno-padded -Wno-strict-prototypes -Wno-double-promotion -ferror-limit=1 -Wno-sign-conversion -Wno-missing-prototypes -Wno-implicit-float-conversion -Wno-float-conversion -fopenmp'
 let b:ale_c_flawfinder_minlevel=4
