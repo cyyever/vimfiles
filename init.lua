@@ -253,7 +253,6 @@ require("nvim-tree").setup()
 -- provider
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
 
 if vim.fn.has("win32") then
 	vim.g.python3_host_prog = vim.fn.exepath("python")
