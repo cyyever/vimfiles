@@ -254,10 +254,6 @@ require("nvim-tree").setup()
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-if vim.fn.has("win32") then
-	vim.g.python3_host_prog = vim.fn.exepath("python")
-end
-
 vim.o.mouse = "r"
 
 vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
