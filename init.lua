@@ -161,8 +161,8 @@ require("packer").startup(function(use)
 				vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
 			end
 			if vim.loop.os_uname().sysname == "Linux" then
-				vim.g.vimtex_view_method = "zathura"
-				vim.g.vimtex_view_zathura_options = "-c ~/opt/cli_tool_configs"
+				vim.g.vimtex_view_method = "zathura_simple"
+				vim.g.vimtex_view_zathura_simple_options = "-c ~/opt/cli_tool_configs"
 			end
 			if vim.loop.os_uname().sysname == "Darwin" then
 				vim.g.vimtex_view_method = "sioyek"
