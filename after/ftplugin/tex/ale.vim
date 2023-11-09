@@ -9,7 +9,7 @@ if filereadable(b:textidote_jar)
   let b:ale_tex_textidote_check_lang='en'
 
   let b:removed_macros=['derivative','approxvar']
-  let b:ale_tex_textidote_options='-jar '.b:textidote_jar.' --no-color --output singleline --ignore "lt:en:MORFOLOGIK_RULE_EN_US,sh:seclen,sh:nobreak"  --remove-macros "'.join(b:removed_macros, ',').'" --dict '.b:dict_file
+  let b:ale_tex_textidote_options='-jar '.b:textidote_jar.' --no-color --output singleline --check en --read-all --ignore "lt:en:MORFOLOGIK_RULE_EN_US,sh:seclen,sh:nobreak"  --remove-macros "'.join(b:removed_macros, ',').'" --dict '.b:dict_file
 endif
 
 let b:ale_tex_latexindent_options="-y=\"defaultIndent:'  '\""
