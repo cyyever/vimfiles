@@ -64,66 +64,99 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.tagcase = "match"
 
-local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-		vim.cmd([[packadd packer.nvim]])
-		return true
-	end
-	return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = function()
-			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-			ts_update()
-		end,
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
 	})
-	use({
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+
+			configs.setup({
+				ensure_installed = {
+					"c",
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"bash",
+					"bibtex",
+					"cmake",
+					"comment",
+					"cpp",
+					"cuda",
+					"diff",
+					"dockerfile",
+					"fish",
+					"go",
+					"json",
+					"python",
+					"thrift",
+					"yaml",
+				},
+				auto_install = true,
+				highlight = {
+					enable = not vim.g.use_eink,
+					disable = { "latex" },
+
+					-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+					-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+					-- Using this option may slow down your editor, and you may see some duplicate highlights.
+					-- Instead of true it can also be a list of languages
+					additional_vim_regex_highlighting = false,
+				},
+			})
+		end,
+	},
+	{
 		"nvim-tree/nvim-tree.lua",
-		requires = {
+		dependencies = {
 			"nvim-tree/nvim-web-devicons", -- optional
 		},
 		config = function()
 			vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
 		end,
-	})
-	use({
+	},
+	{
 		"luochen1990/rainbow",
 		cond = function()
 			return vim.g.use_eink == 0
 		end,
-	})
-	use({
+	},
+	{
 		"ntpeters/vim-better-whitespace",
 		cond = function()
 			return vim.g.use_eink == 0
 		end,
-	})
-
-	use({
+	},
+	{
 		"morhetz/gruvbox",
 		cond = function()
 			return vim.g.use_eink == 0
 		end,
-		setup = function()
+		init = function()
 			vim.g.gruvbox_italic = 1
 		end,
 		config = function()
 			vim.cmd("colorscheme gruvbox")
 		end,
-	})
-	use({
+	},
+{
 		"neoclide/coc.nvim",
 		branch = "release",
-		run = function()
+		build= function()
 			vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
 		end,
 		config = function()
@@ -131,18 +164,18 @@ require("packer").startup(function(use)
 			vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
 			vim.keymap.set("n", "<Leader>s", '<cmd>call CocActionAsync("doHover")<cr>')
 		end,
-	})
-	use({
+	},
+	{
 		"vim-airline/vim-airline",
-		setup = function()
+		init = function()
 			vim.g.airline_section_b = ""
 			vim.g.airline_section_x = ""
 			vim.g.airline_extensions = {}
 		end,
-	})
-	use({
+	},
+  {
 		"lervag/vimtex",
-		setup = function()
+		init = function()
 			vim.g.tex_flavor = "latex"
 			vim.g.vimtex_compiler_latexmk = {
 				["callback"] = 1,
@@ -178,11 +211,12 @@ require("packer").startup(function(use)
 			vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 		end,
 		ft = "tex",
-	})
-	use({
+	},
+
+	{
 		"cyyever/ale",
 		branch = "cyy",
-		setup = function()
+		init= function()
 			vim.g.ale_lint_on_text_changed = "never"
 			vim.g.ale_echo_msg_format = "[%linter%] %code: %%s"
 			vim.g.ale_fixers = { ["*"] = { "remove_trailing_lines", "trim_whitespace" } }
@@ -199,55 +233,20 @@ require("packer").startup(function(use)
 				{ group = mygroup, command = "if empty(&buftype) | lclose | endif" }
 			)
 		end,
-	})
-	use("wellle/targets.vim")
-	use("dstein64/vim-startuptime")
-	use("jiangmiao/auto-pairs")
-end)
+	},
+	"wellle/targets.vim",
+	"dstein64/vim-startuptime",
+	"jiangmiao/auto-pairs",
+})
+
 config_update_tag_path = config_dir .. "/.update_tag"
 if
 	not vim.fn.filereadable(config_update_tag_path)
 	or vim.fn.getftime(config) > vim.fn.getftime(config_update_tag_path)
 then
-	vim.cmd("PackerSync")
+  require("lazy").sync()
 	vim.fn.writefile({}, config_update_tag_path)
 end
-
-require("nvim-treesitter.configs").setup({
-	ensure_installed = {
-		"c",
-		"lua",
-		"vim",
-		"vimdoc",
-		"query",
-		"bash",
-		"bibtex",
-		"cmake",
-		"comment",
-		"cpp",
-		"cuda",
-		"diff",
-		"dockerfile",
-		"fish",
-		"go",
-		"json",
-		"python",
-		"thrift",
-		"yaml",
-	},
-	auto_install = true,
-	highlight = {
-		enable = not vim.g.use_eink,
-		disable = { "latex" },
-
-		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-		-- Using this option may slow down your editor, and you may see some duplicate highlights.
-		-- Instead of true it can also be a list of languages
-		additional_vim_regex_highlighting = false,
-	},
-})
-require("nvim-tree").setup()
 
 -- provider
 vim.g.loaded_perl_provider = 0
