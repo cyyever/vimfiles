@@ -1,25 +1,11 @@
 scriptencoding utf-8
 
 
-
 " au BufReadPost * if &ma && &fenc !='utf-8' | set fenc=utf-8 | endif
 
 if &diff
   au VimEnter * if &diff | execute 'windo set wrap' | endif
 endif
-
-
-" let &backupdir=s:back_dir
-
-" set path
-" let $PATH ='/usr/bin/vendor_perl:'.$HOME.'/opt/python/bin:'.$HOME.'/opt/node_modules/.bin:'.$HOME.'/opt/bin:'.$HOME.'/opt/gopath/bin:'.$HOME.'/opt:'.$HOME.'/.local/bin:'.$PATH
-" if has('win32')
-"   let $PATH= substitute($PATH, '/', '\','g')
-"   let $PATH= substitute($PATH, ':\+', ';','g')
-" else
-"   let $PATH= substitute($PATH, ':\+', ':','g')
-" endif
-
 
 
 "打开文件跳转到上次阅读地方且居中
@@ -38,10 +24,6 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
 endif
 set spell
 au TermOpen * setlocal nospell
-
-" 终端模式
-tnoremap <Esc> <C-\><C-n>
-
 
 
 " let s:languagetool_jar=$HOME.'/opt/languagetool/languagetool-commandline.jar'
