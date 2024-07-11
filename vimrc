@@ -51,7 +51,6 @@ tnoremap <Esc> <C-\><C-n>
 " endif
 " let g:ale_textlint_options='--rule languagetool'
 
-" Plug 'cyyever/ale', { 'branch': 'cyy' }
 
 
 
