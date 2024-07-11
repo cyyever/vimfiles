@@ -4,8 +4,8 @@ vim.o.encoding = "utf-8"
 vim.g.loaded_netrw = "1"
 vim.g.loaded_netrwPlugin = "1"
 
--- disable clipboard.vim because it slows down the startup of neovim
-vim.g.loaded_clipboard_provider= "1"
+-- -- disable clipboard.vim because it slows down the startup of neovim
+-- vim.g.loaded_clipboard_provider= "1"
 
 config = vim.env.MYVIMRC
 config_dir = vim.fn.fnamemodify(config, ":p:h")
@@ -37,7 +37,7 @@ vim.opt.diffopt:append("horizontal,algorithm:patience")
 vim.opt.path:append(vim.env.HOME .. "/opt/bin")
 vim.opt.path:append(vim.env.HOME .. "/opt/include")
 
-vim.o.clipboard = "unnamed"
+-- vim.o.clipboard = "unnamed"
 
 --备份文件
 vim.o.backup = true
