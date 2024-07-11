@@ -203,7 +203,6 @@ require("packer").startup(function(use)
 			)
 		end,
 	})
-	use("tpope/vim-commentary")
 	use("wellle/targets.vim")
 	use("dstein64/vim-startuptime")
 	use("jiangmiao/auto-pairs")
