@@ -104,22 +104,21 @@ require("lazy").setup({
 			end,
 		},
 
-		-- 	{
-		-- 		"neoclide/coc.nvim",
-		-- 		branch = "release",
-		-- 		build = "npm ci",
-		-- 		dependencies = {
-		-- 			"nvim-treesitter/nvim-treesitter",
-		-- 		},
-		-- 		--      function()
-		-- 		-- 	vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
-		-- 		-- end,
-		-- 		config = function(plugin)
-		-- 			vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')
-		-- 			vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
-		-- 			vim.keymap.set("n", "<Leader>s", '<cmd>call CocActionAsync("doHover")<cr>')
-		-- 		end,
-		-- 	},
+		{
+			"neoclide/coc.nvim",
+			branch = "release",
+			dependencies = {
+				"nvim-treesitter/nvim-treesitter",
+			},
+			build = function()
+				vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
+			end,
+			config = function(plugin)
+				vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')
+				vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
+				vim.keymap.set("n", "<Leader>s", '<cmd>call CocActionAsync("doHover")<cr>')
+			end,
+		},
 		{
 			"lervag/vimtex",
 			init = function()
