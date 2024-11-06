@@ -111,7 +111,7 @@ require("lazy").setup({
 				"nvim-treesitter/nvim-treesitter",
 			},
 			build = function()
-				vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp")
+				vim.cmd("CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json")
 			end,
 			config = function(plugin)
 				vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')

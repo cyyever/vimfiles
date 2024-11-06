@@ -1,8 +1,6 @@
 {
-  "coc.preferences.enableFloatHighlight": false,
-  "powershell.integratedConsole.showOnStartup": false,
-  "python.linting.enabled": false,
-  "python.setInterpreter": "~/opt/python/bin/python3",
+  "diagnostic.enable": true,
+  "diagnostic.displayByAle": true,
   "suggest.removeDuplicateItems": true,
   "languageserver": {
     "racket-languageserver": {
