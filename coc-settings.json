@@ -1,5 +1,4 @@
 {
-  "diagnostic.enable": true,
   "diagnostic.displayByAle": true,
   "suggest.removeDuplicateItems": true,
   "languageserver": {
