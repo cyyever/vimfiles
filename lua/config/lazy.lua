@@ -107,6 +107,7 @@ require("lazy").setup({
 		{
 			"neoclide/coc.nvim",
 			branch = "master",
+			enabled = (not vim.loop.os_uname().sysname == "Darwin"),
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
 			},
