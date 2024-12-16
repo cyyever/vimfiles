@@ -106,7 +106,7 @@ require("lazy").setup({
 
 		{
 			"neoclide/coc.nvim",
-			branch = "release",
+			branch = "master",
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
 			},
