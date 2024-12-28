@@ -107,15 +107,14 @@ require("lazy").setup({
 		{
 			"neoclide/coc.nvim",
 			branch = "master",
-			enabled = (not vim.loop.os_uname().sysname == "Darwin"),
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
 			},
-			build = function()
-				vim.cmd(
-					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git"
-				)
-			end,
+			-- build = function()
+			-- 	vim.cmd(
+			-- 		"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git"
+			-- 	)
+			-- end,
 			config = function(plugin)
 				vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')
 				vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
