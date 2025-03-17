@@ -43,6 +43,7 @@ require("lazy").setup({
 						"go",
 						"json",
 						"python",
+						"scheme",
 						"thrift",
 						"yaml",
 					},
