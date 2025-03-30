@@ -126,11 +126,12 @@ require("lazy").setup({
 			"lervag/vimtex",
 			lazy = false, -- we don't want to lazy load VimTeX
 			init = function()
-				vim.g.vimtex_syntax_enabled = false
-				vim.g.tex_flavor = "latex"
+				-- vim.g.vimtex_syntax_enabled = false
+				-- vim.g.tex_flavor = "latex"
 				vim.g.vimtex_compiler_latexmk = {
 					["callback"] = 1,
 					["continuous"] = 1,
+          ["aux_dir"] = ".build",
 					["executable"] = "latexmk",
 					["hooks"] = {},
 					["options"] = {
