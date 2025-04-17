@@ -9,6 +9,7 @@ cyyever
 dataset
 DeepIR
 DenseNet
+dequantization
 dequantize
 discretization
 discretized
