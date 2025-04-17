@@ -171,9 +171,6 @@ require("lazy").setup({
 		{
 			"psliwka/vim-dirtytalk",
 			build = ":DirtytalkUpdate",
-			config = function()
-				vim.opt.spelllang = { "en", "programming" }
-			end,
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
