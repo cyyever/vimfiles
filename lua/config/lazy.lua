@@ -128,6 +128,7 @@ require("lazy").setup({
 			init = function()
 				vim.g.vimtex_syntax_enabled = false
 				-- vim.g.tex_flavor = "latex"
+				vim.g.vimtex_compiler_engine = "lualatex"
 				vim.g.vimtex_compiler_latexmk = {
 					["callback"] = 1,
 					["continuous"] = 1,
