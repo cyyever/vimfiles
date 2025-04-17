@@ -17,12 +17,12 @@ set termguicolors
 
 
 " 拼写检查
-let &spellfile=expand('<sfile>:p:h') . '/spell/cyy_dictionary.utf-8.add'
+let &spellfile=expand('<sfile>:p:h') . '/spell/cyymine.utf-8.add'
 if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&spellfile) > getftime(&spellfile . '.spl'))
   exec 'mkspell! ' . fnameescape(&spellfile)
 endif
 set spell
-set spelllang=en,cjk,programming,cyy_dictionary
+set spelllang=en,cjk,programming,cyymine
 au TermOpen * setlocal nospell
 
 
