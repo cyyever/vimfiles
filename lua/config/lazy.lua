@@ -46,6 +46,8 @@ require("lazy").setup({
 						"scheme",
 						"thrift",
 						"yaml",
+            "bibtex",
+            "latex",
 					},
 					auto_install = true,
 					sync_install = false,
