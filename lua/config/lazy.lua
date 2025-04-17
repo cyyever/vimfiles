@@ -46,8 +46,8 @@ require("lazy").setup({
 						"scheme",
 						"thrift",
 						"yaml",
-            "bibtex",
-            "latex",
+						"bibtex",
+						"latex",
 					},
 					auto_install = true,
 					sync_install = false,
@@ -167,6 +167,13 @@ require("lazy").setup({
 				vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 			end,
 			ft = "tex",
+		},
+		{
+			"psliwka/vim-dirtytalk",
+			build = ":DirtytalkUpdate",
+			config = function()
+				vim.opt.spelllang = { "en", "programming" }
+			end,
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
