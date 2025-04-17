@@ -115,7 +115,7 @@ require("lazy").setup({
 			},
 			build = function()
 				vim.cmd(
-					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-spell-checker"
+					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git"
 				)
 			end,
 			config = function(plugin)
@@ -171,6 +171,11 @@ require("lazy").setup({
 		{
 			"psliwka/vim-dirtytalk",
 			build = ":DirtytalkUpdate",
+		},
+		{
+			"ravibrock/spellwarn.nvim",
+			event = "VeryLazy",
+			config = true,
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
