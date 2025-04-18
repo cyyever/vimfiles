@@ -172,11 +172,6 @@ require("lazy").setup({
 			"psliwka/vim-dirtytalk",
 			build = ":DirtytalkUpdate",
 		},
-		{
-			"ravibrock/spellwarn.nvim",
-			event = "VeryLazy",
-			config = true,
-		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
