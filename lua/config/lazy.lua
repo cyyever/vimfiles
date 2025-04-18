@@ -134,8 +134,8 @@ require("lazy").setup({
 				vim.g.vimtex_compiler_latexmk = {
 					["callback"] = 1,
 					["continuous"] = 1,
-					["aux_dir"] = ".build",
-					["out_dir"] = ".out",
+					-- ["aux_dir"] = ".build",
+					-- ["out_dir"] = ".out",
 					["executable"] = "latexmk",
 					["hooks"] = {},
 					["options"] = {
