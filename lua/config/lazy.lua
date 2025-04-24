@@ -165,7 +165,6 @@ require("lazy").setup({
 				)
 				vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 			end,
-			ft = "tex",
 		},
 		{
 			"psliwka/vim-dirtytalk",
