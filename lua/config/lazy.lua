@@ -56,7 +56,6 @@ require("lazy").setup({
 			end,
 		},
 		{ "ntpeters/vim-better-whitespace" },
-		{ "luochen1990/rainbow" },
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
 		{ "wellle/targets.vim" },
@@ -93,18 +92,19 @@ require("lazy").setup({
 				)
 			end,
 		},
-		{
-			"nvim-tree/nvim-tree.lua",
-			version = "*",
-			lazy = false,
-			dependencies = {
-				"nvim-tree/nvim-web-devicons", -- optional
-			},
-			config = function(plugin)
-				require("nvim-tree").setup({})
-				vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
-			end,
-		},
+		{ "nvim-tree/nvim-web-devicons", opts = {} },
+		-- {
+		-- 	"nvim-tree/nvim-tree.lua",
+		-- 	version = "*",
+		-- 	lazy = false,
+		-- 	dependencies = {
+		-- 		"nvim-tree/nvim-web-devicons", -- optional
+		-- 	},
+		-- 	config = function(plugin)
+		-- 		require("nvim-tree").setup({})
+		-- 		vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
+		-- 	end,
+		-- },
 
 		{
 			"neoclide/coc.nvim",
@@ -172,8 +172,6 @@ require("lazy").setup({
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "gruvbox" } },
 	-- automatically check for plugin updates
 	checker = { enabled = false },
 })
