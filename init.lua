@@ -64,8 +64,6 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.tagcase = "match"
 
-vim.g.gruvbox_italic = 1
-vim.cmd("colorscheme gruvbox")
 -- provider
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -80,6 +78,9 @@ vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 
 if vim.g.use_eink == 1 then
 	vim.cmd("colorscheme eink")
+else
+	vim.o.background = "dark" -- or "light" for light mode
+	vim.cmd([[colorscheme gruvbox]])
 end
 
 -- config_update_tag_path = config_dir .. "/.update_tag"
