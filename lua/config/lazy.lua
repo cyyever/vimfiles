@@ -114,7 +114,7 @@ require("lazy").setup({
 			},
 			build = function()
 				vim.cmd(
-					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-bibtex coc-fish"
+					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-fish"
 				)
 			end,
 			config = function(plugin)
