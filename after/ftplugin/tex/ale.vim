@@ -8,7 +8,7 @@ if filereadable(b:textidote_jar)
   let b:dict_file=&spellfile
   let b:ale_tex_textidote_check_lang='en'
 
-  let b:removed_macros=['derivative','approxvar']
+  let b:removed_macros=['methodname','sysname']
   let b:ale_tex_textidote_options='-jar '.b:textidote_jar.' --no-color --output singleline --check en --read-all --ignore "sh:seclen,sh:nobreak,sh:008,sh:figmag"  --remove-macros "'.join(b:removed_macros, ',').'" --dict '.b:dict_file
 endif
 
