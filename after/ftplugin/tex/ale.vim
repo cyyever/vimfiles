@@ -2,7 +2,7 @@ let b:ale_linters=  ['alex', 'chktex' , 'textlint','textidote']
 let b:ale_fixers= ['latexindent','remove_trailing_lines','trim_whitespace']
 
 let b:textidote_jar=$HOME.'/opt/textidote/textidote.jar'
-let b:ale_tex_chktex_options='-n 1 -n 24 -n 44'
+let b:ale_tex_chktex_options=' -l '.$HOME.'/opt/cli_tool_configs/chktexrc'
 if filereadable(b:textidote_jar)
   let b:ale_tex_textidote_executable='java'
   let b:dict_file=&spellfile
