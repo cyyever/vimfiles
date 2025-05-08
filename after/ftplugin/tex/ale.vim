@@ -6,7 +6,7 @@ let b:ale_tex_chktex_options=' -l '.$HOME.'/opt/cli_tool_configs/chktexrc'
 if filereadable(b:textidote_jar)
   let b:ale_tex_textidote_executable='java'
   let b:dict_file=&spellfile
-  let b:ale_tex_textidote_check_lang='en'
+  let b:ale_tex_textidote_check_lang='en_UK'
 
   let b:removed_macros=['methodname','sysname']
   let b:ale_tex_textidote_options='-jar '.b:textidote_jar.' --no-color --output singleline --check en --read-all --ignore "sh:seclen,sh:nobreak,sh:008,sh:figmag,sh:tabmag,sh:secmag,sh:chamag"  --remove-macros "'.join(b:removed_macros, ',').'" --dict '.b:dict_file
