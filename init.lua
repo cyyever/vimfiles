@@ -1,4 +1,5 @@
 vim.o.encoding = "utf-8"
+vim.opt.fileformats = "unix,dos"
 vim.g.mapleader = ";"
 require("config.lazy")
 
