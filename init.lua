@@ -33,6 +33,7 @@ vim.opt.diffopt:append("horizontal,algorithm:patience")
 
 -- 增加检索路径
 vim.opt.path:append(vim.env.HOME .. "/opt/bin")
+vim.opt.path:append(vim.env.HOME .. "/opt/python/bin")
 vim.opt.path:append(vim.env.HOME .. "/.local/bin")
 vim.opt.path:append(vim.env.HOME .. "/opt/include")
 
