@@ -61,6 +61,7 @@ require("lazy").setup({
 		{ "wellle/targets.vim" },
 		{ "dstein64/vim-startuptime" },
 		{ "jiangmiao/auto-pairs" },
+		{ "neovim/nvim-lspconfig" },
 
 		{
 			"vim-airline/vim-airline",
