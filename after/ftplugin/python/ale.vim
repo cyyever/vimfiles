@@ -27,7 +27,7 @@ if has('win32')
 endif
 
 let b:ale_fixers= ['ruff_format']
-let b:ale_linters= ['mypy', 'pylint','pyflakes','pyre','ruff']
+let b:ale_linters= ['mypy', 'pylint','pyflakes','ruff']
 let s:pylint_config_file= $HOME.'/opt/cli_tool_configs/pylintrc'
 let b:ale_python_pylint_options = '--rcfile='.s:pylint_config_file
 let s:pycodestyle_config_file= $HOME.'/opt/cli_tool_configs/pycodestyle'
