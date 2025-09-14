@@ -69,6 +69,8 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 if vim.loop.os_uname().sysname == "Windows_NT" then
 	vim.g.python3_host_prog = "python"
+else
+  vim.g.python3_host_prog = "python3"
 end
 vim.g.node_host_prog = vim.env.HOME .. "/opt/node_modules/neovim/bin/cli.js"
 
