@@ -61,6 +61,7 @@ require("lazy").setup({
 		{ "wellle/targets.vim" },
 		{ "dstein64/vim-startuptime" },
 		{ "jiangmiao/auto-pairs" },
+		{ "neovim/nvim-lspconfig" },
 
 		{
 			"vim-airline/vim-airline",
@@ -93,19 +94,18 @@ require("lazy").setup({
 			end,
 		},
 		{ "nvim-tree/nvim-web-devicons", opts = {} },
-		-- {
-		-- 	"nvim-tree/nvim-tree.lua",
-		-- 	version = "*",
-		-- 	lazy = false,
-		-- 	dependencies = {
-		-- 		"nvim-tree/nvim-web-devicons", -- optional
-		-- 	},
-		-- 	config = function(plugin)
-		-- 		require("nvim-tree").setup({})
-		-- 		vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
-		-- 	end,
-		-- },
-
+		{
+			"nvim-tree/nvim-tree.lua",
+			version = "*",
+			lazy = false,
+			dependencies = {
+				"nvim-tree/nvim-web-devicons",
+			},
+			config = function()
+				require("nvim-tree").setup({})
+				vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
+			end,
+		},
 		{
 			"neoclide/coc.nvim",
 			branch = "release",
@@ -128,7 +128,7 @@ require("lazy").setup({
 			lazy = false, -- we don't want to lazy load VimTeX
 			init = function()
 				vim.g.vimtex_syntax_enabled = false
-				-- vim.g.tex_flavor = "latex"
+				vim.g.tex_flavor = "latex"
 				vim.g.vimtex_compiler_engine = "lualatex"
 				vim.g.vimtex_compiler_latexmk = {
 					["callback"] = 1,
