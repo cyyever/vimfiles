@@ -42,6 +42,8 @@ require("lazy").setup({
 						"fish",
 						"go",
 						"json",
+						"markdown",
+						"jinja",
 						"python",
 						"scheme",
 						"thrift",
@@ -62,7 +64,6 @@ require("lazy").setup({
 		{ "dstein64/vim-startuptime" },
 		{ "jiangmiao/auto-pairs" },
 		{ "neovim/nvim-lspconfig" },
-
 		{
 			"vim-airline/vim-airline",
 			init = function()
