@@ -26,6 +26,7 @@ require("lazy").setup({
 
 				configs.setup({
 					ensure_installed = {
+						"bibtex",
 						"c",
 						"lua",
 						"vim",
