@@ -63,7 +63,6 @@ require("lazy").setup({
 		{ "wellle/targets.vim" },
 		{ "dstein64/vim-startuptime" },
 		{ "jiangmiao/auto-pairs" },
-		{ "neovim/nvim-lspconfig" },
 		{
 			"vim-airline/vim-airline",
 			init = function()
@@ -115,7 +114,7 @@ require("lazy").setup({
 			},
 			build = function()
 				vim.cmd(
-					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-fish"
+					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-fish coc-yaml coc-lua"
 				)
 			end,
 			config = function(plugin)
