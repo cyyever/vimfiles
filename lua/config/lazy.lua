@@ -171,6 +171,11 @@ require("lazy").setup({
 			"psliwka/vim-dirtytalk",
 			build = ":DirtytalkUpdate",
 		},
+		{
+			"MeanderingProgrammer/render-markdown.nvim",
+			dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+			opts = {},
+		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- automatically check for plugin updates
