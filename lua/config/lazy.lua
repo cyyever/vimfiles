@@ -42,7 +42,7 @@ require("lazy").setup({
 						"dockerfile",
 						"fish",
 						"go",
-            "html",
+						"html",
 						"json",
 						"jinja",
 						"markdown",
@@ -84,6 +84,8 @@ require("lazy").setup({
 				vim.g.ale_fix_on_save = 1
 				vim.g.ale_open_list = 1
 				vim.g.ale_list_window_size = 5
+				vim.g.ale_set_loclist = 0
+				vim.g.ale_set_quickfix = 1
 				vim.g.ale_linter_aliases = { ["ps1"] = "powershell" }
 			end,
 
