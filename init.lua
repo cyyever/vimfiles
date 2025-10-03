@@ -54,6 +54,8 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
+vim.keymap.set("n", "n", "nzz", { noremap = true })
+
 --关键字搜索当前目录
 
 vim.opt.complete:append("k*")
@@ -73,7 +75,7 @@ vim.g.loaded_ruby_provider = 0
 if vim.loop.os_uname().sysname == "Windows_NT" then
 	vim.g.python3_host_prog = "python"
 else
-  vim.g.python3_host_prog = "python3"
+	vim.g.python3_host_prog = "python3"
 end
 vim.g.node_host_prog = vim.env.HOME .. "/opt/node_modules/neovim/bin/cli.js"
 
