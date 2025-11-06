@@ -59,7 +59,6 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "ntpeters/vim-better-whitespace" },
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
 		{ "wellle/targets.vim" },

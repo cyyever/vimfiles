@@ -19,6 +19,8 @@ else
 	vim.g.use_eink = 0
 end
 
+vim.o.list = true
+
 -- 设置写入文件编码
 vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
 vim.o.fileencoding = "utf-8"
