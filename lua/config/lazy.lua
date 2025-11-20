@@ -46,6 +46,7 @@ require("lazy").setup({
 						"json",
 						"jinja",
 						"markdown",
+						"markdown_inline",
 						"python",
 						"scheme",
 						"thrift",
