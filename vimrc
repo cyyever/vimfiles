@@ -22,7 +22,7 @@ if filereadable(&spellfile) && (!filereadable(&spellfile . '.spl') || getftime(&
   exec 'mkspell! ' . fnameescape(&spellfile)
 endif
 set spell
-set spelllang=en,cjk,programming,cyymine
+set spelllang=en,cjk,cyymine
 au TermOpen * setlocal nospell
 
 
