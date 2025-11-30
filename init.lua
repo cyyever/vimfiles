@@ -86,7 +86,7 @@ vim.o.mouse = "r"
 vim.o.termguicolors = true
 
 if vim.g.use_eink == 1 then
-	vim.cmd("colorscheme eink")
+	vim.cmd([[colorscheme eink]])
 else
 	vim.o.background = "dark" -- or "light" for light mode
 	vim.cmd([[colorscheme gruvbox]])
