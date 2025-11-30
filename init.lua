@@ -82,8 +82,8 @@ end
 vim.g.node_host_prog = vim.env.HOME .. "/opt/node_modules/neovim/bin/cli.js"
 
 vim.o.mouse = "r"
-
-vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
+-- 颜色方案
+vim.o.termguicolors = true
 
 if vim.g.use_eink == 1 then
 	vim.cmd("colorscheme eink")
@@ -92,6 +92,7 @@ else
 	vim.cmd([[colorscheme gruvbox]])
 end
 
+-- vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 -- config_update_tag_path = config_dir .. "/.update_tag"
 -- if
 -- 	not vim.fn.filereadable(config_update_tag_path)
