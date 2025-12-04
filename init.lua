@@ -92,7 +92,7 @@ else
 	vim.cmd([[colorscheme gruvbox]])
 end
 
--- vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
+vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 -- config_update_tag_path = config_dir .. "/.update_tag"
 -- if
 -- 	not vim.fn.filereadable(config_update_tag_path)
