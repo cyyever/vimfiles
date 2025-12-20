@@ -23,6 +23,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				local configs = require("nvim-treesitter.configs")
+        lazy=false,
 
 				configs.setup({
 					ensure_installed = {
