@@ -39,6 +39,8 @@ require("lazy").setup({
         "dockerfile",
         "fish",
         "go",
+        "tsx",
+        "typescript",
         "html",
         "json",
         "jinja",
