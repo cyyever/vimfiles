@@ -22,43 +22,42 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			lazy = false,
-			config = function()
-				require("nvim-treesitter.configs").setup({
-					ensure_installed = {
-						"c",
-						"lua",
-						"vim",
-						"vimdoc",
-						"query",
-						"bash",
-						"bibtex",
-						"cmake",
-						"comment",
-						"cpp",
-						"cuda",
-						"diff",
-						"dockerfile",
-						"fish",
-						"go",
-						"tsx",
-						"typescript",
-						"html",
-						"json",
-						"jinja",
-						"markdown",
-						"markdown_inline",
-						"python",
-						"scheme",
-						"thrift",
-						"yaml",
-						"latex",
-					},
-					auto_install = true,
-					sync_install = false,
-					highlight = { enable = not vim.g.use_eink },
-					indent = { enable = true },
-				})
-			end,
+			main = "nvim-treesitter.config",
+			opts = {
+				ensure_installed = {
+					"c",
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"bash",
+					"bibtex",
+					"cmake",
+					"comment",
+					"cpp",
+					"cuda",
+					"diff",
+					"dockerfile",
+					"fish",
+					"go",
+					"tsx",
+					"typescript",
+					"html",
+					"json",
+					"jinja",
+					"markdown",
+					"markdown_inline",
+					"python",
+					"scheme",
+					"thrift",
+					"yaml",
+					"latex",
+				},
+				auto_install = true,
+				sync_install = false,
+				highlight = { enable = not vim.g.use_eink },
+				indent = { enable = true },
+			},
 		},
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
@@ -110,21 +109,91 @@ require("lazy").setup({
 				vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
 			end,
 		},
+		-- LSP Support
 		{
-			"neoclide/coc.nvim",
-			branch = "release",
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter",
-			},
-			build = function()
-				vim.cmd(
-					"CocInstall coc-clangd coc-pyright coc-cmake coc-vimtex coc-powershell coc-vimlsp coc-json coc-git coc-fish coc-yaml coc-lua"
-				)
+			"williamboman/mason.nvim",
+			lazy = false,
+			config = function()
+				require("mason").setup()
 			end,
-			config = function(plugin)
-				vim.keymap.set("n", "<Leader>d", '<cmd>call CocActionAsync("jumpDefinition")<cr>')
-				vim.keymap.set("n", "<Leader>r", '<cmd>call CocActionAsync("jumpReferences")<cr>')
-				vim.keymap.set("n", "<Leader>s", '<cmd>call CocActionAsync("doHover")<cr>')
+		},
+		{
+			"williamboman/mason-lspconfig.nvim",
+			lazy = false,
+			dependencies = { "williamboman/mason.nvim" },
+			config = function()
+				require("mason-lspconfig").setup({
+					ensure_installed = {
+						"clangd",
+						"pyright",
+						"neocmake",
+						"texlab",
+						"powershell_es",
+						"vimls",
+						"jsonls",
+						"fish_lsp",
+						"yamlls",
+						"lua_ls",
+					},
+					automatic_installation = true,
+				})
+
+				-- Native Neovim 0.11 LSP configuration
+				-- Configure lua_ls with Neovim-specific settings
+				vim.lsp.config("lua_ls", {
+					settings = {
+						Lua = {
+							runtime = { version = "LuaJIT" },
+							diagnostics = { globals = { "vim" } },
+							workspace = {
+								library = vim.api.nvim_get_runtime_file("", true),
+								checkThirdParty = false,
+							},
+							telemetry = { enable = false },
+						},
+					},
+				})
+
+				-- Configure racket langserver
+				vim.lsp.config("racket_langserver", {
+					cmd = { "racket", "-l", "racket-langserver" },
+					filetypes = { "racket", "scheme" },
+				})
+
+				-- Enable all LSP servers
+				vim.lsp.enable({
+					"clangd",
+					"pyright",
+					"neocmake",
+					"texlab",
+					"powershell_es",
+					"vimls",
+					"jsonls",
+					"fish_lsp",
+					"yamlls",
+					"lua_ls",
+					"racket_langserver",
+				})
+
+				-- LSP Keymaps
+				vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
+				vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
+				vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
+
+				-- LSP attach autocmd for completion
+				vim.api.nvim_create_autocmd("LspAttach", {
+					callback = function(args)
+						local client = vim.lsp.get_client_by_id(args.data.client_id)
+						if not client then
+							return
+						end
+
+						-- Enable LSP completion (Neovim 0.11+)
+						if client.supports_method("textDocument/completion") then
+							vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+						end
+					end,
+				})
 			end,
 		},
 		{
