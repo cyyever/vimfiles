@@ -90,6 +90,12 @@ else
 	vim.cmd([[colorscheme gruvbox]])
 end
 
+-- Diagnostic virtual lines (Neovim 0.11+)
+vim.diagnostic.config({
+	virtual_text = false,
+	virtual_lines = { only_current_line = true },
+})
+
 vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
 -- config_update_tag_path = config_dir .. "/.update_tag"
 -- if
