@@ -23,7 +23,6 @@ require("lazy").setup({
 			build = ":TSUpdate",
       lazy=false,
       ensure_installed={
-        "bibtex",
         "c",
         "lua",
         "vim",
