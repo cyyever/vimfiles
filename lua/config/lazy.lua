@@ -62,14 +62,21 @@ require("lazy").setup({
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
 		{ "wellle/targets.vim" },
-		{ "dstein64/vim-startuptime" },
-		{ "jiangmiao/auto-pairs" },
+		{ "dstein64/vim-startuptime", cmd = "StartupTime" },
 		{
-			"vim-airline/vim-airline",
-			init = function()
-				vim.g.airline_section_b = ""
-				vim.g.airline_section_x = ""
-				vim.g.airline_extensions = {}
+			"echasnovski/mini.pairs",
+			event = "InsertEnter",
+			config = function()
+				require("mini.pairs").setup()
+			end,
+		},
+		{
+			"echasnovski/mini.statusline",
+			lazy = false,
+			config = function()
+				require("mini.statusline").setup({
+					use_icons = true,
+				})
 			end,
 		},
 
@@ -117,10 +124,12 @@ require("lazy").setup({
 				require("mason").setup()
 			end,
 		},
+		-- nvim-lspconfig provides default configs in lsp/ directory
+		{ "neovim/nvim-lspconfig", lazy = false },
 		{
 			"williamboman/mason-lspconfig.nvim",
 			lazy = false,
-			dependencies = { "williamboman/mason.nvim" },
+			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
 			config = function()
 				require("mason-lspconfig").setup({
 					ensure_installed = {
@@ -128,7 +137,6 @@ require("lazy").setup({
 						"pyright",
 						"neocmake",
 						"texlab",
-						"powershell_es",
 						"vimls",
 						"jsonls",
 						"fish_lsp",
@@ -138,58 +146,43 @@ require("lazy").setup({
 					automatic_installation = true,
 				})
 
-				-- Native Neovim 0.11 LSP configuration
-				-- Configure lua_ls with Neovim-specific settings
-				vim.lsp.config("lua_ls", {
-					settings = {
-						Lua = {
-							runtime = { version = "LuaJIT" },
-							diagnostics = { globals = { "vim" } },
-							workspace = {
-								library = vim.api.nvim_get_runtime_file("", true),
-								checkThirdParty = false,
-							},
-							telemetry = { enable = false },
-						},
-					},
-				})
-
-				-- Configure racket langserver
+				-- Native Neovim 0.11+ LSP configuration
+				-- Racket langserver (not in Mason, needs config before enable)
 				vim.lsp.config("racket_langserver", {
 					cmd = { "racket", "-l", "racket-langserver" },
 					filetypes = { "racket", "scheme" },
 				})
 
-				-- Enable all LSP servers
+				-- Enable all servers (uses defaults from nvim-lspconfig/lsp/)
 				vim.lsp.enable({
-					"clangd",
-					"pyright",
-					"neocmake",
-					"texlab",
-					"powershell_es",
-					"vimls",
-					"jsonls",
-					"fish_lsp",
-					"yamlls",
 					"lua_ls",
+					"pyright",
+					"jsonls",
+					"yamlls",
+					"vimls",
+					"texlab",
+					"neocmake",
+					"fish_lsp",
+					"clangd",
 					"racket_langserver",
 				})
+
+				-- lua_ls settings configured in init.lua (after plugins load)
 
 				-- LSP Keymaps
 				vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
 				vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
 				vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
+				vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
+				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
+				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+				vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 
 				-- LSP attach autocmd for completion
 				vim.api.nvim_create_autocmd("LspAttach", {
 					callback = function(args)
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if not client then
-							return
-						end
-
-						-- Enable LSP completion (Neovim 0.11+)
-						if client.supports_method("textDocument/completion") then
+						if client and client:supports_method("textDocument/completion") then
 							vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
 						end
 					end,

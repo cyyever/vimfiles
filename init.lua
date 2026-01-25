@@ -1,14 +1,22 @@
+-- Enable Lua module caching for faster startup (Neovim 0.11+)
+vim.loader.enable()
+
+-- Add Mason bin to PATH early (before LSP servers start)
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+vim.env.PATH = mason_bin .. ";" .. vim.env.PATH
+
 vim.o.encoding = "utf-8"
 vim.o.fileformats = "unix,dos"
 vim.g.mapleader = ";"
+
+-- Disable netrw before loading plugins (required for nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require("config.lazy")
 
--- disable netrw at the very start of your init.lua for nvim-tree.lua
-vim.g.loaded_netrw = "1"
-vim.g.loaded_netrwPlugin = "1"
-
-config = vim.env.MYVIMRC
-config_dir = vim.fn.fnamemodify(config, ":p:h")
+local config = vim.env.MYVIMRC
+local config_dir = vim.fn.fnamemodify(config, ":p:h")
 vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
 vim.opt.runtimepath:prepend(config_dir .. "/vimfiles")
 vim.o.packpath = vim.o.runtimepath
@@ -41,7 +49,7 @@ vim.o.clipboard = "unnamed"
 
 --备份文件
 vim.o.backup = true
-back_dir = vim.fn.stdpath("data") .. "/backup/"
+local back_dir = vim.fn.stdpath("data") .. "/backup/"
 if not vim.fn.isdirectory(back_dir) then
 	vim.fn.mkdir(back_dir)
 end
@@ -56,11 +64,8 @@ vim.o.expandtab = true
 
 vim.keymap.set("n", "n", "nzz", { noremap = true })
 
---关键字搜索当前目录
-
-vim.opt.complete:append("k*")
-
 -- 补全选项
+vim.o.completeopt = "menuone,noselect,fuzzy"
 vim.o.wildignorecase = true
 vim.o.infercase = true
 
@@ -97,6 +102,27 @@ vim.diagnostic.config({
 })
 
 vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
+
+-- Override lua_ls cmd after all plugins loaded (nvim-lspconfig defaults)
+local mason_packages = vim.fn.stdpath("data") .. "/mason/packages/"
+local lua_ls_exe = mason_packages .. "lua-language-server/bin/lua-language-server"
+if vim.uv.os_uname().sysname == "Windows_NT" then
+	lua_ls_exe = lua_ls_exe .. ".exe"
+end
+vim.lsp.config("lua_ls", {
+	cmd = { lua_ls_exe },
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = { vim.env.VIMRUNTIME },
+				checkThirdParty = false,
+			},
+			telemetry = { enable = false },
+		},
+	},
+})
 -- config_update_tag_path = config_dir .. "/.update_tag"
 -- if
 -- 	not vim.fn.filereadable(config_update_tag_path)
