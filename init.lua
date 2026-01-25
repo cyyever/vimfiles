@@ -38,7 +38,7 @@ vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
 vim.g.sql_type_default = "mysql"
 
 -- diff
-vim.opt.diffopt:append("horizontal,algorithm:patience")
+vim.opt.diffopt:append("horizontal,algorithm:patience,followwrap")
 
 -- 增加检索路径
 vim.opt.path:append({
@@ -139,16 +139,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
-
--- Wrap lines in diff mode
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		if vim.wo.diff then
-			vim.cmd("windo set wrap")
-		end
-	end,
-})
-
 
 -- Spell checking
 local spellfile = config_dir .. "/vimfiles/spell/cyymine.utf-8.add"
