@@ -27,8 +27,6 @@ vim.o.fileencoding = "utf-8"
 
 -- 文件类型选项
 vim.g.sql_type_default = "mysql"
-vim.cmd("filetype plugin on")
-vim.cmd("filetype indent on")
 
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience")
