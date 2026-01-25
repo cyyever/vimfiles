@@ -21,7 +21,6 @@ require("lazy").setup({
 		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
-			lazy = false,
 			main = "nvim-treesitter.config",
 			opts = {
 				ensure_installed = {
@@ -77,73 +76,53 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "dstein64/vim-startuptime", cmd = "StartupTime" },
+		{ "echasnovski/mini.pairs", event = "InsertEnter", opts = {} },
+		{ "echasnovski/mini.statusline", opts = { use_icons = true } },
 		{
-			"echasnovski/mini.pairs",
-			event = "InsertEnter",
-			config = function()
-				require("mini.pairs").setup()
-			end,
+			"stevearc/conform.nvim",
+			event = "BufWritePre",
+			opts = {
+				formatters_by_ft = {
+					bib = { "bibclean" },
+					c = { "clang-format" },
+					cpp = { "clang-format" },
+					cmake = { "cmake_format" },
+					diff = {}, -- preserve whitespace
+					fish = { "fish_indent" },
+					haskell = { "brittany" },
+					html = { "prettier" },
+					javascript = { "prettier" },
+					json = { "fixjson" },
+					jsonc = { "biome" },
+					lua = { "stylua" },
+					markdown = { "markdownlint-cli2" },
+					proto = { "buf" },
+					ps1 = { "psscriptanalyzer" },
+					python = { "ruff_format" },
+					ruby = { "rufo" },
+					sh = { "shfmt" },
+					tex = { "latexindent" },
+					toml = { "taplo" },
+					yaml = { "yamlfix" },
+					["_"] = { "trim_whitespace", "trim_newlines" },
+				},
+				format_on_save = {
+					timeout_ms = 500,
+					lsp_fallback = true,
+				},
+			},
 		},
-		{
-			"echasnovski/mini.statusline",
-			lazy = false,
-			config = function()
-				require("mini.statusline").setup({
-					use_icons = true,
-				})
-			end,
-		},
-
-		{
-			"cyyever/ale",
-			branch = "cyy",
-			init = function()
-				vim.g.ale_lint_on_text_changed = "never"
-				vim.g.ale_echo_msg_format = "[%linter%] %code: %%s"
-				vim.g.ale_fixers = { ["*"] = { "remove_trailing_lines", "trim_whitespace" } }
-				vim.g.ale_fix_on_save = 1
-				vim.g.ale_open_list = 1
-				vim.g.ale_list_window_size = 5
-				vim.g.ale_set_loclist = 0
-				vim.g.ale_set_quickfix = 1
-				vim.g.ale_linter_aliases = { ["ps1"] = "powershell" }
-			end,
-
-			config = function()
-				local mygroup = vim.api.nvim_create_augroup("CloseLoclistWindowGroup", { clear = true })
-				vim.api.nvim_create_autocmd(
-					{ "QuitPre" },
-					{ group = mygroup, command = "if empty(&buftype) | lclose | endif" }
-				)
-			end,
-		},
-		{ "nvim-tree/nvim-web-devicons", opts = {} },
 		{
 			"nvim-tree/nvim-tree.lua",
 			version = "*",
-			lazy = false,
-			dependencies = {
-				"nvim-tree/nvim-web-devicons",
-			},
-			config = function()
-				require("nvim-tree").setup({})
-				vim.keymap.set("n", "<Leader>f", "<cmd>NvimTreeFindFile<cr>")
-			end,
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			keys = { { "<Leader>f", "<cmd>NvimTreeFindFile<cr>" } },
+			opts = {},
 		},
 		-- LSP Support
-		{
-			"williamboman/mason.nvim",
-			lazy = false,
-			config = function()
-				require("mason").setup()
-			end,
-		},
-		-- nvim-lspconfig provides default configs in lsp/ directory
-		{ "neovim/nvim-lspconfig", lazy = false },
+		{ "williamboman/mason.nvim", opts = {} },
 		{
 			"williamboman/mason-lspconfig.nvim",
-			lazy = false,
 			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
 			config = function()
 				require("mason-lspconfig").setup({
@@ -214,34 +193,32 @@ require("lazy").setup({
 		},
 		{
 			"lervag/vimtex",
-			lazy = false, -- we don't want to lazy load VimTeX
 			init = function()
 				vim.g.vimtex_syntax_enabled = false
 				vim.g.tex_flavor = "latex"
 				vim.g.vimtex_compiler_engine = "lualatex"
 				vim.g.vimtex_compiler_latexmk = {
-					["callback"] = 1,
-					["continuous"] = 1,
-					["aux_dir"] = ".build",
-					["out_dir"] = ".out",
-					["executable"] = "latexmk",
-					["hooks"] = {},
-					["options"] = {
+					callback = 1,
+					continuous = 1,
+					aux_dir = ".build",
+					out_dir = ".out",
+					executable = "latexmk",
+					hooks = {},
+					options = {
 						"-verbose",
 						"-file-line-error",
 						"-synctex=1",
 						"-interaction=nonstopmode",
 					},
 				}
-				if vim.uv.os_uname().sysname == "Windows_NT" then
+				local sysname = vim.uv.os_uname().sysname
+				if sysname == "Windows_NT" then
 					vim.g.vimtex_view_general_viewer = "SumatraPDF"
 					vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
-				end
-				if vim.uv.os_uname().sysname == "Linux" then
+				elseif sysname == "Linux" then
 					vim.g.vimtex_view_method = "zathura_simple"
 					vim.g.vimtex_view_zathura_simple_options = "-c ~/opt/cli_tool_configs"
-				end
-				if vim.uv.os_uname().sysname == "Darwin" then
+				elseif sysname == "Darwin" then
 					vim.g.vimtex_view_method = "sioyek"
 					vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
 				end
@@ -257,29 +234,9 @@ require("lazy").setup({
 		},
 		{
 			"MeanderingProgrammer/render-markdown.nvim",
-			dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+			dependencies = { "nvim-treesitter/nvim-treesitter" },
 			ft = { "markdown" },
-			opts = {
-				heading = {
-					icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },
-				},
-				checkbox = {
-					unchecked = { icon = "󰄱 " },
-					checked = { icon = "󰄵 " },
-				},
-				code = {
-					sign = false,
-					width = "block",
-					border = "thin",
-				},
-				link = {
-					image = "󰥶 ",
-					hyperlink = "󰌹 ",
-				},
-				bullet = {
-					icons = { "●", "○", "◆", "◇" },
-				},
-			},
+			opts = {},
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.

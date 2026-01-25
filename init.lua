@@ -27,13 +27,12 @@ vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
 vim.opt.runtimepath:prepend(config_dir .. "/vimfiles")
 vim.o.packpath = vim.o.runtimepath
 
-vim.g.use_eink = vim.env.eink_screen == "1" and 1 or 0
+vim.g.use_eink = vim.env.eink_screen == "1"
 
 vim.o.list = true
 
 -- 设置写入文件编码
 vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
-vim.o.fileencoding = "utf-8"
 
 -- 文件类型选项
 vim.g.sql_type_default = "mysql"
@@ -42,10 +41,12 @@ vim.g.sql_type_default = "mysql"
 vim.opt.diffopt:append("horizontal,algorithm:patience")
 
 -- 增加检索路径
-vim.opt.path:append(vim.env.HOME .. "/opt/bin")
-vim.opt.path:append(vim.env.HOME .. "/opt/python/bin")
-vim.opt.path:append(vim.env.HOME .. "/.local/bin")
-vim.opt.path:append(vim.env.HOME .. "/opt/include")
+vim.opt.path:append({
+	vim.env.HOME .. "/opt/bin",
+	vim.env.HOME .. "/opt/python/bin",
+	vim.env.HOME .. "/.local/bin",
+	vim.env.HOME .. "/opt/include",
+})
 
 vim.o.clipboard = "unnamed"
 
@@ -112,11 +113,11 @@ vim.o.mouse = "r"
 -- 颜色方案
 vim.o.termguicolors = true
 
-if vim.g.use_eink == 1 then
-	vim.cmd([[colorscheme eink]])
+if vim.g.use_eink then
+	vim.cmd.colorscheme("eink")
 else
-	vim.o.background = "dark" -- or "light" for light mode
-	vim.cmd([[colorscheme gruvbox]])
+	vim.o.background = "dark"
+	vim.cmd.colorscheme("gruvbox")
 end
 
 -- Diagnostic virtual lines (Neovim 0.11+)
@@ -125,11 +126,16 @@ vim.diagnostic.config({
 	virtual_lines = { only_current_line = true },
 })
 
--- Auto-set fenc to utf-8 for modifiable buffers
+-- BufReadPost: auto-set fenc to utf-8, jump to last position
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function()
 		if vim.bo.modifiable and vim.bo.fileencoding ~= "utf-8" then
 			vim.bo.fileencoding = "utf-8"
+		end
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local line = mark[1]
+		if line > 1 and line <= vim.api.nvim_buf_line_count(0) then
+			vim.cmd('normal! g`"zz')
 		end
 	end,
 })
@@ -143,16 +149,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
--- Jump to last position when opening a file
-vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function()
-		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local line = mark[1]
-		if line > 1 and line <= vim.api.nvim_buf_line_count(0) then
-			vim.cmd('normal! g`"zz')
-		end
-	end,
-})
 
 -- Spell checking
 local spellfile = config_dir .. "/vimfiles/spell/cyymine.utf-8.add"
@@ -166,14 +162,7 @@ vim.o.spellfile = spellfile
 vim.o.spell = true
 vim.o.spelllang = "en,cjk,cyymine"
 
--- Override lua_ls cmd after all plugins loaded (nvim-lspconfig defaults)
-local mason_packages = vim.fn.stdpath("data") .. "/mason/packages/"
-local lua_ls_exe = mason_packages .. "lua-language-server/bin/lua-language-server"
-if vim.uv.os_uname().sysname == "Windows_NT" then
-	lua_ls_exe = lua_ls_exe .. ".exe"
-end
 vim.lsp.config("lua_ls", {
-	cmd = { lua_ls_exe },
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT" },
