@@ -72,7 +72,7 @@ vim.o.tagcase = "match"
 -- provider
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-if vim.loop.os_uname().sysname == "Windows_NT" then
+if vim.uv.os_uname().sysname == "Windows_NT" then
 	vim.g.python3_host_prog = "python"
 else
 	vim.g.python3_host_prog = "python3"

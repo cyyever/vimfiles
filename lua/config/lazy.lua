@@ -217,15 +217,15 @@ require("lazy").setup({
 						"-interaction=nonstopmode",
 					},
 				}
-				if vim.loop.os_uname().sysname == "Windows_NT" then
+				if vim.uv.os_uname().sysname == "Windows_NT" then
 					vim.g.vimtex_view_general_viewer = "SumatraPDF"
 					vim.g.vimtex_view_general_options = "-zoom 200 -reuse-instance -forward-search @tex @line @pdf"
 				end
-				if vim.loop.os_uname().sysname == "Linux" then
+				if vim.uv.os_uname().sysname == "Linux" then
 					vim.g.vimtex_view_method = "zathura_simple"
 					vim.g.vimtex_view_zathura_simple_options = "-c ~/opt/cli_tool_configs"
 				end
-				if vim.loop.os_uname().sysname == "Darwin" then
+				if vim.uv.os_uname().sysname == "Darwin" then
 					vim.g.vimtex_view_method = "sioyek"
 					vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
 				end
