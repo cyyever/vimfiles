@@ -257,8 +257,29 @@ require("lazy").setup({
 		},
 		{
 			"MeanderingProgrammer/render-markdown.nvim",
-			dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
-			opts = {},
+			dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+			ft = { "markdown" },
+			opts = {
+				heading = {
+					icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },
+				},
+				checkbox = {
+					unchecked = { icon = "󰄱 " },
+					checked = { icon = "󰄵 " },
+				},
+				code = {
+					sign = false,
+					width = "block",
+					border = "thin",
+				},
+				link = {
+					image = "󰥶 ",
+					hyperlink = "󰌹 ",
+				},
+				bullet = {
+					icons = { "●", "○", "◆", "◇" },
+				},
+			},
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.

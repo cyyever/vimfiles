@@ -1,9 +1,16 @@
 -- Enable Lua module caching for faster startup (Neovim 0.11+)
 vim.loader.enable()
 
--- Add Mason bin to PATH early (before LSP servers start)
+-- Add Mason bin to PATH early (and TeX Live on Windows)
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-vim.env.PATH = mason_bin .. ";" .. vim.env.PATH
+local sysname = vim.uv.os_uname().sysname
+local path_sep = sysname == "Windows_NT" and ";" or ":"
+
+vim.env.PATH = mason_bin .. path_sep .. vim.env.PATH
+
+if sysname == "Windows_NT" then
+	vim.env.PATH = "C:/texlive/2026/bin/windows" .. path_sep .. vim.env.PATH
+end
 
 vim.o.fileformats = "unix,dos"
 vim.g.mapleader = ";"
@@ -57,7 +64,33 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
+-- Smooth scrolling (Neovim 0.11+)
+vim.o.smoothscroll = true
+
+-- Treesitter folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevel = 99 -- Start with all folds open
+vim.o.foldlevelstart = 99
+
 vim.keymap.set("n", "n", "nzz")
+
+-- Snippet navigation (Neovim 0.11+)
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+	if vim.snippet.active({ direction = 1 }) then
+		return "<cmd>lua vim.snippet.jump(1)<cr>"
+	else
+		return "<Tab>"
+	end
+end, { expr = true })
+
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+	if vim.snippet.active({ direction = -1 }) then
+		return "<cmd>lua vim.snippet.jump(-1)<cr>"
+	else
+		return "<S-Tab>"
+	end
+end, { expr = true })
 
 -- 补全选项
 vim.o.completeopt = "menuone,noselect,fuzzy"
