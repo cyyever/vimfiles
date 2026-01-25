@@ -5,7 +5,6 @@ vim.loader.enable()
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 vim.env.PATH = mason_bin .. ";" .. vim.env.PATH
 
-vim.o.encoding = "utf-8"
 vim.o.fileformats = "unix,dos"
 vim.g.mapleader = ";"
 
@@ -21,11 +20,7 @@ vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
 vim.opt.runtimepath:prepend(config_dir .. "/vimfiles")
 vim.o.packpath = vim.o.runtimepath
 
-if vim.fn.exists("$eink_screen") and vim.env.eink_screen == 1 then
-	vim.g.use_eink = 1
-else
-	vim.g.use_eink = 0
-end
+vim.g.use_eink = vim.env.eink_screen == "1" and 1 or 0
 
 vim.o.list = true
 
@@ -62,7 +57,7 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
-vim.keymap.set("n", "n", "nzz", { noremap = true })
+vim.keymap.set("n", "n", "nzz")
 
 -- 补全选项
 vim.o.completeopt = "menuone,noselect,fuzzy"
@@ -101,7 +96,46 @@ vim.diagnostic.config({
 	virtual_lines = { only_current_line = true },
 })
 
-vim.cmd("source " .. config_dir .. "/vimfiles/vimrc")
+-- Auto-set fenc to utf-8 for modifiable buffers
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		if vim.bo.modifiable and vim.bo.fileencoding ~= "utf-8" then
+			vim.bo.fileencoding = "utf-8"
+		end
+	end,
+})
+
+-- Wrap lines in diff mode
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		if vim.wo.diff then
+			vim.cmd("windo set wrap")
+		end
+	end,
+})
+
+-- Jump to last position when opening a file
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local line = mark[1]
+		if line > 1 and line <= vim.api.nvim_buf_line_count(0) then
+			vim.cmd('normal! g`"zz')
+		end
+	end,
+})
+
+-- Spell checking
+local spellfile = config_dir .. "/vimfiles/spell/cyymine.utf-8.add"
+if vim.fn.filereadable(spellfile) == 1 then
+	local splfile = spellfile .. ".spl"
+	if vim.fn.filereadable(splfile) == 0 or vim.fn.getftime(spellfile) > vim.fn.getftime(splfile) then
+		vim.cmd("mkspell! " .. vim.fn.fnameescape(spellfile))
+	end
+end
+vim.o.spellfile = spellfile
+vim.o.spell = true
+vim.o.spelllang = "en,cjk,cyymine"
 
 -- Override lua_ls cmd after all plugins loaded (nvim-lspconfig defaults)
 local mason_packages = vim.fn.stdpath("data") .. "/mason/packages/"
@@ -146,11 +180,3 @@ vim.lsp.config("basedpyright", {
 vim.lsp.config("clangd", {
 	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
 })
--- config_update_tag_path = config_dir .. "/.update_tag"
--- if
--- 	not vim.fn.filereadable(config_update_tag_path)
--- 	or vim.fn.getftime(config) > vim.fn.getftime(config_update_tag_path)
--- then
--- 	vim.cmd("Lazy sync")
--- 	vim.fn.writefile({}, config_update_tag_path)
--- end
