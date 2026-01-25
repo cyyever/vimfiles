@@ -120,8 +120,31 @@ vim.lsp.config("lua_ls", {
 				checkThirdParty = false,
 			},
 			telemetry = { enable = false },
+			hint = { enable = true },
 		},
 	},
+})
+
+-- Enable inlay hints for basedpyright
+vim.lsp.config("basedpyright", {
+	settings = {
+		basedpyright = {
+			analysis = {
+				autoImportCompletions = false, -- better performance
+				inlayHints = {
+					variableTypes = true,
+					functionReturnTypes = true,
+					callArgumentNames = true,
+					genericTypes = true,
+				},
+			},
+		},
+	},
+})
+
+-- Enable inlay hints for clangd
+vim.lsp.config("clangd", {
+	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
 })
 -- config_update_tag_path = config_dir .. "/.update_tag"
 -- if

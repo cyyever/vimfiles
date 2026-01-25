@@ -61,7 +61,22 @@ require("lazy").setup({
 		},
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
-		{ "wellle/targets.vim" },
+		{
+			"echasnovski/mini.ai",
+			event = "VeryLazy",
+			config = function()
+				local ai = require("mini.ai")
+				ai.setup({
+					n_lines = 500,
+					custom_textobjects = {
+						-- Treesitter-based text objects
+						f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+						c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+						a = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+					},
+				})
+			end,
+		},
 		{ "dstein64/vim-startuptime", cmd = "StartupTime" },
 		{
 			"echasnovski/mini.pairs",
@@ -133,8 +148,8 @@ require("lazy").setup({
 			config = function()
 				require("mason-lspconfig").setup({
 					ensure_installed = {
-						"clangd",
-						"pyright",
+						-- clangd uses system installation
+						"basedpyright",
 						"neocmake",
 						"texlab",
 						"vimls",
@@ -156,7 +171,7 @@ require("lazy").setup({
 				-- Enable all servers (uses defaults from nvim-lspconfig/lsp/)
 				vim.lsp.enable({
 					"lua_ls",
-					"pyright",
+					"basedpyright",
 					"jsonls",
 					"yamlls",
 					"vimls",
@@ -177,13 +192,21 @@ require("lazy").setup({
 				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
 				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 				vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+				vim.keymap.set("n", "<Leader>ih", function()
+					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+				end)
 
-				-- LSP attach autocmd for completion
+				-- LSP attach autocmd for completion and inlay hints
 				vim.api.nvim_create_autocmd("LspAttach", {
 					callback = function(args)
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if client and client:supports_method("textDocument/completion") then
-							vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+						if client then
+							if client:supports_method("textDocument/completion") then
+								vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+							end
+							if client:supports_method("textDocument/inlayHint") then
+								vim.lsp.inlay_hint.enable(true)
+							end
 						end
 					end,
 				})
