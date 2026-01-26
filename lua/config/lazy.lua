@@ -130,7 +130,6 @@ require("lazy").setup({
 						-- clangd uses system installation
 						"basedpyright",
 						"neocmake",
-						"texlab",
 						"vimls",
 						"jsonls",
 						"fish_lsp",
@@ -154,7 +153,6 @@ require("lazy").setup({
 					"jsonls",
 					"yamlls",
 					"vimls",
-					"texlab",
 					"neocmake",
 					"fish_lsp",
 					"clangd",
@@ -193,6 +191,7 @@ require("lazy").setup({
 		},
 		{
 			"lervag/vimtex",
+			ft = { "tex", "bib" },
 			init = function()
 				vim.g.vimtex_syntax_enabled = false
 				vim.g.tex_flavor = "latex"
