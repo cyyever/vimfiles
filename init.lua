@@ -21,12 +21,6 @@ vim.g.loaded_netrwPlugin = 1
 
 require("config.lazy")
 
-local config = vim.env.MYVIMRC
-local config_dir = vim.fn.fnamemodify(config, ":p:h")
-vim.opt.runtimepath:prepend(config_dir .. "/vimfiles/after")
-vim.opt.runtimepath:prepend(config_dir .. "/vimfiles")
-vim.o.packpath = vim.o.runtimepath
-
 vim.g.use_eink = vim.env.eink_screen == "1"
 
 vim.o.list = true
