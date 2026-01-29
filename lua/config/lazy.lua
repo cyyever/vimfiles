@@ -134,7 +134,6 @@ require("lazy").setup({
 						"jsonls",
 						"fish_lsp",
 						"yamlls",
-						"lua_ls",
 					},
 					automatic_installation = true,
 				})
@@ -148,7 +147,6 @@ require("lazy").setup({
 
 				-- Enable all servers (uses defaults from nvim-lspconfig/lsp/)
 				vim.lsp.enable({
-					"lua_ls",
 					"basedpyright",
 					"jsonls",
 					"yamlls",

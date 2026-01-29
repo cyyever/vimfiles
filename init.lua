@@ -146,21 +146,6 @@ vim.o.spellfile = spellfile
 vim.o.spell = true
 vim.o.spelllang = "en,cjk,cyymine"
 
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = {
-			runtime = { version = "LuaJIT" },
-			diagnostics = { globals = { "vim" } },
-			workspace = {
-				library = { vim.env.VIMRUNTIME },
-				checkThirdParty = false,
-			},
-			telemetry = { enable = false },
-			hint = { enable = true },
-		},
-	},
-})
-
 -- Enable inlay hints for basedpyright
 vim.lsp.config("basedpyright", {
 	settings = {
