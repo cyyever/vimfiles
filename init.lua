@@ -60,6 +60,14 @@ vim.lsp.config("racket_langserver", {
 
 require("config.lazy")
 
+-- Pass blink.cmp capabilities to all LSP servers
+local ok, blink = pcall(require, "blink.cmp")
+if ok then
+	vim.lsp.config("*", {
+		capabilities = blink.get_lsp_capabilities(),
+	})
+end
+
 -- Enable LSP servers (after plugins load default configs)
 vim.lsp.enable({
 	"lua_ls",
@@ -138,38 +146,6 @@ vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldlevelstart = 99
 
 vim.keymap.set("n", "n", "nzz")
-
--- Snippet navigation (Neovim 0.11+)
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
-	if vim.snippet.active({ direction = 1 }) then
-		return "<cmd>lua vim.snippet.jump(1)<cr>"
-	else
-		return "<Tab>"
-	end
-end, { expr = true })
-
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-	if vim.snippet.active({ direction = -1 }) then
-		return "<cmd>lua vim.snippet.jump(-1)<cr>"
-	else
-		return "<S-Tab>"
-	end
-end, { expr = true })
-
--- 补全选项 (Neovim 0.12 native autocomplete)
-vim.o.completeopt = "menuone,noselect,fuzzy,popup"
-vim.o.autocomplete = true
-vim.o.complete = ".,w,b,u,t,o"
-
--- 输入 / 时自动触发路径补全（expr 映射保证按键序列原子执行）
-vim.keymap.set("i", "/", function()
-	local col = vim.fn.col(".") - 1
-	if col > 0 and vim.api.nvim_get_current_line():sub(col, col):match("[%.%w_~%-]") then
-		local prefix = vim.fn.pumvisible() == 1 and vim.keycode("<C-e>") or ""
-		return prefix .. "/" .. vim.keycode("<C-x><C-f>")
-	end
-	return "/"
-end, { expr = true, noremap = true })
 
 vim.o.wildignorecase = true
 vim.o.infercase = true

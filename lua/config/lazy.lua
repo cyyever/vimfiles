@@ -119,6 +119,22 @@ require("lazy").setup({
 			keys = { { "<Leader>f", "<cmd>NvimTreeFindFile<cr>" } },
 			opts = {},
 		},
+		-- Completion
+		{
+			"saghen/blink.cmp",
+			version = "1.*",
+			opts = {
+				keymap = { preset = "super-tab" },
+				sources = {
+					default = { "lsp", "path", "snippets", "buffer" },
+				},
+				completion = {
+					documentation = { auto_show = true },
+				},
+				signature = { enabled = true },
+			},
+		},
+
 		-- LSP Support
 		{ "williamboman/mason.nvim", opts = {} },
 		{
