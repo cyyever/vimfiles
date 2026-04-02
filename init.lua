@@ -120,6 +120,25 @@ end, { expr = true })
 
 -- 补全选项
 vim.o.completeopt = "menuone,noselect,fuzzy,popup"
+
+-- 输入路径时自动触发 <C-x><C-f> 补全
+vim.api.nvim_create_autocmd("InsertCharPre", {
+	callback = function()
+		if vim.fn.pumvisible() == 1 or vim.v.char ~= "/" then
+			return
+		end
+		local col = vim.fn.col(".") - 1
+		if col == 0 then
+			return
+		end
+		local ch = vim.api.nvim_get_current_line():sub(col, col)
+		if ch:match("[%.%w_~%-]") then
+			vim.schedule(function()
+				vim.api.nvim_feedkeys(vim.keycode("<C-x><C-f>"), "m", false)
+			end)
+		end
+	end,
+})
 vim.o.wildignorecase = true
 vim.o.infercase = true
 
