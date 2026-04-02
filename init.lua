@@ -53,7 +53,45 @@ vim.lsp.config("clangd", {
 	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
 })
 
+vim.lsp.config("racket_langserver", {
+	cmd = { "racket", "-l", "racket-langserver" },
+	filetypes = { "racket", "scheme" },
+})
+
 require("config.lazy")
+
+-- Enable LSP servers (after plugins load default configs)
+vim.lsp.enable({
+	"lua_ls",
+	"basedpyright",
+	"jsonls",
+	"yamlls",
+	"vimls",
+	"neocmake",
+	"fish_lsp",
+	"clangd",
+	"racket_langserver",
+})
+
+-- LSP keymaps
+vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
+vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
+vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
+vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
+vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<Leader>ih", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
+
+-- Enable inlay hints on LSP attach
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client and client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true)
+		end
+	end,
+})
 
 vim.o.list = true
 

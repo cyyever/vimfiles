@@ -124,63 +124,18 @@ require("lazy").setup({
 		{
 			"williamboman/mason-lspconfig.nvim",
 			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-			config = function()
-				require("mason-lspconfig").setup({
-					ensure_installed = {
-						-- clangd uses system installation
-						"basedpyright",
-						"neocmake",
-						"vimls",
-						"jsonls",
-						"fish_lsp",
-						"yamlls",
-						"lua_ls",
-					},
-					automatic_installation = true,
-				})
-
-				-- Native Neovim 0.11+ LSP configuration
-				-- Racket langserver (not in Mason, needs config before enable)
-				vim.lsp.config("racket_langserver", {
-					cmd = { "racket", "-l", "racket-langserver" },
-					filetypes = { "racket", "scheme" },
-				})
-
-				-- Enable all servers (uses defaults from nvim-lspconfig/lsp/)
-				vim.lsp.enable({
-					"lua_ls",
+			opts = {
+				ensure_installed = {
 					"basedpyright",
-					"jsonls",
-					"yamlls",
-					"vimls",
 					"neocmake",
+					"vimls",
+					"jsonls",
 					"fish_lsp",
-					"clangd",
-					"racket_langserver",
-				})
-
-				-- lua_ls settings configured in init.lua (after plugins load)
-
-				-- LSP Keymaps
-				vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
-				vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
-				vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
-				vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
-				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
-				vim.keymap.set("n", "<Leader>ih", function()
-					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-				end)
-
-				-- LSP attach autocmd for inlay hints
-				vim.api.nvim_create_autocmd("LspAttach", {
-					callback = function(args)
-						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if client and client:supports_method("textDocument/inlayHint") then
-							vim.lsp.inlay_hint.enable(true)
-						end
-					end,
-				})
-			end,
+					"yamlls",
+					"lua_ls",
+				},
+				automatic_installation = true,
+			},
 		},
 		{
 			"lervag/vimtex",
