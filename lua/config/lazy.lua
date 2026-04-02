@@ -21,7 +21,7 @@ require("lazy").setup({
 		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
-			main = "nvim-treesitter.config",
+			main = "nvim-treesitter.configs",
 			opts = {
 				ensure_installed = {
 					"c",
@@ -108,7 +108,7 @@ require("lazy").setup({
 				},
 				format_on_save = {
 					timeout_ms = 500,
-					lsp_fallback = true,
+					lsp_format = "fallback",
 				},
 			},
 		},
@@ -167,8 +167,6 @@ require("lazy").setup({
 				vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
 				vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
 				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
-				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-				vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 				vim.keymap.set("n", "<Leader>ih", function()
 					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 				end)

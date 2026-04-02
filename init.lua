@@ -1,6 +1,3 @@
--- Enable Lua module caching for faster startup (Neovim 0.11+)
-vim.loader.enable()
-
 -- Add Mason bin to PATH early (and TeX Live on Windows)
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 local sysname = vim.uv.os_uname().sysname
@@ -12,16 +9,51 @@ if sysname == "Windows_NT" then
 	vim.env.PATH = "C:/texlive/2026/bin/windows" .. path_sep .. vim.env.PATH
 end
 
-vim.o.fileformats = "unix,dos"
 vim.g.mapleader = ";"
 
 -- Disable netrw before loading plugins (required for nvim-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-require("config.lazy")
-
 vim.g.use_eink = vim.env.eink_screen == "1"
+
+-- LSP server settings (register before vim.lsp.enable() in lazy.lua)
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = { vim.env.VIMRUNTIME },
+				checkThirdParty = false,
+			},
+			telemetry = { enable = false },
+			hint = { enable = true },
+		},
+	},
+})
+
+vim.lsp.config("basedpyright", {
+	settings = {
+		basedpyright = {
+			analysis = {
+				autoImportCompletions = false,
+				inlayHints = {
+					variableTypes = true,
+					functionReturnTypes = true,
+					callArgumentNames = true,
+					genericTypes = true,
+				},
+			},
+		},
+	},
+})
+
+vim.lsp.config("clangd", {
+	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
+})
+
+require("config.lazy")
 
 vim.o.list = true
 
@@ -47,7 +79,7 @@ vim.o.clipboard = "unnamed"
 --备份文件
 vim.o.backup = true
 local back_dir = vim.fn.stdpath("data") .. "/backup/"
-if not vim.fn.isdirectory(back_dir) then
+if vim.fn.isdirectory(back_dir) == 0 then
 	vim.fn.mkdir(back_dir)
 end
 vim.o.backupdir = back_dir
@@ -65,7 +97,6 @@ vim.o.smoothscroll = true
 -- Treesitter folding
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.foldlevel = 99 -- Start with all folds open
 vim.o.foldlevelstart = 99
 
 vim.keymap.set("n", "n", "nzz")
@@ -88,7 +119,7 @@ vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
 end, { expr = true })
 
 -- 补全选项
-vim.o.completeopt = "menuone,noselect,fuzzy"
+vim.o.completeopt = "menuone,noselect,fuzzy,popup"
 vim.o.wildignorecase = true
 vim.o.infercase = true
 
@@ -104,8 +135,6 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_node_provider = 0
 
 vim.o.mouse = "r"
--- 颜色方案
-vim.o.termguicolors = true
 
 if vim.g.use_eink then
 	vim.cmd.colorscheme("eink")
@@ -135,7 +164,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Spell checking
-local spellfile = config_dir .. "/vimfiles/spell/cyymine.utf-8.add"
+local config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ":p:h")
+local spellfile = config_dir .. "/spell/cyymine.utf-8.add"
 if vim.fn.filereadable(spellfile) == 1 then
 	local splfile = spellfile .. ".spl"
 	if vim.fn.filereadable(splfile) == 0 or vim.fn.getftime(spellfile) > vim.fn.getftime(splfile) then
@@ -145,40 +175,3 @@ end
 vim.o.spellfile = spellfile
 vim.o.spell = true
 vim.o.spelllang = "en,cjk,cyymine"
-
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = {
-			runtime = { version = "LuaJIT" },
-			diagnostics = { globals = { "vim" } },
-			workspace = {
-				library = { vim.env.VIMRUNTIME },
-				checkThirdParty = false,
-			},
-			telemetry = { enable = false },
-			hint = { enable = true },
-		},
-	},
-})
-
--- Enable inlay hints for basedpyright
-vim.lsp.config("basedpyright", {
-	settings = {
-		basedpyright = {
-			analysis = {
-				autoImportCompletions = false, -- better performance
-				inlayHints = {
-					variableTypes = true,
-					functionReturnTypes = true,
-					callArgumentNames = true,
-					genericTypes = true,
-				},
-			},
-		},
-	},
-})
-
--- Enable inlay hints for clangd
-vim.lsp.config("clangd", {
-	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
-})
