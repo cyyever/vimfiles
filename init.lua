@@ -159,33 +159,17 @@ end, { expr = true })
 -- 补全选项 (Neovim 0.12 native autocomplete)
 vim.o.completeopt = "menuone,noselect,fuzzy,popup"
 vim.o.autocomplete = true
-vim.o.complete = ".,w,b,u,t,o,Fv:lua.complete_path"
+vim.o.complete = ".,w,b,u,t,o"
 
--- 路径补全函数 (complete-functions 接口)
-function _G.complete_path(findstart, base)
-	if findstart == 1 then
-		local line = vim.api.nvim_get_current_line()
-		local col = vim.fn.col(".") - 1
-		while col > 0 and line:sub(col, col):match("[%w_.~/%-%+]") do
-			col = col - 1
-		end
-		return col
+-- 输入 / 时自动触发路径补全（expr 映射保证按键序列原子执行）
+vim.keymap.set("i", "/", function()
+	local col = vim.fn.col(".") - 1
+	if col > 0 and vim.api.nvim_get_current_line():sub(col, col):match("[%.%w_~%-]") then
+		local prefix = vim.fn.pumvisible() == 1 and vim.keycode("<C-e>") or ""
+		return prefix .. "/" .. vim.keycode("<C-x><C-f>")
 	end
-	if not base:match("[/~%.]") then
-		return {}
-	end
-	local expanded = base:gsub("^~", vim.env.HOME)
-	local matches = vim.fn.glob(expanded .. "*", false, true)
-	local results = {}
-	for _, m in ipairs(matches) do
-		local is_dir = vim.fn.isdirectory(m) == 1
-		table.insert(results, {
-			word = is_dir and m .. "/" or m,
-			kind = is_dir and "[dir]" or "[file]",
-		})
-	end
-	return results
-end
+	return "/"
+end, { expr = true, noremap = true })
 
 vim.o.wildignorecase = true
 vim.o.infercase = true
