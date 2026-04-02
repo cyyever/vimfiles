@@ -118,27 +118,37 @@ vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
 	end
 end, { expr = true })
 
--- 补全选项
+-- 补全选项 (Neovim 0.12 native autocomplete)
 vim.o.completeopt = "menuone,noselect,fuzzy,popup"
+vim.o.autocomplete = true
+vim.o.complete = ".,w,b,u,t,o,Fv:lua.complete_path"
 
--- 输入路径时自动触发 <C-x><C-f> 补全
-vim.api.nvim_create_autocmd("InsertCharPre", {
-	callback = function()
-		if vim.fn.pumvisible() == 1 or vim.v.char ~= "/" then
-			return
-		end
+-- 路径补全函数 (complete-functions 接口)
+function _G.complete_path(findstart, base)
+	if findstart == 1 then
+		local line = vim.api.nvim_get_current_line()
 		local col = vim.fn.col(".") - 1
-		if col == 0 then
-			return
+		while col > 0 and line:sub(col, col):match("[%w_.~/%-%+]") do
+			col = col - 1
 		end
-		local ch = vim.api.nvim_get_current_line():sub(col, col)
-		if ch:match("[%.%w_~%-]") then
-			vim.schedule(function()
-				vim.api.nvim_feedkeys(vim.keycode("<C-x><C-f>"), "m", false)
-			end)
-		end
-	end,
-})
+		return col
+	end
+	if not base:match("[/~%.]") then
+		return {}
+	end
+	local expanded = base:gsub("^~", vim.env.HOME)
+	local matches = vim.fn.glob(expanded .. "*", false, true)
+	local results = {}
+	for _, m in ipairs(matches) do
+		local is_dir = vim.fn.isdirectory(m) == 1
+		table.insert(results, {
+			word = is_dir and m .. "/" or m,
+			kind = is_dir and "[dir]" or "[file]",
+		})
+	end
+	return results
+end
+
 vim.o.wildignorecase = true
 vim.o.infercase = true
 
