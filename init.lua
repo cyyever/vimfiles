@@ -68,35 +68,29 @@ if ok then
 	})
 end
 
--- Enable LSP servers (after plugins load default configs)
-vim.lsp.enable({
-	"lua_ls",
-	"basedpyright",
-	"jsonls",
-	"yamlls",
-	"vimls",
-	"neocmake",
-	"fish_lsp",
-	"clangd",
-	"racket_langserver",
-})
+-- mason-lspconfig v2 auto-enables servers in `ensure_installed` via vim.lsp.enable().
+-- Only enable servers that aren't installed via Mason here.
+vim.lsp.enable({ "clangd", "racket_langserver" })
 
--- LSP keymaps
+-- LSP keymaps. Defaults (0.11+): K (hover), grn (rename), gra (code action),
+-- grr (references), gri (implementation), grt (type definition), gO (symbols).
 vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
-vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
-vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
-vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
-vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<Leader>ih", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end)
 
--- Enable inlay hints on LSP attach
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client and client:supports_method("textDocument/inlayHint") then
+		if not client then
+			return
+		end
+		if client:supports_method("textDocument/inlayHint") then
 			vim.lsp.inlay_hint.enable(true)
+		end
+		if client:supports_method("textDocument/foldingRange") then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
 	end,
 })
@@ -174,6 +168,11 @@ end
 vim.diagnostic.config({
 	virtual_text = false,
 	virtual_lines = { only_current_line = true },
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({ bufnr = bufnr })
+		end,
+	},
 })
 
 -- BufReadPost: auto-set fenc to utf-8, jump to last position

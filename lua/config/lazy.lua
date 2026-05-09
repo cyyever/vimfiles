@@ -136,10 +136,10 @@ require("lazy").setup({
 		},
 
 		-- LSP Support
-		{ "williamboman/mason.nvim", opts = {} },
+		{ "mason-org/mason.nvim", opts = {} },
 		{
-			"williamboman/mason-lspconfig.nvim",
-			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+			"mason-org/mason-lspconfig.nvim",
+			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
 			opts = {
 				ensure_installed = {
 					"basedpyright",
@@ -150,7 +150,7 @@ require("lazy").setup({
 					"yamlls",
 					"lua_ls",
 				},
-				automatic_installation = true,
+				automatic_enable = true,
 			},
 		},
 		{
