@@ -201,4 +201,4 @@ if vim.fn.filereadable(spellfile) == 1 then
 end
 vim.o.spellfile = spellfile
 vim.o.spell = true
-vim.o.spelllang = "en,cjk,cyymine"
+vim.o.spelllang = "en,cjk,programming,cyymine"

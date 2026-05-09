@@ -23,13 +23,9 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			main = "nvim-treesitter.configs",
 			opts = {
+				-- bash, c, lua, markdown, markdown_inline, python, query, vim, vimdoc
+				-- ship as core parsers in nvim 0.13+, no need to list here.
 				ensure_installed = {
-					"c",
-					"lua",
-					"vim",
-					"vimdoc",
-					"query",
-					"bash",
 					"bibtex",
 					"cmake",
 					"comment",
@@ -44,9 +40,6 @@ require("lazy").setup({
 					"html",
 					"json",
 					"jinja",
-					"markdown",
-					"markdown_inline",
-					"python",
 					"scheme",
 					"thrift",
 					"yaml",
@@ -201,6 +194,7 @@ require("lazy").setup({
 			ft = { "markdown" },
 			opts = {},
 		},
+		{ "psliwka/vim-dirtytalk", build = ":DirtytalkUpdate" },
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- automatically check for plugin updates
