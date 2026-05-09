@@ -102,6 +102,7 @@ vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
 
 -- 文件类型选项
 vim.g.sql_type_default = "mysql"
+vim.filetype.add({ pattern = { [".*%.json%.conf"] = "json" } })
 
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience,followwrap")
