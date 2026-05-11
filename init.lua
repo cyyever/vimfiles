@@ -10,6 +10,7 @@ if sysname == "Windows_NT" then
 end
 
 vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"
 
 -- Disable netrw before loading plugins (required for nvim-tree)
 vim.g.loaded_netrw = 1
