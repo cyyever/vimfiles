@@ -194,7 +194,28 @@ require("lazy").setup({
 			ft = { "markdown" },
 			opts = {},
 		},
-		{ "psliwka/vim-dirtytalk", build = ":DirtytalkUpdate" },
+		{
+			"psliwka/vim-dirtytalk",
+			-- Nvim 0.13 dropped autoload/spellfile.vim, breaking :DirtytalkUpdate
+			-- (it calls spellfile#WritableSpellDir → E117). Build the .spl from
+			-- the plugin's wordlists ourselves.
+			build = function(plugin)
+				local spell_dir = vim.fn.stdpath("data") .. "/site/spell"
+				vim.fn.mkdir(spell_dir, "p")
+				local words = {}
+				for _, f in ipairs(vim.fn.glob(plugin.dir .. "/wordlists/*.words", true, true)) do
+					vim.list_extend(words, vim.fn.readfile(f))
+				end
+				local tmp = vim.fn.tempname()
+				vim.fn.writefile(words, tmp)
+				vim.cmd(
+					"mkspell! "
+						.. vim.fn.fnameescape(spell_dir .. "/programming")
+						.. " "
+						.. vim.fn.fnameescape(tmp)
+				)
+			end,
+		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- automatically check for plugin updates
