@@ -20,12 +20,14 @@ require("lazy").setup({
 	spec = {
 		{
 			"nvim-treesitter/nvim-treesitter",
+			branch = "main",
+			lazy = false,
 			build = ":TSUpdate",
-			main = "nvim-treesitter.configs",
-			opts = {
+			config = function()
+				require("nvim-treesitter").setup()
 				-- bash, c, lua, markdown, markdown_inline, python, query, vim, vimdoc
-				-- ship as core parsers in nvim 0.13+, no need to list here.
-				ensure_installed = {
+				-- ship as core parsers in nvim 0.13+, no need to install here.
+				require("nvim-treesitter").install({
 					"bibtex",
 					"cmake",
 					"comment",
@@ -44,13 +46,22 @@ require("lazy").setup({
 					"thrift",
 					"yaml",
 					"latex",
-				},
-				auto_install = true,
-				sync_install = false,
-				highlight = { enable = not vim.g.use_eink },
-				indent = { enable = true },
-			},
+				})
+
+				vim.api.nvim_create_autocmd("FileType", {
+					callback = function(args)
+						if not vim.g.use_eink then
+							pcall(vim.treesitter.start, args.buf)
+						end
+						local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+						if lang and vim.treesitter.query.get(lang, "indents") then
+							vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+						end
+					end,
+				})
+			end,
 		},
+		{ "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", event = "VeryLazy" },
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
 		{
