@@ -181,10 +181,15 @@ require("lazy").setup({
 			end,
 			config = function()
 				local mygroup = vim.api.nvim_create_augroup("vimtex_config", { clear = true })
-				vim.api.nvim_create_autocmd(
-					"User",
-					{ pattern = "VimtexEventInitPost", group = mygroup, command = "VimtexCompile" }
-				)
+				vim.api.nvim_create_autocmd("User", {
+					pattern = "VimtexEventInitPost",
+					group = mygroup,
+					callback = function()
+						if vim.bo.filetype == "tex" then
+							vim.cmd("VimtexCompile")
+						end
+					end,
+				})
 				vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 			end,
 		},
