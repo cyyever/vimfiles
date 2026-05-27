@@ -88,7 +88,6 @@ require("lazy").setup({
 					json = { "fixjson" },
 					jsonc = { "biome" },
 					lua = { "stylua" },
-					markdown = { "markdownlint-cli2" },
 					proto = { "buf" },
 					ps1 = { "psscriptanalyzer" },
 					python = { "ruff_format" },
