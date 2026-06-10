@@ -116,13 +116,15 @@ require("lazy").setup({
 			},
 		},
 		{
-			"nvim-tree/nvim-tree.lua",
+			"stevearc/oil.nvim",
 			version = "*",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 			lazy = false,
-			keys = { { "<Leader>f", "<cmd>NvimTreeFindFile<cr>" } },
+			keys = {
+				{ "<Leader>f", "<cmd>Oil<cr>", desc = "Open parent directory" },
+			},
 			opts = {
-				hijack_directories = { enable = true, auto_open = true },
+				default_file_explorer = true,
 			},
 		},
 		-- Completion

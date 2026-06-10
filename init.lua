@@ -12,7 +12,7 @@ end
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
--- Disable netrw before loading plugins (required for nvim-tree)
+-- Disable netrw before loading plugins (oil.nvim replaces it)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
