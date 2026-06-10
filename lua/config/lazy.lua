@@ -119,8 +119,11 @@ require("lazy").setup({
 			"nvim-tree/nvim-tree.lua",
 			version = "*",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
+			lazy = false,
 			keys = { { "<Leader>f", "<cmd>NvimTreeFindFile<cr>" } },
-			opts = {},
+			opts = {
+				hijack_directories = { enable = true, auto_open = true },
+			},
 		},
 		-- Completion
 		{
