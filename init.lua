@@ -188,4 +188,12 @@ if vim.fn.filereadable(spellfile) == 1 then
 end
 vim.o.spellfile = spellfile
 vim.o.spell = true
-vim.o.spelllang = "en,cjk,programming,cyymine"
+-- `programming` is built by vim-dirtytalk's build step (see lua/config/lazy.lua)
+-- into stdpath("data")/site/spell. Only enable it once the .spl exists, or spell
+-- raises E756 on a fresh install before the build has run.
+local langs = { "en", "cjk" }
+if vim.fn.filereadable(vim.fn.stdpath("data") .. "/site/spell/programming.spl") == 1 then
+	table.insert(langs, "programming")
+end
+table.insert(langs, "cyymine")
+vim.o.spelllang = table.concat(langs, ",")
