@@ -19,21 +19,6 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.use_eink = vim.env.eink_screen == "1"
 
 -- LSP server settings (register before vim.lsp.enable() in lazy.lua)
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = {
-			runtime = { version = "LuaJIT" },
-			diagnostics = { globals = { "vim" } },
-			workspace = {
-				library = { vim.env.VIMRUNTIME },
-				checkThirdParty = false,
-			},
-			telemetry = { enable = false },
-			hint = { enable = true },
-		},
-	},
-})
-
 vim.lsp.config("basedpyright", {
 	settings = {
 		basedpyright = {
