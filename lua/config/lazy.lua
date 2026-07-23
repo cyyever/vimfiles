@@ -20,16 +20,14 @@ require("lazy").setup({
 	spec = {
 		{
 			"nvim-treesitter/nvim-treesitter",
+			branch = "main",
+			lazy = false,
 			build = ":TSUpdate",
-			main = "nvim-treesitter.config",
-			opts = {
-				ensure_installed = {
-					"c",
-					"lua",
-					"vim",
-					"vimdoc",
-					"query",
-					"bash",
+			config = function()
+				require("nvim-treesitter").setup()
+				-- bash, c, lua, markdown, markdown_inline, python, query, vim, vimdoc
+				-- ship as core parsers in nvim 0.13+, no need to install here.
+				require("nvim-treesitter").install({
 					"bibtex",
 					"cmake",
 					"comment",
@@ -44,20 +42,26 @@ require("lazy").setup({
 					"html",
 					"json",
 					"jinja",
-					"markdown",
-					"markdown_inline",
-					"python",
 					"scheme",
 					"thrift",
 					"yaml",
 					"latex",
-				},
-				auto_install = true,
-				sync_install = false,
-				highlight = { enable = not vim.g.use_eink },
-				indent = { enable = true },
-			},
+				})
+
+				vim.api.nvim_create_autocmd("FileType", {
+					callback = function(args)
+						if not vim.g.use_eink then
+							pcall(vim.treesitter.start, args.buf)
+						end
+						local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+						if lang and vim.treesitter.query.get(lang, "indents") then
+							vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+						end
+					end,
+				})
+			end,
 		},
+		{ "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", event = "VeryLazy" },
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
 		{
@@ -95,7 +99,6 @@ require("lazy").setup({
 					json = { "fixjson" },
 					jsonc = { "biome" },
 					lua = { "stylua" },
-					markdown = { "markdownlint-cli2" },
 					proto = { "buf" },
 					ps1 = { "psscriptanalyzer" },
 					python = { "ruff_format" },
@@ -108,84 +111,54 @@ require("lazy").setup({
 				},
 				format_on_save = {
 					timeout_ms = 500,
-					lsp_fallback = true,
+					lsp_format = "fallback",
 				},
 			},
 		},
 		{
-			"nvim-tree/nvim-tree.lua",
+			"stevearc/oil.nvim",
 			version = "*",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
-			keys = { { "<Leader>f", "<cmd>NvimTreeFindFile<cr>" } },
-			opts = {},
+			lazy = false,
+			keys = {
+				{ "<Leader>f", "<cmd>Oil<cr>", desc = "Open parent directory" },
+			},
+			opts = {
+				default_file_explorer = true,
+			},
 		},
-		-- LSP Support
-		{ "williamboman/mason.nvim", opts = {} },
+		-- Completion
 		{
-			"williamboman/mason-lspconfig.nvim",
-			dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-			config = function()
-				require("mason-lspconfig").setup({
-					ensure_installed = {
-						-- clangd uses system installation
-						"basedpyright",
-						"neocmake",
-						"vimls",
-						"jsonls",
-						"fish_lsp",
-						"yamlls",
-					},
-					automatic_installation = true,
-				})
+			"saghen/blink.cmp",
+			version = "1.*",
+			opts = {
+				keymap = { preset = "super-tab" },
+				sources = {
+					default = { "lsp", "path", "snippets", "buffer" },
+				},
+				completion = {
+					documentation = { auto_show = true },
+				},
+				signature = { enabled = true },
+			},
+		},
 
-				-- Native Neovim 0.11+ LSP configuration
-				-- Racket langserver (not in Mason, needs config before enable)
-				vim.lsp.config("racket_langserver", {
-					cmd = { "racket", "-l", "racket-langserver" },
-					filetypes = { "racket", "scheme" },
-				})
-
-				-- Enable all servers (uses defaults from nvim-lspconfig/lsp/)
-				vim.lsp.enable({
+		-- LSP Support
+		{ "mason-org/mason.nvim", opts = {} },
+		{
+			"mason-org/mason-lspconfig.nvim",
+			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
+			opts = {
+				ensure_installed = {
 					"basedpyright",
-					"jsonls",
-					"yamlls",
-					"vimls",
 					"neocmake",
+					"vimls",
+					"jsonls",
 					"fish_lsp",
-					"clangd",
-					"racket_langserver",
-				})
-
-				-- lua_ls settings configured in init.lua (after plugins load)
-
-				-- LSP Keymaps
-				vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
-				vim.keymap.set("n", "<Leader>r", vim.lsp.buf.references)
-				vim.keymap.set("n", "<Leader>s", vim.lsp.buf.hover)
-				vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename)
-				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action)
-				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-				vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-				vim.keymap.set("n", "<Leader>ih", function()
-					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-				end)
-
-				-- LSP attach autocmd for completion and inlay hints
-				vim.api.nvim_create_autocmd("LspAttach", {
-					callback = function(args)
-						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if client then
-							if client:supports_method("textDocument/completion") then
-								vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-							end
-							if client:supports_method("textDocument/inlayHint") then
-								vim.lsp.inlay_hint.enable(true)
-							end
-						end
-					end,
-				})
-			end,
+					"yamlls",
+				},
+				automatic_enable = true,
+			},
 		},
 		{
 			"lervag/vimtex",
@@ -222,10 +195,15 @@ require("lazy").setup({
 			end,
 			config = function()
 				local mygroup = vim.api.nvim_create_augroup("vimtex_config", { clear = true })
-				vim.api.nvim_create_autocmd(
-					"User",
-					{ pattern = "VimtexEventInitPost", group = mygroup, command = "VimtexCompile" }
-				)
+				vim.api.nvim_create_autocmd("User", {
+					pattern = "VimtexEventInitPost",
+					group = mygroup,
+					callback = function()
+						if vim.bo.filetype == "tex" then
+							vim.cmd("VimtexCompile")
+						end
+					end,
+				})
 				vim.keymap.set("n", "<Leader>v", "<cmd>VimtexView<cr>")
 			end,
 		},
@@ -234,6 +212,28 @@ require("lazy").setup({
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
 			ft = { "markdown" },
 			opts = {},
+		},
+		{
+			"psliwka/vim-dirtytalk",
+			-- Nvim 0.13 dropped autoload/spellfile.vim, breaking :DirtytalkUpdate
+			-- (it calls spellfile#WritableSpellDir → E117). Build the .spl from
+			-- the plugin's wordlists ourselves.
+			build = function(plugin)
+				local spell_dir = vim.fn.stdpath("data") .. "/site/spell"
+				vim.fn.mkdir(spell_dir, "p")
+				local words = {}
+				for _, f in ipairs(vim.fn.glob(plugin.dir .. "/wordlists/*.words", true, true)) do
+					vim.list_extend(words, vim.fn.readfile(f))
+				end
+				local tmp = vim.fn.tempname()
+				vim.fn.writefile(words, tmp)
+				vim.cmd(
+					"mkspell! "
+						.. vim.fn.fnameescape(spell_dir .. "/programming")
+						.. " "
+						.. vim.fn.fnameescape(tmp)
+				)
+			end,
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.

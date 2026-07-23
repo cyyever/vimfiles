@@ -1,6 +1,3 @@
--- Enable Lua module caching for faster startup (Neovim 0.11+)
-vim.loader.enable()
-
 -- Add Mason bin to PATH early (and TeX Live on Windows)
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 local sysname = vim.uv.os_uname().sysname
@@ -12,16 +9,92 @@ if sysname == "Windows_NT" then
 	vim.env.PATH = "C:/texlive/2026/bin/windows" .. path_sep .. vim.env.PATH
 end
 
-vim.o.fileformats = "unix,dos"
 vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"
 
--- Disable netrw before loading plugins (required for nvim-tree)
+-- Disable netrw before loading plugins (oil.nvim replaces it)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.use_eink = vim.env.eink_screen == "1"
+
+-- LSP server settings (register before vim.lsp.enable() in lazy.lua)
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = { vim.env.VIMRUNTIME },
+				checkThirdParty = false,
+			},
+			telemetry = { enable = false },
+			hint = { enable = true },
+		},
+	},
+})
+
+vim.lsp.config("basedpyright", {
+	settings = {
+		basedpyright = {
+			analysis = {
+				autoImportCompletions = false,
+				inlayHints = {
+					variableTypes = true,
+					functionReturnTypes = true,
+					callArgumentNames = true,
+					genericTypes = true,
+				},
+			},
+		},
+	},
+})
+
+vim.lsp.config("clangd", {
+	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
+})
+
+vim.lsp.config("racket_langserver", {
+	cmd = { "racket", "-l", "racket-langserver" },
+	filetypes = { "racket", "scheme" },
+})
+
 require("config.lazy")
 
-vim.g.use_eink = vim.env.eink_screen == "1"
+-- Pass blink.cmp capabilities to all LSP servers
+local ok, blink = pcall(require, "blink.cmp")
+if ok then
+	vim.lsp.config("*", {
+		capabilities = blink.get_lsp_capabilities(),
+	})
+end
+
+-- mason-lspconfig v2 auto-enables servers in `ensure_installed` via vim.lsp.enable().
+-- Only enable servers that aren't installed via Mason here.
+vim.lsp.enable({ "clangd", "racket_langserver" })
+
+-- LSP keymaps. Defaults (0.11+): K (hover), grn (rename), gra (code action),
+-- grr (references), gri (implementation), grt (type definition), gO (symbols).
+vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
+vim.keymap.set("n", "<Leader>ih", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client then
+			return
+		end
+		if client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true)
+		end
+		if client:supports_method("textDocument/foldingRange") then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+		end
+	end,
+})
 
 vim.o.list = true
 
@@ -30,6 +103,7 @@ vim.o.fileencodings = "utf-8,gb18030,cp950,euc-tw"
 
 -- 文件类型选项
 vim.g.sql_type_default = "mysql"
+vim.filetype.add({ pattern = { [".*%.json%.conf"] = "json" } })
 
 -- diff
 vim.opt.diffopt:append("horizontal,algorithm:patience,followwrap")
@@ -47,7 +121,7 @@ vim.o.clipboard = "unnamed"
 --备份文件
 vim.o.backup = true
 local back_dir = vim.fn.stdpath("data") .. "/backup/"
-if not vim.fn.isdirectory(back_dir) then
+if vim.fn.isdirectory(back_dir) == 0 then
 	vim.fn.mkdir(back_dir)
 end
 vim.o.backupdir = back_dir
@@ -65,30 +139,10 @@ vim.o.smoothscroll = true
 -- Treesitter folding
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.foldlevel = 99 -- Start with all folds open
 vim.o.foldlevelstart = 99
 
 vim.keymap.set("n", "n", "nzz")
 
--- Snippet navigation (Neovim 0.11+)
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
-	if vim.snippet.active({ direction = 1 }) then
-		return "<cmd>lua vim.snippet.jump(1)<cr>"
-	else
-		return "<Tab>"
-	end
-end, { expr = true })
-
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-	if vim.snippet.active({ direction = -1 }) then
-		return "<cmd>lua vim.snippet.jump(-1)<cr>"
-	else
-		return "<S-Tab>"
-	end
-end, { expr = true })
-
--- 补全选项
-vim.o.completeopt = "menuone,noselect,fuzzy"
 vim.o.wildignorecase = true
 vim.o.infercase = true
 
@@ -104,8 +158,6 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_node_provider = 0
 
 vim.o.mouse = "r"
--- 颜色方案
-vim.o.termguicolors = true
 
 if vim.g.use_eink then
 	vim.cmd.colorscheme("eink")
@@ -118,6 +170,11 @@ end
 vim.diagnostic.config({
 	virtual_text = false,
 	virtual_lines = { only_current_line = true },
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({ bufnr = bufnr })
+		end,
+	},
 })
 
 -- BufReadPost: auto-set fenc to utf-8, jump to last position
@@ -135,7 +192,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Spell checking
-local spellfile = vim.fn.stdpath("config") .. "/vimfiles/spell/cyymine.utf-8.add"
+local config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ":p:h")
+local spellfile = config_dir .. "/spell/cyymine.utf-8.add"
 if vim.fn.filereadable(spellfile) == 1 then
 	local splfile = spellfile .. ".spl"
 	if vim.fn.filereadable(splfile) == 0 or vim.fn.getftime(spellfile) > vim.fn.getftime(splfile) then
@@ -144,26 +202,4 @@ if vim.fn.filereadable(spellfile) == 1 then
 end
 vim.o.spellfile = spellfile
 vim.o.spell = true
-vim.o.spelllang = "en,cjk,cyymine"
-
--- Enable inlay hints for basedpyright
-vim.lsp.config("basedpyright", {
-	settings = {
-		basedpyright = {
-			analysis = {
-				autoImportCompletions = false, -- better performance
-				inlayHints = {
-					variableTypes = true,
-					functionReturnTypes = true,
-					callArgumentNames = true,
-					genericTypes = true,
-				},
-			},
-		},
-	},
-})
-
--- Enable inlay hints for clangd
-vim.lsp.config("clangd", {
-	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
-})
+vim.o.spelllang = "en,cjk,programming,cyymine"
