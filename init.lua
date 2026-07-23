@@ -75,8 +75,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.inlay_hint.enable(true)
 		end
 		if client:supports_method("textDocument/foldingRange") then
-			local win = vim.api.nvim_get_current_win()
-			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+			-- Target the windows actually showing the attached buffer, not the
+			-- focused window, which may differ when the LSP attaches in the
+			-- background.
+			for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
+				vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+			end
 		end
 	end,
 })
