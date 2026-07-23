@@ -162,6 +162,7 @@ vim.o.mouse = "r"
 if vim.g.use_eink then
 	vim.cmd.colorscheme("eink")
 else
+	vim.o.termguicolors = true
 	vim.o.background = "dark"
 	vim.cmd.colorscheme("gruvbox")
 end
