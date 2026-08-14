@@ -1,12 +1,6 @@
--- Add Mason bin to PATH early (and TeX Live on Windows)
-local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-local sysname = vim.uv.os_uname().sysname
-local path_sep = sysname == "Windows_NT" and ";" or ":"
-
-vim.env.PATH = mason_bin .. path_sep .. vim.env.PATH
-
-if sysname == "Windows_NT" then
-	vim.env.PATH = "C:/texlive/2026/bin/windows" .. path_sep .. vim.env.PATH
+-- Mason puts its own bin dir on PATH (see lua/config/lazy.lua); only TeX Live is left.
+if vim.uv.os_uname().sysname == "Windows_NT" then
+	vim.env.PATH = "C:/texlive/2026/bin/windows;" .. vim.env.PATH
 end
 
 vim.g.mapleader = ";"
@@ -58,7 +52,7 @@ end
 -- Only enable servers that aren't installed via Mason here.
 vim.lsp.enable({ "clangd", "racket_langserver" })
 
--- LSP keymaps. Defaults (0.11+): K (hover), grn (rename), gra (code action),
+-- LSP keymaps. Built-in defaults: K (hover), grn (rename), gra (code action),
 -- grr (references), gri (implementation), grt (type definition), gO (symbols).
 vim.keymap.set("n", "<Leader>d", vim.lsp.buf.definition)
 vim.keymap.set("n", "<Leader>ih", function()
@@ -122,7 +116,6 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
--- Smooth scrolling (Neovim 0.11+)
 vim.o.smoothscroll = true
 
 -- Treesitter folding
@@ -156,7 +149,6 @@ else
 	vim.cmd.colorscheme("gruvbox")
 end
 
--- Diagnostic virtual lines (Neovim 0.11+)
 vim.diagnostic.config({
 	virtual_text = false,
 	virtual_lines = { only_current_line = true },

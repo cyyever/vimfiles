@@ -25,15 +25,14 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter").setup()
-				-- bash, c, lua, markdown, markdown_inline, python, query, vim, vimdoc
-				-- ship as core parsers in nvim 0.13+, no need to install here.
+				-- bash, c, diff, lua, markdown, markdown_inline, python, query, vim,
+				-- vimdoc ship as core parsers in nvim 0.13, no need to install here.
 				require("nvim-treesitter").install({
 					"bibtex",
 					"cmake",
 					"comment",
 					"cpp",
 					"cuda",
-					"diff",
 					"dockerfile",
 					"fish",
 					"go",
@@ -61,12 +60,13 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", event = "VeryLazy" },
-		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 
+		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 		{
 			"echasnovski/mini.ai",
 			event = "VeryLazy",
+			-- Supplies the `textobjects` queries that gen_spec.treesitter reads.
+			dependencies = { { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" } },
 			config = function()
 				local ai = require("mini.ai")
 				ai.setup({
@@ -144,7 +144,8 @@ require("lazy").setup({
 		},
 
 		-- LSP Support
-		{ "mason-org/mason.nvim", opts = {} },
+		-- init.lua relies on "prepend" to reach Mason-installed tools; declare it here.
+		{ "mason-org/mason.nvim", opts = { PATH = "prepend" } },
 		{
 			"mason-org/mason-lspconfig.nvim",
 			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
@@ -236,7 +237,5 @@ require("lazy").setup({
 			end,
 		},
 	},
-	-- Configure any other settings here. See the documentation for more details.
-	-- automatically check for plugin updates
 	checker = { enabled = false },
 })
