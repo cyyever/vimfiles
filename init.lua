@@ -6,10 +6,6 @@ end
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
--- Disable netrw before loading plugins (oil.nvim replaces it)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 vim.g.use_eink = vim.env.eink_screen == "1"
 
 -- LSP server settings (register before vim.lsp.enable() in lazy.lua)
@@ -31,26 +27,15 @@ vim.lsp.config("basedpyright", {
 
 vim.lsp.config("clangd", {
 	cmd = { "clangd", "--clang-tidy", "--inlay-hints" },
-})
-
-vim.lsp.config("racket_langserver", {
-	cmd = { "racket", "-l", "racket-langserver" },
-	filetypes = { "racket", "scheme" },
+	-- 无 compile_commands.json 时默认按 C++26 解析
+	init_options = { fallbackFlags = { "-std=c++26" } },
 })
 
 require("config.lazy")
 
--- Pass blink.cmp capabilities to all LSP servers
-local ok, blink = pcall(require, "blink.cmp")
-if ok then
-	vim.lsp.config("*", {
-		capabilities = blink.get_lsp_capabilities(),
-	})
-end
-
 -- mason-lspconfig v2 auto-enables servers in `ensure_installed` via vim.lsp.enable().
 -- Only enable servers that aren't installed via Mason here.
-vim.lsp.enable({ "clangd", "racket_langserver" })
+vim.lsp.enable({ "clangd" })
 
 -- LSP keymaps. Built-in defaults: K (hover), grn (rename), gra (code action),
 -- grr (references), gri (implementation), grt (type definition), gO (symbols).
@@ -59,16 +44,12 @@ vim.keymap.set("n", "<Leader>ih", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end)
 
+vim.lsp.inlay_hint.enable(true)
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if not client then
-			return
-		end
-		if client:supports_method("textDocument/inlayHint") then
-			vim.lsp.inlay_hint.enable(true)
-		end
-		if client:supports_method("textDocument/foldingRange") then
+		if client and client:supports_method("textDocument/foldingRange") then
 			-- Target the windows actually showing the attached buffer, not the
 			-- focused window, which may differ when the LSP attaches in the
 			-- background.
@@ -101,13 +82,11 @@ vim.opt.path:append({
 
 vim.o.clipboard = "unnamed"
 
---备份文件
+--备份文件,只写入默认的 stdpath("state")/backup,不落在文件旁边
+--该目录 nvim 不会自动创建,缺失时备份会静默失效
 vim.o.backup = true
-local back_dir = vim.fn.stdpath("data") .. "/backup/"
-if vim.fn.isdirectory(back_dir) == 0 then
-	vim.fn.mkdir(back_dir)
-end
-vim.o.backupdir = back_dir
+vim.opt.backupdir:remove(".")
+vim.fn.mkdir(vim.fn.stdpath("state") .. "/backup", "p")
 --设置页号
 vim.o.number = true
 
@@ -144,14 +123,14 @@ vim.o.mouse = "r"
 if vim.g.use_eink then
 	vim.cmd.colorscheme("eink")
 else
-	vim.o.termguicolors = true
 	vim.o.background = "dark"
-	vim.cmd.colorscheme("gruvbox")
+	-- 试用内置的 gruvbox 风格配色;不满意就换回 gruvbox.nvim
+	-- vim.cmd.colorscheme("gruvbox")
+	vim.cmd.colorscheme("retrobox")
 end
 
 vim.diagnostic.config({
-	virtual_text = false,
-	virtual_lines = { only_current_line = true },
+	virtual_lines = { current_line = true },
 	jump = {
 		on_jump = function(_, bufnr)
 			vim.diagnostic.open_float({ bufnr = bufnr })
@@ -184,12 +163,4 @@ if vim.fn.filereadable(spellfile) == 1 then
 end
 vim.o.spellfile = spellfile
 vim.o.spell = true
--- `programming` is built by vim-dirtytalk's build step (see lua/config/lazy.lua)
--- into stdpath("data")/site/spell. Only enable it once the .spl exists, or spell
--- raises E756 on a fresh install before the build has run.
-local langs = { "en", "cjk" }
-if vim.fn.filereadable(vim.fn.stdpath("data") .. "/site/spell/programming.spl") == 1 then
-	table.insert(langs, "programming")
-end
-table.insert(langs, "cyymine")
-vim.o.spelllang = table.concat(langs, ",")
+vim.o.spelllang = "en,cjk,cyymine"

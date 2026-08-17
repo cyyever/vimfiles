@@ -61,7 +61,7 @@ require("lazy").setup({
 			end,
 		},
 
-		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+		-- { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 		{
 			"echasnovski/mini.ai",
 			event = "VeryLazy",
@@ -81,7 +81,7 @@ require("lazy").setup({
 			end,
 		},
 		{ "echasnovski/mini.pairs", event = "InsertEnter", opts = {} },
-		{ "echasnovski/mini.statusline", opts = { use_icons = true } },
+		{ "echasnovski/mini.statusline", opts = {} },
 		{
 			"stevearc/conform.nvim",
 			event = "BufWritePre",
@@ -118,14 +118,12 @@ require("lazy").setup({
 		{
 			"stevearc/oil.nvim",
 			version = "*",
-			dependencies = { "nvim-tree/nvim-web-devicons" },
+			dependencies = { { "echasnovski/mini.icons", opts = {} } },
 			lazy = false,
 			keys = {
 				{ "<Leader>f", "<cmd>Oil<cr>", desc = "Open parent directory" },
 			},
-			opts = {
-				default_file_explorer = true,
-			},
+			opts = {},
 		},
 		-- Completion
 		{
@@ -133,9 +131,6 @@ require("lazy").setup({
 			version = "1.*",
 			opts = {
 				keymap = { preset = "super-tab" },
-				sources = {
-					default = { "lsp", "path", "snippets", "buffer" },
-				},
 				completion = {
 					documentation = { auto_show = true },
 				},
@@ -144,8 +139,7 @@ require("lazy").setup({
 		},
 
 		-- LSP Support
-		-- init.lua relies on "prepend" to reach Mason-installed tools; declare it here.
-		{ "mason-org/mason.nvim", opts = { PATH = "prepend" } },
+		{ "mason-org/mason.nvim", opts = {} },
 		{
 			"mason-org/mason-lspconfig.nvim",
 			dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
@@ -158,7 +152,6 @@ require("lazy").setup({
 					"fish_lsp",
 					"yamlls",
 				},
-				automatic_enable = true,
 			},
 		},
 		{
@@ -169,18 +162,8 @@ require("lazy").setup({
 				vim.g.tex_flavor = "latex"
 				vim.g.vimtex_compiler_engine = "lualatex"
 				vim.g.vimtex_compiler_latexmk = {
-					callback = 1,
-					continuous = 1,
 					aux_dir = ".build",
 					out_dir = ".out",
-					executable = "latexmk",
-					hooks = {},
-					options = {
-						"-verbose",
-						"-file-line-error",
-						"-synctex=1",
-						"-interaction=nonstopmode",
-					},
 				}
 				local sysname = vim.uv.os_uname().sysname
 				if sysname == "Windows_NT" then
@@ -214,28 +197,5 @@ require("lazy").setup({
 			ft = { "markdown" },
 			opts = {},
 		},
-		{
-			"psliwka/vim-dirtytalk",
-			-- Nvim 0.13 dropped autoload/spellfile.vim, breaking :DirtytalkUpdate
-			-- (it calls spellfile#WritableSpellDir → E117). Build the .spl from
-			-- the plugin's wordlists ourselves.
-			build = function(plugin)
-				local spell_dir = vim.fn.stdpath("data") .. "/site/spell"
-				vim.fn.mkdir(spell_dir, "p")
-				local words = {}
-				for _, f in ipairs(vim.fn.glob(plugin.dir .. "/wordlists/*.words", true, true)) do
-					vim.list_extend(words, vim.fn.readfile(f))
-				end
-				local tmp = vim.fn.tempname()
-				vim.fn.writefile(words, tmp)
-				vim.cmd(
-					"mkspell! "
-						.. vim.fn.fnameescape(spell_dir .. "/programming")
-						.. " "
-						.. vim.fn.fnameescape(tmp)
-				)
-			end,
-		},
 	},
-	checker = { enabled = false },
 })
