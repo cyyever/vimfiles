@@ -154,7 +154,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- Spell checking
 local config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ":p:h")
-local spellfile = config_dir .. "/spell/cyymine.utf-8.add"
 if vim.fn.filereadable(spellfile) == 1 then
 	local splfile = spellfile .. ".spl"
 	if vim.fn.filereadable(splfile) == 0 or vim.fn.getftime(spellfile) > vim.fn.getftime(splfile) then
@@ -163,4 +162,4 @@ if vim.fn.filereadable(spellfile) == 1 then
 end
 vim.o.spellfile = spellfile
 vim.o.spell = true
-vim.o.spelllang = "en,cjk,cyymine"
+vim.o.spelllang = "en,cjk"
