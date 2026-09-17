@@ -6,3 +6,4 @@ spell/*.add.spl
 
 # Claude Code local state
 .claude/
+.DS_Store

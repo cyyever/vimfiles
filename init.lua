@@ -130,7 +130,7 @@ else
 end
 
 vim.diagnostic.config({
-	virtual_lines = { current_line = true },
+	virtual_text = true,
 	jump = {
 		on_jump = function(_, bufnr)
 			vim.diagnostic.open_float({ bufnr = bufnr })
@@ -153,13 +153,5 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Spell checking
-local config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ":p:h")
-if vim.fn.filereadable(spellfile) == 1 then
-	local splfile = spellfile .. ".spl"
-	if vim.fn.filereadable(splfile) == 0 or vim.fn.getftime(spellfile) > vim.fn.getftime(splfile) then
-		vim.cmd("mkspell! " .. vim.fn.fnameescape(spellfile))
-	end
-end
-vim.o.spellfile = spellfile
 vim.o.spell = true
 vim.o.spelllang = "en,cjk"
